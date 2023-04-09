@@ -33,7 +33,9 @@
     }
 
     input[type="text"],
-    input[type="password"] {
+    input[type="password"],
+    input[type="date"],
+    select {
         width: 100%;
         padding: 10px;
         border: 1px solid #ccc;
@@ -41,7 +43,7 @@
         margin-bottom: 20px;
     }
 
-    button {
+    .buttonRegister {
         display: block;
         margin: 20px auto;
         padding: 10px 20px;
@@ -53,7 +55,7 @@
         cursor: pointer;
     }
 
-    button:hover {
+    .buttonRegister:hover {
         background-color: #3e8e41;
     }
     </style>
@@ -66,15 +68,31 @@
     <div class="container">
         <form>
             <label for="Name">Name</label>
-            <input type="text" id="username" name="username" placeholder="Enter your name" required>
+            <input type="text" id="username" name="username" placeholder="Enter your name (required)" required>
 
             <label for="email">Email</label>
-            <input type="text" id="email" name="email" placeholder="Enter your email" required>
+            <input type="text" id="email" name="email" placeholder="Enter your email (required)" required>
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <input type="password" id="password" name="password" placeholder="Enter your password (required)" required>
 
-            <button type="submit">Register</button>
+            <label for="country">Country</label>
+            <select id="country" name="country">
+                <option value="australia">Australia</option>
+                <option value="canada">Canada</option>
+                <option value="usa">USA</option>
+            </select>
+
+            <label for="birthday">Date of Birth</label>
+            <input type="date" id="birthday" name="birthday">
+
+            <label for="height">Height</label>
+            <input type="text" id="height" name="height" placeholder="Enter your height">
+
+            <label for="weight">Weight</label>
+            <input type="text" id="weight" name="weight" placeholder="Enter your weight">
+
+            <button type="submit" class="buttonRegister" id="registerBtn">Register</button>
         </form>
     </div>
 </body>

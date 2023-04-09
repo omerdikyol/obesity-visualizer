@@ -86,15 +86,23 @@
                 <td>omerdikyol@example.com</td>
             </tr>
             <tr>
+                <td>Country</td>
+                <td>Turkey</td>
+            </tr>
+            <tr>
+                <td>Date of Birth</td>
+                <td>02/04/2002</td>
+            </tr>
+            <tr>
                 <td>Height</td>
                 <td>193cm</td>
             </tr>
             <tr>
                 <td>Weight</td>
-                <td>82kg</td>
+                <td>-</td>
             </tr>
         </table>
-        <button class="button_personal" id="updateBtn">Update</button>
+        <button class="button_personal" id="editBtn">Edit</button>
         <button class="button_personal" id="exportBtn">Export</button>
     </div>
 </body>
