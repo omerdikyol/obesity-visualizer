@@ -41,7 +41,7 @@
         margin-bottom: 20px;
     }
 
-    button {
+    .buttonLogin {
         display: block;
         margin: 20px auto;
         padding: 10px 20px;
@@ -53,7 +53,7 @@
         cursor: pointer;
     }
 
-    button:hover {
+    .buttonLogin:hover {
         background-color: #3e8e41;
     }
     </style>
@@ -73,7 +73,7 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
-                <button type="submit">Login</button>
+                <button type="submit" class="buttonLogin" id="loginBtn">Login</button>
             </form>
         </div>
     </div>
