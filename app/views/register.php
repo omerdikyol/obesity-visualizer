@@ -66,7 +66,7 @@
 <body>
     <h1 style="color: black;">Registration Form</h1>
     <div class="container">
-        <form>
+        <form action="../controllers/registerController.php" method="post">
             <label for="Name">Name</label>
             <input type="text" id="username" name="username" placeholder="Enter your name (required)" required>
 
@@ -76,6 +76,10 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter your password (required)" required>
 
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword"
+                placeholder="Confirm your password (required)" required>
+
             <label for="country">Country</label>
             <select id="country" name="country">
                 <option value="australia">Australia</option>
@@ -83,14 +87,14 @@
                 <option value="usa">USA</option>
             </select>
 
-            <label for="birthday">Date of Birth</label>
-            <input type="date" id="birthday" name="birthday">
+            <label for="dateOfBirth">Date of Birth</label>
+            <input type="date" id="dateOfBirth" name="dateOfBirth">
 
             <label for="height">Height</label>
-            <input type="text" id="height" name="height" placeholder="Enter your height">
+            <input type="text" id="height" name="height" placeholder="Enter your height (optional)">
 
             <label for="weight">Weight</label>
-            <input type="text" id="weight" name="weight" placeholder="Enter your weight">
+            <input type="text" id="weight" name="weight" placeholder="Enter your weight (optional)">
 
             <button type="submit" class="buttonRegister" id="registerBtn">Register</button>
         </form>
