@@ -2,8 +2,6 @@
 
 session_start();
 
-echo $_SESSION['user_id'];
-
 if (isset($_SESSION['user_id'])) {
 
     $mysqli = require_once('../db/database.php');

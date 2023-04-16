@@ -90,10 +90,10 @@
             <label for="dateOfBirth">Date of Birth</label>
             <input type="date" id="dateOfBirth" name="dateOfBirth">
 
-            <label for="height">Height</label>
+            <label for="height">Height (cm)</label>
             <input type="text" id="height" name="height" placeholder="Enter your height (optional)">
 
-            <label for="weight">Weight</label>
+            <label for="weight">Weight (kg)</label>
             <input type="text" id="weight" name="weight" placeholder="Enter your weight (optional)">
 
             <button type="submit" class="buttonRegister" id="registerBtn">Register</button>
