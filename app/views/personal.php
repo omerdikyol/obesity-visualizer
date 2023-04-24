@@ -319,13 +319,14 @@ function exportPNG() {
 
                 <label for="country">Country</label>
                 <select id="country" name="country" required>
-                    <option value="indonesia" <?php if ($country == "indonesia") echo "selected" ?>>Indonesia
-                    </option>
-                    <option value="malaysia" <?php if ($country == "malaysia") echo "selected" ?>>Malaysia</option>
-                    <option value="singapore" <?php if ($country == "singapore") echo "selected" ?>>Singapore
-                    </option>
-                    <option value="thailand" <?php if ($country == "thailand") echo "selected" ?>>Thailand</option>
-                    <option value="vietnam" <?php if ($country == "vietnam") echo "selected" ?>>Vietnam</option>
+                    <option value="<?php echo $country ?>"><?php echo ucfirst($country) ?></option>
+                    <?php
+                        // Get countries from helper file   
+                        $countries = include '../helper/countries.php';
+                        foreach ($countries as $key => $country) {
+                            echo "<option value='$country'>$country</option>";
+                        }
+                        ?>
                 </select>
 
                 <label for="date_of_birth">Date of Birth</label>
