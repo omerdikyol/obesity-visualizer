@@ -82,9 +82,13 @@
 
             <label for="country">Country</label>
             <select id="country" name="country">
-                <option value="australia">Australia</option>
-                <option value="canada">Canada</option>
-                <option value="usa">USA</option>
+                <?php
+                // Get all countries from the array in countries.php
+                $countries = include '../helper/countries.php';
+                foreach ($countries as $key => $country) {
+                    echo "<option value='$country'>$country</option>";
+                }
+                ?>
             </select>
 
             <label for="dateOfBirth">Date of Birth</label>

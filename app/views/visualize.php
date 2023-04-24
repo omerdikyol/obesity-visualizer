@@ -36,6 +36,20 @@ session_start();
         box-shadow: rgba(27, 31, 35, 0.1) 0px 1px 0px 0px, rgba(255, 255, 255, 0.03) 0px 1px 0px 0px inset;
         transition-duration: 0.1s;
     }
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
+    iframe {
+        width: 90%;
+        height: 100%;
+        border: 2px solid black;
+        min-height: 800px;
+    }
     </style>
 </head>
 
@@ -56,10 +70,18 @@ session_start();
     <script>
     function Map() {
         document.querySelector('.chart-holder').innerHTML = "";
-        // Add image to object
-        var map = document.createElement('img');
-        map.src = "../../public/images/map.jpg";
-        map.alt = "map";
+
+        // Add svg map from map.php
+        var map = document.createElement('iframe');
+        map.src = "../visualize/map.php";
+
+        // Align to center
+        map.style.margin = "auto";
+        map.style.display = "block";
+        map.style.align = "center";
+
+
+
         document.querySelector('.chart-holder').appendChild(map);
     }
 
