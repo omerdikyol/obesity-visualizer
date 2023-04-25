@@ -16,7 +16,7 @@ if (isset($_GET['country']) && isset($_GET['year']) && isset($_GET['bmi'])) {
             $bmi = "BMI_GE30";
             break;
     }
-    $mysqli = require_once '../db/database.php';
+    $mysqli = require_once '../../db/database.php';
     $sql = sprintf(
         "SELECT * FROM public_data WHERE geo = '%s' AND year = '%s' AND bmi ='%s'",
         $mysqli->real_escape_string($country),

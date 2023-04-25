@@ -5,66 +5,12 @@
     <meta charset="utf-8">
     <title>Obesity Visualizer</title>
     <link rel="stylesheet" href="../../public/css/style.css">
-    <style>
-    /* CSS Code to Style the Page */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-        margin: 0;
-        padding: 0;
-    }
-
-    h1 {
-        text-align: center;
-        margin-top: 50px;
-    }
-
-    .container {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    label {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    input[type="text"],
-    input[type="password"],
-    input[type="date"],
-    select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        margin-bottom: 20px;
-    }
-
-    .buttonRegister {
-        display: block;
-        margin: 20px auto;
-        padding: 10px 20px;
-        background-color: #4caf50;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-    .buttonRegister:hover {
-        background-color: #3e8e41;
-    }
-    </style>
 </head>
 
 <?php include('./includes/header.php'); ?>
 
 <body>
-    <h1 style="color: black;">Registration Form</h1>
+    <h1>Registration Form</h1>
     <div class="container">
         <form action="../controllers/registerController.php" method="post">
             <label for="Name">Name</label>
@@ -100,7 +46,7 @@
             <label for="weight">Weight (kg)</label>
             <input type="text" id="weight" name="weight" placeholder="Enter your weight (optional)">
 
-            <button type="submit" class="buttonRegister" id="registerBtn">Register</button>
+            <button type="submit" class="button1" id="registerBtn">Register</button>
         </form>
     </div>
 </body>

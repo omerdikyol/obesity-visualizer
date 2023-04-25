@@ -56,8 +56,6 @@ if (isset($_SESSION['user_id'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-
-
 <script>
 // Edit button function
 function editBtn() {
@@ -112,138 +110,6 @@ function exportPNG() {
     <meta charset="utf-8">
     <title>Obesity Visualizer</title>
     <link rel="stylesheet" href="../../public/css/style.css">
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-        margin: 0;
-        padding: 0;
-    }
-
-    h1 {
-        text-align: center;
-        margin-top: 50px;
-    }
-
-    .data_container,
-    .edit_container {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    table {
-        width: 100%;
-        margin-top: 30px;
-        border-collapse: collapse;
-    }
-
-    th,
-    td {
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #f5f5f5;
-        font-weight: bold;
-        color: #333;
-    }
-
-    .button_personal {
-        display: block;
-        margin: 20px auto;
-        padding: 10px 20px;
-        background-color: #4caf50;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-    .button_personal:hover {
-        background-color: #3e8e41;
-    }
-
-    .edit_container {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    label {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    input[type="text"],
-    input[type="password"],
-    input[type="date"],
-    input[type="number"],
-    input[type="email"],
-    select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        margin-bottom: 20px;
-    }
-
-    /* Dropdown Button */
-    .dropbtn {
-        background-color: #04AA6D;
-        color: white;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
-    }
-
-    /* The container <div> - needed to position the dropdown content */
-    .dropdown {
-        position: relative;
-        display: inline-block;
-
-    }
-
-    /* Dropdown Content (Hidden by Default) */
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f1f1f1;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-
-    /* Links inside the dropdown */
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-
-    /* Change color of dropdown links on hover */
-    .dropdown-content a:hover {
-        background-color: #ddd;
-    }
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    /* Change the background color of the dropdown button when the dropdown content is shown */
-    .dropdown:hover .dropbtn {
-        background-color: #3e8e41;
-    }
-    </style>
 </head>
 
 <body>
@@ -252,15 +118,15 @@ function exportPNG() {
     <!-- Check if session user_id exists -->
     <?php if (!isset($_SESSION['user_id'])) : ?>
     <div class="container">
-        <h1 style="color: black;">You are not logged in!</h1>
-        <p style="color: black;">Please <a href="login.php">login</a> to view this page.</p>
+        <h1>You are not logged in!</h1>
+        <p style="text-align: center; margin-top: 50px;">Please <a href="login.php">login</a> to view this page.</p>
     </div>
     <?php else : ?>
-    <div class="data_container" id="data_container">
+    <div class="container" id="data_container">
         <div class="exportable" id="exportable">
-            <h1 style="color: black;">My Personal Data</h1>
+            <h1>My Personal Data</h1>
             <div class="container">
-                <table>
+                <table class="personal-table">
                     <tr>
                         <th>Attribute</th>
                         <th>Value</th>
@@ -296,9 +162,9 @@ function exportPNG() {
                 </table>
             </div>
         </div>
-        <button class="button_personal" id="editBtn" onclick="editBtn()">Edit</button>
+        <button class="button1" id="editBtn" onclick="editBtn()">Edit</button>
         <div class="dropdown">
-            <button class="button_personal" id="exportBtn">Export</button>
+            <button class="button1" id="exportBtn">Export</button>
             <div class="dropdown-content">
                 <a href="#" onclick="exportCSV();return false;">as CSV</a>
                 <a href="#" onclick="exportPDF();return false;">as PDF</a>
@@ -307,7 +173,7 @@ function exportPNG() {
         </div>
     </div>
 
-    <div class="edit_container" id="edit_container" style="display: none;">
+    <div class="container" id="edit_container" style="display: none;">
         <h1 style="color: black;">Edit Personal Data</h1>
         <div class="container">
             <form action="../controllers/editController.php" method="post" class="form">

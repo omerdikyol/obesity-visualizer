@@ -6,9 +6,15 @@ session_start();
 <html lang="en">
 
 <head>
+    <base href="./">
     <meta charset="UTF-8">
     <title>Obesity Visualizer</title>
-    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="./public/css/style.css">
+    <style>
+    h1 {
+        text-align: left;
+    }
+    </style>
 </head>
 
 <body>
