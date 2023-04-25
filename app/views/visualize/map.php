@@ -3,7 +3,7 @@
 session_start();
 
 // Connect to database
-$mysqli = require_once('../db/database.php');
+$mysqli = require_once('../../db/database.php');
 
 // Get all countries
 $sql = "SELECT * FROM public_data";
@@ -19,84 +19,13 @@ $result = $mysqli->query($sql);
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-    #country-name {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        font-size: 14px;
-        font-family: sans-serif;
-        background-color: gainsboro;
-        padding: 2px;
-        box-sizing: border-box;
-    }
-
-    /* Legend */
-    .legend {
-        display: none;
-        position: fixed;
-        bottom: 10px;
-        left: 10px;
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        background-color: #fff;
-        z-index: 9999;
-    }
-
-    .legend h4 {
-        margin-top: 0;
-        margin-bottom: 10px;
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    .legend-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 5px;
-    }
-
-    .color-box {
-        width: 16px;
-        height: 16px;
-        margin-right: 5px;
-    }
-
-    .legend-item span {
-        font-size: 14px;
-    }
-
-    /* Country List */
-    .list-item {
-        list-style-type: none;
-        background-color: #f2f2f2;
-        padding: 10px;
-        margin-bottom: 5px;
-        cursor: pointer;
-    }
-
-    /* Country Info Box */
-    .info-box {
-        display: none;
-        position: fixed;
-        padding: 2px;
-        border: 1px solid #ccc;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        background-color: #fff;
-        z-index: 9999;
-    }
-    </style>
+    <link rel="stylesheet" href="../../../public/css/style.css">
 </head>
 
 <body>
     <section>
         <!-- Add dropdown menu for selecting year and hold that value in a variable -->
-        <select name="year" id="year">
+        <select name="year" id="year" style="width: auto;">
             <option value="2008">2008</option>
             <option value="2014">2014</option>
             <option value="2017">2017</option>
@@ -104,7 +33,7 @@ $result = $mysqli->query($sql);
         </select>
 
         <!-- Add dropdown menu for selecting body mass index type -->
-        <select name="bmi" id="bmi">
+        <select name="bmi" id="bmi" style="width: auto;">
             <option value="Overweight">Overweight</option>
             <option value="Pre-obese">Pre-obese</option>
             <option value="Obese">Obese</option>
@@ -138,10 +67,10 @@ $result = $mysqli->query($sql);
                 // Add countries to list
                 foreach ($countries as $country) {
                     // Get country name from countries.php
-                    $countries = include('../helper/countries.php');
+                    $countries = include('../../helper/countries.php');
                     $country = $countries[$country];
 
-                    echo "<li id='$country' class='list-item' onclick='countryClicked(this.id)'>$country</li>";
+                    echo "<li id='$country' class='country-list-item' onclick='countryClicked(this.id)'>$country</li>";
                 }
                 ?>
             </ul>
@@ -278,9 +207,9 @@ $result = $mysqli->query($sql);
 
 </html>
 
-<script type='text/javascript' src='../../public/js/tinycolor.js'></script>
+<script type='text/javascript' src='../../../public/js/tinycolor.js'></script>
 
-<script>
+<script type='text/javascript'>
 var svgObject = document.getElementById("europe-map");
 var countryName = document.getElementById("country-name");
 
@@ -293,8 +222,6 @@ year.addEventListener("change", resetInfoBox);
 bmi.addEventListener("change", colorMap);
 bmi.addEventListener("change", showLegend);
 bmi.addEventListener("change", resetInfoBox);
-
-
 
 // Show legend based on selected bmi type
 function showLegend() {
@@ -317,8 +244,6 @@ function showLegend() {
         legendBmiGe30.style.display = 'block';
     }
 }
-
-
 
 //! Write a function for coloring the map depends on values year and bmi
 // Create color dictionaries for all indexes
@@ -521,8 +446,6 @@ svgObject.addEventListener("load", function() {
         });
 
         paths[i].addEventListener("mouseover", function() {
-            //! Show country name and make color darker
-
             // If country is already colored, make it a little bit darker
             if (this.getAttribute("fill")[0] == "#") {
                 // Get old color and make it a little bit darker using tinycolor.js

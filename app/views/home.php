@@ -27,14 +27,14 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="../../public/css/style.css">
 </head>
 
-</head>
+
 <?php include('./includes/header.php'); ?>
 
 <body>
     <h1>Home</h1>
 
     <?php if (isset($user)) : ?>
-    <p>Welcome, <?php echo $user['name']; ?>!</p>
+    <p style="text-align: center;">Welcome, <?php echo $user['name']; ?>!</p>
     <?php else : ?>
     <p><a href="login.php">Login</a> or <a href="register.php">Register</a></p>
 
