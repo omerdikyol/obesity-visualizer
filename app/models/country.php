@@ -1,6 +1,6 @@
 <?php
+# Returns data for a specific country, year and bmi
 
-# Read country from header and send data according to the country
 if (isset($_GET['country']) && isset($_GET['year']) && isset($_GET['bmi'])) {
     $country = $_GET['country'];
     $year = $_GET['year'];
@@ -16,7 +16,7 @@ if (isset($_GET['country']) && isset($_GET['year']) && isset($_GET['bmi'])) {
             $bmi = "BMI_GE30";
             break;
     }
-    $mysqli = require_once '../../db/database.php';
+    $mysqli = require_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/db/database.php';
     $sql = sprintf(
         "SELECT * FROM public_data WHERE geo = '%s' AND year = '%s' AND bmi ='%s'",
         $mysqli->real_escape_string($country),

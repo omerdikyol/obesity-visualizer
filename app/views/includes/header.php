@@ -15,7 +15,7 @@ $root = $_SERVER['DOCUMENT_ROOT'];
         <h1 style="text-align: center;">Obesity Visualizer</h1>
         <nav>
             <a href="../../../obesity-visualizer/index.php"><button class="buttonHeader">Home</button></a>
-            <a href="../../../obesity-visualizer/app/views/visualize.php"><button
+            <a href="/obesity-visualizer/app/controllers/visualize.php"><button
                     class="buttonHeader">Visualize</button></a>
             <a href="../../../obesity-visualizer/app/views/personal.php"><button
                     class="buttonHeader">Personal</button></a>
