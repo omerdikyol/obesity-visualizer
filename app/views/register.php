@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="../../public/css/style.css">
 </head>
 
-<?php include('./includes/header.php'); ?>
+<?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/header.php"; ?>
 
 <body>
     <h1>Registration Form</h1>
     <div class="container">
-        <form action="../controllers/registerController.php" method="post">
+        <form action="/obesity-visualizer/app/controllers/registerValidation.php" method="post">
             <label for="Name">Name</label>
             <input type="text" id="username" name="username" placeholder="Enter your name (required)" required>
 
@@ -29,8 +29,6 @@
             <label for="country">Country</label>
             <select id="country" name="country">
                 <?php
-                // Get all countries from the array in countries.php
-                $countries = include '../helper/countries.php';
                 foreach ($countries as $key => $country) {
                     echo "<option value='$country'>$country</option>";
                 }
@@ -51,6 +49,6 @@
     </div>
 </body>
 
-<?php include('./includes/footer.php'); ?>
+<?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/footer.php"; ?>
 
 </html>
