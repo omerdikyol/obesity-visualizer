@@ -24,15 +24,24 @@ if ($_POST['password'] != $_POST['confirmPassword']) {
 }
 
 # Date Validation
-if (!preg_match("/^(20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_POST['dateOfBirth'])) {
+if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_POST['dateOfBirth'])) {
     die("Invalid date format");
 }
+
 
 # Hash password
 $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 # Connect to database
-$mysqli = require_once('../db/database.php');
+$mysqli = require_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/db/database.php';
+
+# Check if email already exists in database
+$sql = sprintf("SELECT * FROM user WHERE email = '%s'", $mysqli->real_escape_string($_POST['email']));
+$result = $mysqli->query($sql);
+$user = $result->fetch_assoc();
+if ($user) {
+    die("Email already exists");
+}
 
 # Insert user into database
 $sql = "INSERT INTO user (name, email, password_hash, country, date_of_birth) VALUES (?, ?, ?, ?, ?)";
@@ -52,4 +61,4 @@ $stmt->close();
 $mysqli->close();
 
 # Redirect to login page
-header("Location: ../views/login.php");
+header("Location: /obesity-visualizer/app/controllers/login.php");

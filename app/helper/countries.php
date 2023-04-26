@@ -133,7 +133,7 @@ return array(
     "LT" => "Lithuania",
     "LU" => "Luxembourg",
     "MO" => "Macao",
-    "MK" => "Macedonia, the Former Yugoslav Republic of",
+    "MK" => "Macedonia",
     "MG" => "Madagascar",
     "MW" => "Malawi",
     "MY" => "Malaysia",

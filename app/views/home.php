@@ -1,20 +1,3 @@
-<?php
-
-session_start();
-
-if (isset($_SESSION['user_id'])) {
-
-    $mysqli = require_once('../db/database.php');
-
-    $sql = sprintf("SELECT * FROM user WHERE id = '%s'", $mysqli->real_escape_string($_SESSION['user_id']));
-
-    $result = $mysqli->query($sql);
-
-    $user = $result->fetch_assoc();
-}
-
-?>
-
 <!DOCTYPE html>
 <html>
 
@@ -28,7 +11,7 @@ if (isset($_SESSION['user_id'])) {
 </head>
 
 
-<?php include('./includes/header.php'); ?>
+<?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/header.php"; ?>
 
 <body>
     <h1>Home</h1>
@@ -36,10 +19,10 @@ if (isset($_SESSION['user_id'])) {
     <?php if (isset($user)) : ?>
     <p style="text-align: center;">Welcome, <?php echo $user['name']; ?>!</p>
     <?php else : ?>
-    <p><a href="login.php">Login</a> or <a href="register.php">Register</a></p>
+    <p style="text-align: center;"><a href="login.php">Login</a> or <a href="register.php">Register</a></p>
 
     <?php endif; ?>
 </body>
-<?php include('./includes/footer.php'); ?>
+<?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/footer.php"; ?>
 
 </html>
