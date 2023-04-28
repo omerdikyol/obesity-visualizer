@@ -22,18 +22,31 @@ function Map() {
 
 function Pie() {
     document.querySelector('.chart-holder').innerHTML = "";
-    // Add image to object
-    var pie = document.createElement('img');
-    pie.src = "/obesity-visualizer/public/images/pie.jpg";
-    pie.alt = "pie chart";
+
+    // Add pie chart from pie.php
+    var pie = document.createElement('iframe');
+    pie.src = "/obesity-visualizer/app/controllers/pie.php";
+
+    // Align to center
+    pie.style.margin = "auto";
+    pie.style.display = "block";
+    pie.style.align = "center";
+
     document.querySelector('.chart-holder').appendChild(pie);
 }
 
 function Line() {
     document.querySelector('.chart-holder').innerHTML = "";
-    var line = document.createElement('img');
-    line.src = "/obesity-visualizer/public/images/line.jpg";
-    line.alt = "line chart";
+
+    // Add line chart from line.php
+    var line = document.createElement('iframe');
+    line.src = "/obesity-visualizer/app/controllers/line.php";
+
+    // Align to center
+    line.style.margin = "auto";
+    line.style.display = "block";
+    line.style.align = "center";
+
     document.querySelector('.chart-holder').appendChild(line);
 }
 
