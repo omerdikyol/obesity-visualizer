@@ -28,7 +28,6 @@ if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_POS
     die("Invalid date format");
 }
 
-
 # Hash password
 $password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
