@@ -12,7 +12,7 @@
 <body>
     <h1>Registration Form</h1>
     <div class="container">
-        <form action="/obesity-visualizer/app/controllers/registerValidation.php" method="post">
+        <form action="/obesity-visualizer/app/models/register.php" method="post">
             <label for="Name">Name</label>
             <input type="text" id="username" name="username" placeholder="Enter your name (required)" required>
 

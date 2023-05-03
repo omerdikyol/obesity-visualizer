@@ -12,6 +12,7 @@ function getCountryCodes()
             array_push($codes, $row['geo']);
         }
     }
+
     return $codes;
 }
 
