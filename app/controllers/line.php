@@ -38,6 +38,164 @@ function createLine() {
     var response = [];
     var svg = d3.select("#line").select("svg");
 
+    // Insert data function to call asynchronously after data is retrieved
+    function insertData(data) {
+        // Change from country codes to country names using countriesDict
+        for (var i = 0; i < data.length; i++) {
+            data[i].geo = countriesDict[data[i].geo];
+        }
+
+        // Remove null and undefined values
+        data = data.filter(function(d) {
+            return d["geo"] != null || d["geo"] != undefined;
+        });
+
+        // Group the data by country
+        var groupedData = d3.group(data, d => d.geo);
+
+        // Get all values
+        var allValues = [];
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].value != null && data[i].value != 0)
+                allValues.push(parseFloat(data[i].value));
+        }
+
+        // Add the SVG element
+        var svg = d3.select("#line")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        // Add title to the graph
+        svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 0 - (margin.top / 2) + 10)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "underline")
+            .text("Obesity Prevalence in " + bmi + " BMI");
+
+        // Add x-axis label
+        svg.append("text")
+            .attr("x", width / 2)
+            .attr("y", height + margin.bottom - 10)
+            .style("text-anchor", "middle")
+            .text("Year");
+
+        // Add y-axis label
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left + 10)
+            .attr("x", 0 - (height / 2))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("% of Population");
+
+        // Add year to x-axis
+        var xAxis = d3.scaleLinear()
+            .domain(["2008", "2019"])
+            .range([0, width]);
+
+        var x = svg.append("g")
+            .attr("transform", "translate(0," + height + ")") // put height instead of 500
+            .attr("class", "x axis")
+            .call(d3.axisBottom(xAxis));
+
+        // Add values to y-axis
+        var yAxis = d3.scaleLinear()
+            .domain([d3.min(allValues) - 5, d3.max(allValues) + 5])
+            .range([height, 0]);
+
+        var y = svg.append("g")
+            .attr("class", "y axis")
+            .call(d3.axisLeft(yAxis));
+
+        var color = d3.scaleOrdinal()
+            .domain(countries)
+            .range(colors);
+
+        // Add line for each country
+        var line = d3.line()
+            .x(function(d) {
+                return xAxis(d.year)
+            })
+            .y(function(d) {
+                return yAxis(d.value)
+            })
+        svg.selectAll("myLines")
+            .data(groupedData)
+            .enter()
+            .append("path")
+            .attr("d", function(d) {
+                return line(d[1])
+            })
+            .attr("stroke", function(d) {
+                return color(d[0])
+            })
+            .style("stroke-width", 4)
+            .style("fill", "none")
+            .on("mouseover", handleMouseOver)
+            .on("mouseout", handleMouseOut)
+            .on("click", handleClick);
+
+        // Add dots for each country
+        svg.selectAll("myDots")
+            .data(groupedData)
+            .enter()
+            .append('g')
+            .style("fill", function(d) {
+                return color(d[0])
+            })
+            .selectAll("myPoints")
+            .data(function(d) {
+                return d[1]
+            })
+            .enter()
+            .append("circle")
+            .attr("cx", function(d) {
+                return xAxis(d.year)
+            })
+            .attr("cy", function(d) {
+                return yAxis(d.value)
+            })
+            .attr("r", 5)
+            .attr("stroke", "white")
+
+        // Add country name to the left of the line
+        svg.selectAll("myLabels")
+            .data(groupedData)
+            .enter()
+            .append('g')
+            .append("text")
+            .attr("x", function(d) {
+                return xAxis(d[1][0].year) - 10
+            })
+            .attr("y", function(d) {
+                return yAxis(d[1][0].value)
+            })
+            .text(function(d) {
+                return d[0]
+            })
+            .style("fill", function(d) {
+                return color(d[0])
+            })
+            .style("font-size", 15)
+            .style("font-weight", "bold")
+            .attr("text-anchor", "end")
+            .on("click", handleClick)
+            .on("mouseover", handleMouseOver)
+            .on("mouseout", handleMouseOut);
+
+        // Add zoom functionality
+        var chart = document.querySelector("#line svg");
+        var zoom = d3.select(chart).call(d3.zoom().on("zoom", function() {
+            svg.attr("transform", d3.zoomTransform(this))
+        }));
+    }
+
     // Set the dimensions and margins of the graph
     const width = 700;
     const height = 700;
@@ -84,173 +242,20 @@ function createLine() {
         type: "GET",
         data: {
             bmi: bmi
-        },
-        async: false,
-        success: function(data) {
-            response = JSON.parse(data);
-        },
-        error: function() {
-            console.log("Error retrieving BMI data for " + request[i].country);
         }
+    }).done(function(data) {
+        response = JSON.parse(data);
+        // call insertData function with response
+        insertData(response);
+    }).fail(function() {
+        console.log("Error retrieving BMI data for " + request[i].country);
+    }).always(function() {
+        console.log("Finished");
     });
 
-    // Change from country codes to country names using countriesDict
-    for (var i = 0; i < response.length; i++) {
-        response[i].geo = countriesDict[response[i].geo];
-    }
-
-    // Remove null and undefined values
-    response = response.filter(function(d) {
-        return d["geo"] != null || d["geo"] != undefined;
-    });
-
-    // Group the data by country
-    var groupedData = d3.group(response, d => d.geo);
-
-    // Get all values
-    var allValues = [];
-    for (var i = 0; i < response.length; i++) {
-        if (response[i].value != null && response[i].value != 0)
-            allValues.push(parseFloat(response[i].value));
-    }
-
-    //! Working on Chart
-
-    // Add the SVG element
-    var svg = d3.select("#line")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
-
-    // Add title to the graph
-    svg.append("text")
-        .attr("x", (width / 2))
-        .attr("y", 0 - (margin.top / 2) + 10)
-        .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .style("text-decoration", "underline")
-        .text("Obesity Prevalence in " + bmi + " BMI");
-
-    // Add x-axis label
-    svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", height + margin.bottom - 10)
-        .style("text-anchor", "middle")
-        .text("Year");
-
-    // Add y-axis label
-    svg.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left + 10)
-        .attr("x", 0 - (height / 2))
-        .attr("dy", "1em")
-        .style("text-anchor", "middle")
-        .text("% of Population");
-
-    // Add year to x-axis
-    var xAxis = d3.scaleLinear()
-        .domain(["2008", "2019"])
-        .range([0, width]);
-
-    var x = svg.append("g")
-        .attr("transform", "translate(0," + height + ")") // put height instead of 500
-        .attr("class", "x axis")
-        .call(d3.axisBottom(xAxis));
-
-    // Add values to y-axis
-    var yAxis = d3.scaleLinear()
-        .domain([d3.min(allValues) - 5, d3.max(allValues) + 5])
-        .range([height, 0]);
-
-    var y = svg.append("g")
-        .attr("class", "y axis")
-        .call(d3.axisLeft(yAxis));
-
-    var color = d3.scaleOrdinal()
-        .domain(countries)
-        .range(colors);
-
-    // Add line for each country
-    var line = d3.line()
-        .x(function(d) {
-            return xAxis(d.year)
-        })
-        .y(function(d) {
-            return yAxis(d.value)
-        })
-    svg.selectAll("myLines")
-        .data(groupedData)
-        .enter()
-        .append("path")
-        .attr("d", function(d) {
-            return line(d[1])
-        })
-        .attr("stroke", function(d) {
-            return color(d[0])
-        })
-        .style("stroke-width", 4)
-        .style("fill", "none")
-        .on("mouseover", handleMouseOver)
-        .on("mouseout", handleMouseOut)
-        .on("click", handleClick);
-
-    // Add dots for each country
-    svg.selectAll("myDots")
-        .data(groupedData)
-        .enter()
-        .append('g')
-        .style("fill", function(d) {
-            return color(d[0])
-        })
-        .selectAll("myPoints")
-        .data(function(d) {
-            return d[1]
-        })
-        .enter()
-        .append("circle")
-        .attr("cx", function(d) {
-            return xAxis(d.year)
-        })
-        .attr("cy", function(d) {
-            return yAxis(d.value)
-        })
-        .attr("r", 5)
-        .attr("stroke", "white")
-
-    // Add country name to the left of the line
-    svg.selectAll("myLabels")
-        .data(groupedData)
-        .enter()
-        .append('g')
-        .append("text")
-        .attr("x", function(d) {
-            return xAxis(d[1][0].year) - 10
-        })
-        .attr("y", function(d) {
-            return yAxis(d[1][0].value)
-        })
-        .text(function(d) {
-            return d[0]
-        })
-        .style("fill", function(d) {
-            return color(d[0])
-        })
-        .style("font-size", 15)
-        .style("font-weight", "bold")
-        .attr("text-anchor", "end")
-        .on("click", handleClick)
-        .on("mouseover", handleMouseOver)
-        .on("mouseout", handleMouseOut);
-
-    // Add zoom functionality
-    var chart = document.querySelector("#line svg");
-    var zoom = d3.select(chart).call(d3.zoom().on("zoom", function() {
-        svg.attr("transform", d3.zoomTransform(this))
-    }));
 }
+
+
 
 function handleMouseOver(d) {
     // Get country name
@@ -368,7 +373,6 @@ function reset() {
     var svg = d3.select("#line").select("svg");
 
     updateLine();
-
 }
 
 createLine();

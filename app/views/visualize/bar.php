@@ -26,24 +26,11 @@
             <option value="Obese">Obese</option>
         </select>
 
-        <!-- Add label for country count -->
-        <label for="country_count">Country Count:</label>
-        <!-- Add dropdown menu for country count -->
-        <select name="country_count" id="country_count" style="width: auto;">
-            <option value="1">1</option>
-            <option value="3">3</option>
-            <option value="5" selected="selected">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-
-        </select>
-
         <!-- Add div to show selected countries information -->
         <p id="country-info"></p>
 
         <div style="position: relative;">
-            <!-- Add pie chart -->
+            <!-- Add bar chart -->
             <div id="chart"></div>
 
             <!-- Add div to show list of countries -->

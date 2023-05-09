@@ -24,8 +24,10 @@ if (isset($_GET['year']) && isset($_GET['bmi'])) {
     $result = $mysqli->query($sql);
     $data = array();
     while ($row = $result->fetch_assoc()) {
-        $data["country"] = $row['geo'];
-        $data["value"] = $row['value'];
+        $temp = array();
+        $temp["country"] = $row['geo'];
+        $temp["value"] = $row['value'];
+        $data[] = $temp;
     }
     echo json_encode($data);
 } else {
