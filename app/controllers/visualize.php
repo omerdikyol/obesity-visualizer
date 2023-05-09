@@ -52,9 +52,16 @@ function Line() {
 
 function Bar() {
     document.querySelector('.chart-holder').innerHTML = "";
-    var bar = document.createElement('img');
-    bar.src = "/obesity-visualizer/public/images/bar.jpg"
-    bar.alt = "bar chart";
+
+    // Add bar chart from bar.php
+    var bar = document.createElement('iframe');
+    bar.src = "/obesity-visualizer/app/controllers/bar.php";
+
+    // Align to center
+    bar.style.margin = "auto";
+    bar.style.display = "block";
+    bar.style.align = "center";
+
     document.querySelector('.chart-holder').appendChild(bar);
 }
 

@@ -51,7 +51,7 @@
                 <?php
                 // Add countries to list
                 foreach ($countries as $country) {
-                    echo "<li id='$country' class='country-list-item' onclick='countryClicked(this.id)'>$country</li>";
+                    echo "<li id='$country' class='country-list-item' onclick='listClicked(this.id)' onmouseover='listHover(this.id)' onmouseout='listOut()'>$country</li>";
                 }
                 ?>
             </ul>

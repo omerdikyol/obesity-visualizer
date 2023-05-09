@@ -185,70 +185,100 @@ function updateChart() {
         }
     }
 
-    // Build the request array
-    for (var i = 0; i < countries.length; i++) {
-        request.push({
-            country: countries[i],
-            year: year,
-            bmi: bmi
-        });
+    request = {
+        year: year,
+        bmi: bmi
     }
 
     // Make AJAX call to get the BMI data for each country and build the final data array
-    for (var i = 0; i < request.length; i++) {
-        $.ajax({
-            url: "/obesity-visualizer/app/models/country.php",
-            type: "GET",
-            data: request[i],
-            async: false,
-            success: function(data) {
-                data = JSON.parse(data);
-                if (data[0] == null) {
-                    return;
-                }
-                finalData.push({
-                    country: countriesDict[data[0].geo],
-                    value: parseFloat(data[0].value)
-                });
-            },
-            error: function() {
-                console.log("Error retrieving BMI data for " + request[i].country);
-            }
-        });
-    }
-
-    // Sort the data by BMI value
-    finalData.sort(function(a, b) {
-        return b.value - a.value;
-    });
-
-    // Create others category if there are more than "count" countries
-    if (count < finalData.length) {
-        console.log("count: " + count);
-        // put rest to Others
-        var others = {
-            country: "Others",
-            value: 0
-        };
-
-        for (var i = count; i < finalData.length; i++) {
-            others.value += finalData[i].value;
+    $.ajax({
+        url: "/obesity-visualizer/app/models/pie.php",
+        type: "GET",
+        data: request,
+    }).done(function(data) {
+        data = JSON.parse(data);
+        console.log(data);
+        if (data[0] == null) {
+            return;
         }
 
-        // Get the top N countries
-        finalData = finalData.slice(0, count);
+        for (var i = 0; i < data.length; i++) {
+            finalData.push({
+                country: countriesDict[data[i].country],
+                value: parseFloat(data[i].value)
+            });
+        }
 
-        // Add the "Others" category
-        finalData.push(others);
+        // Sort the data by BMI value
+        finalData.sort(function(a, b) {
+            return b.value - a.value;
+        });
+        console.log(finalData);
 
-    }
+        // Create others category if there are more than "count" countries
+        if (count < finalData.length) {
+            console.log("count: " + count);
+            // put rest to Others
+            var others = {
+                country: "Others",
+                value: 0
+            };
 
-    // Remove the old chart
-    d3.select("#chart").select("svg").remove();
+            for (var i = count; i < finalData.length; i++) {
+                others.value += finalData[i].value;
+            }
 
-    console.log(finalData);
-    // Create the new chart
-    createChart(finalData);
+            // Get the top N countries
+            finalData = finalData.slice(0, count);
+
+            // Add the "Others" category
+            finalData.push(others);
+        }
+
+        // Remove the old chart
+        d3.select("#chart").select("svg").remove();
+
+        // Create the new chart
+        createChart(finalData);
+
+    }).fail(function(jqXHR, textStatus) {
+        console.log("Request failed: " + textStatus);
+    });
+
+    // Reset the info box
+    resetInfoBox();
+}
+
+function listClicked(itemName) {
+    var svg = d3.select("#chart").select("svg");
+    // call click event of line that has country name
+    svg.selectAll(".arc")
+        .filter(function(d) {
+            return d["data"].country == itemName;
+        })
+        .dispatch("click");
+}
+
+function listHover(itemName) {
+    var svg = d3.select("#chart").select("svg");
+    // call mouseover event of line that has country name
+    svg.selectAll(".arc")
+        .filter(function(d) {
+            return d["data"].country == itemName;
+        })
+        .dispatch("mouseover");
+}
+
+function listOut() {
+    var svg = d3.select("#chart").select("svg");
+    // call mouseout event of all lines
+    svg.selectAll(".arc")
+        .dispatch("mouseout");
+}
+
+function resetInfoBox() {
+    var infoBox = document.getElementById("info-box");
+    infoBox.style.display = "none";
 }
 
 updateChart();

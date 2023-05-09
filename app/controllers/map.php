@@ -129,7 +129,7 @@ function colorMap() {
                     // Get color
                     for (var key in color_array) {
                         var range = key.split(" - ");
-                        if (value >= range[0] && value < range[1]) {
+                        if (value >= parseFloat(range[0]) && value < parseFloat(range[1])) {
                             color = color_array[key];
                             break;
                         }
