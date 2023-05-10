@@ -9,6 +9,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/cha
 ?>
 
 <script type='text/javascript' src='/obesity-visualizer/public/js/tinycolor.js'></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type='text/javascript'>
 // Add Map and legend to chart div
@@ -215,64 +216,68 @@ function colorMap() {
     var paths = svgDoc.querySelectorAll('path');
 
     var request = [];
+    var year = document.getElementById("year").value;
+    var bmi = document.getElementById("bmi").value;
+    var countriesDict = <?php echo json_encode($countries); ?>;
+    var color = "";
 
-    for (var i = 0; i < paths.length; i++) {
-        (function(i) {
-            // Connect to database and get value of that country
-            var country = paths[i].id;
-            var year = document.getElementById("year").value;
-            var bmi = document.getElementById("bmi").value;
+    // Make AJAX call to get the BMI data for each country and build the final data array
+    $.ajax({
+        url: "/obesity-visualizer/app/models/pie.php",
+        type: "GET",
+        data: {
+            year: year,
+            bmi: bmi
+        },
+    }).done(function(data) {
+        data = JSON.parse(data);
+        if (data[0] == null) {
+            return;
+        }
 
-            // Send request to country.php model
-            request[i] = new XMLHttpRequest();
-            var url = "/obesity-visualizer/app/models/country.php?country=" + country + "&year=" + year +
-                "&bmi=" + bmi;
-            request[i].open("GET", url, true);
+        // Float the values
+        for (var i = 0; i < data.length; i++) {
+            data[i].value = parseFloat(data[i].value);
+        }
 
-            request[i].onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    // Parse the data
-                    var data = JSON.parse(this.responseText);
-                    var value = -1;
-                    var color = "";
-                    if (data.length > 0 && data[0].value != 0) {
-                        value = data[0].value;
-                    }
-                    // if data is empty return (no data for that country, year and bmi)
-                    else {
-                        paths[i].setAttribute("fill", "white");
-                        paths[i].setAttribute("fill", "ADD8E6");
-                        return;
-                    }
-
-                    // Select required array
-                    var color_array;
-                    if (bmi == "Pre-obese") {
-                        color_array = bmi25_29;
-                    } else if (bmi == "Overweight") {
-                        color_array = bmi_ge25;
-                    } else if (bmi == "Obese") {
-                        color_array = bmi_ge30;
-                    }
-
-                    // Get color
-                    for (var key in color_array) {
-                        var range = key.split(" - ");
-                        if (value >= parseFloat(range[0]) && value < parseFloat(range[1])) {
-                            color = color_array[key];
-                            break;
-                        }
-                    }
-
-                    // Color the map
-                    paths[i].setAttribute("fill", "white"); // Clear previous color
-                    paths[i].setAttribute("fill", color);
+        for (var i = 0; i < paths.length; i++) {
+            var id = paths[i].id;
+            // Check if we have that countries data
+            if (data.find(x => x.country == id) == null) { // Country data does not exist in db
+                paths[i].setAttribute("fill", "white");
+                paths[i].setAttribute("fill", "ADD8E6");
+                continue;
+            } else { // Data found in db
+                // Get value of that country id
+                var value = data.find(x => x.country == id).value;
+                // Select required array
+                var color_array;
+                if (bmi == "Pre-obese") {
+                    color_array = bmi25_29;
+                } else if (bmi == "Overweight") {
+                    color_array = bmi_ge25;
+                } else if (bmi == "Obese") {
+                    color_array = bmi_ge30;
                 }
-            };
 
-            request[i].send();
-        })(i);
-    }
+                // Get color
+                for (var key in color_array) {
+                    var range = key.split(" - ");
+                    if (value >= parseFloat(range[0]) && value < parseFloat(range[1])) {
+                        color = color_array[key];
+                        break;
+                    }
+                }
+
+                // Color the map
+                paths[i].setAttribute("fill", "white"); // Clear previous color
+                paths[i].setAttribute("fill", color);
+            }
+        }
+
+    }).fail(function(jqXHR, textStatus) {
+        console.log("Request failed: " + textStatus);
+    });
 }
 
 // Event Listener for initial load
@@ -282,96 +287,100 @@ svgObject.addEventListener("load", function() {
     showLegend();
     document.getElementById("info-box").style.display = "none";
 
+    var year = document.getElementById("year").value;
+    var bmi = document.getElementById("bmi").value;
+
     var svgDoc = svgObject.contentDocument;
     // Get all paths in the SVG
     var paths = svgDoc.querySelectorAll('path');
 
-    for (var i = 0; i < paths.length; i++) {
+    $.ajax({
+        url: "/obesity-visualizer/app/models/pie.php",
+        type: "GET",
+        data: {
+            year: year,
+            bmi: bmi
+        },
+    }).done(function(data) {
+        data = JSON.parse(data);
+        if (data[0] == null) {
+            return;
+        }
 
-        // Add border to all countries
-        paths[i].setAttribute("stroke", "black");
-        paths[i].setAttribute("stroke-width", "0.6px");
-        paths[i].setAttribute("stroke-linejoin", "round");
+        // Float the values
+        for (var i = 0; i < data.length; i++) {
+            data[i].value = parseFloat(data[i].value);
+        }
 
-        // Add event listener to each path
-        paths[i].addEventListener("click", function() {
-            // Get data
-            var country = this.id;
-            var year = document.getElementById("year").value;
-            var bmi = document.getElementById("bmi").value;
-            var countryName = this.getAttribute("name");
+        // Set Borders and Add event listeners to each path
+        for (var i = 0; i < paths.length; i++) {
+            // Add border
+            paths[i].setAttribute("stroke", "black");
+            paths[i].setAttribute("stroke-width", "0.6px");
+            paths[i].setAttribute("stroke-linejoin", "round");
 
-            // Send request to country.php
-            var request = new XMLHttpRequest();
-            var url = "/obesity-visualizer/app/models/country.php?country=" + country + "&year=" +
-                year +
-                "&bmi=" + bmi;
-            request.open("GET", url, true);
-            request.send();
+            // Add event listener to each path
+            paths[i].addEventListener("click", function() {
+                // Show info box
+                var infoBox = document.getElementById("info-box");
+                infoBox.style.display = "block";
 
-            // Get response
-            request.onreadystatechange = function() {
-                if (request.readyState == 4 && request.status == 200) {
-                    try {
-                        var data = JSON.parse(request.responseText);
+                var year = document.getElementById("year").value;
+                var bmi = document.getElementById("bmi").value;
+                var countryName = this.getAttribute("name");
+                var countryId = this.getAttribute("id");
 
-                        // Show info box
-                        var infoBox = document.getElementById("info-box");
-                        var year = document.getElementById("year").value;
-                        var bmi = document.getElementById("bmi").value;
-                        infoBox.style.display = "block";
+                infoBox.getElementsByTagName("p")[0].innerHTML =
+                    "<strong>Country:</strong> " + countryName;
+                infoBox.getElementsByTagName("p")[1].innerHTML =
+                    "<strong>Year:</strong> " + year;
+                infoBox.getElementsByTagName("p")[2].innerHTML =
+                    "<strong>BMI:</strong> " + bmi;
 
-                        infoBox.getElementsByTagName("p")[0].innerHTML =
-                            "<strong>Country:</strong> " + countryName;
-                        infoBox.getElementsByTagName("p")[1].innerHTML =
-                            "<strong>Year:</strong> " + year;
-                        infoBox.getElementsByTagName("p")[2].innerHTML =
-                            "<strong>BMI:</strong> " + bmi;
-
-                        // if data is not empty, get value
-                        if (data.length > 0 && data[0].value != 0) {
-                            var value = data[0].value;
-                            infoBox.getElementsByTagName("p")[3].innerHTML =
-                                "<strong>Percentage:</strong> " + value;
-
-                        } else {
-                            infoBox.getElementsByTagName("p")[3].innerHTML =
-                                "<strong>No data provided.</strong>";
-                        }
-                    } catch (e) {
-                        console.log(e);
-                    }
+                // Check if we have that countries data
+                if (data.find(x => x.country == countryId) ==
+                    null) {
+                    infoBox.getElementsByTagName("p")[3].innerHTML =
+                        "<strong>No data provided.</strong>";
+                } else { // Data found in db
+                    var value = data.find(x => x.country == countryId).value;
+                    infoBox.getElementsByTagName("p")[3].innerHTML =
+                        "<strong>Percentage:</strong> " + value;
                 }
-            }
-        });
+            });
 
-        paths[i].addEventListener("mouseover", function() {
-            // If country is already colored, make it a little bit darker
-            if (this.getAttribute("fill")[0] == "#") {
-                // Get old color and make it a little bit darker using tinycolor.js
-                var oldColor = tinycolor(this.getAttribute("fill"));
-                var newColor = oldColor.darken(30).toString();
-                this.style.fill = newColor;
-            }
+            paths[i].addEventListener("mouseover", function() {
+                // If country is already colored, make it a little bit darker
+                if (this.getAttribute("fill")[0] == "#") {
+                    // Get old color and make it a little bit darker using tinycolor.js
+                    var oldColor = tinycolor(this.getAttribute("fill"));
+                    var newColor = oldColor.darken(30).toString();
+                    this.style.fill = newColor;
+                }
 
 
-            // Move country name to the center of the country
-            var bbox = this.getBBox();
-            var x = bbox.x + bbox.width / 2;
-            var y = bbox.y + 20;
-            countryName.style.transform = "translate(" + x + "px, " + y +
-                "px)";
-            countryName.textContent = this.getAttribute("name");
-            countryName.style
-                .display = "block";
-        });
+                // Move country name to the center of the country
+                var bbox = this.getBBox();
+                var x = bbox.x + bbox.width / 2;
+                var y = bbox.y + 20;
+                countryName.style.transform = "translate(" + x + "px, " + y +
+                    "px)";
+                countryName.textContent = this.getAttribute("name");
+                countryName.style
+                    .display = "block";
+            });
 
-        paths[i].addEventListener("mouseout", function() {
-            // Restore old color and hide country name
-            this.style.fill = this.getAttribute("data-old-fill");
-            countryName.style.display = "none";
-        });
-    }
+
+            paths[i].addEventListener("mouseout", function() {
+                // Restore old color and hide country name
+                this.style.fill = this.getAttribute("data-old-fill");
+                countryName.style.display = "none";
+            });
+        }
+
+    }).fail(function(jqXHR, textStatus) {
+        console.log("Request failed: " + textStatus);
+    });
 });
 
 // Function for clicking list elements
