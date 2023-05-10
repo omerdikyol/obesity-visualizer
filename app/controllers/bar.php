@@ -5,7 +5,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/models/countries.ph
 // Get country names
 $countries = getCountryNames();
 
-include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/bar.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/charts.php';
 ?>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -14,6 +14,10 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/bar
 <script>
 var year = document.getElementById("year");
 var bmi = document.getElementById("bmi");
+
+// Hide unnecessary elements
+document.getElementById("countryCount").style.display = "none";
+document.getElementById("resetButton").style.display = "none";
 
 // Add event listeners to dropdown menus
 year.addEventListener("change", updateBar);

@@ -19,7 +19,8 @@
     <a><button class="button2" id="exportBtn" style="float: right;">Export</button></a>
     <a><button class="button2" id="filterBtn" style="float: right;">Filter</button></a>
 
-    <div class="chart-holder"></div>
+    <div class="chart-holder">
+    </div>
 </body>
 
 <?php include($_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/footer.php"); ?>
