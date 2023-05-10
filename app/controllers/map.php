@@ -5,12 +5,141 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/models/countries.ph
 // Get country names
 $countries = getCountryNames();
 
-include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/map.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/charts.php';
 ?>
 
 <script type='text/javascript' src='/obesity-visualizer/public/js/tinycolor.js'></script>
 
 <script type='text/javascript'>
+// Add Map and legend to chart div
+document.getElementById("chart").innerHTML = `<div style="position: relative;">
+            <!-- Add svg map -->
+            <object id="europe-map" type="image/svg+xml" data="/obesity-visualizer/public/images/europe.svg"></object>
+            <!-- Add div to show country name -->
+            <div id="country-name"></div>
+        </div>
+
+        <!-- Add legends for map -->
+        <div class="legend" id="legend-bmi25-29">
+            <h4>BMI 25-29 (Pre-obese) Legend</h4>
+            <div class=" legend-item">
+                <div class="color-box" style="background-color: #ADD8E6;"></div>
+                <span>30.0 - 32.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #87CEFA;"></div>
+                <span>32.0 - 34.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #00FF00;"></div>
+                <span>34.0 - 36.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #FFFF00;"></div>
+                <span>36.0 - 38.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #FFA500;"></div>
+                <span>38.0 - 40.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #FF4500;"></div>
+                <span>40.0 - 42.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #8B0000;"></div>
+                <span>42.0 - 54.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: lightgray;"></div>
+                <span>No data provided.</span>
+            </div>
+        </div>
+
+        <div class="legend" id="legend-bmi-ge25">
+            <h4>BMI_GE25 (Overweight) Legend</h4>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #ADD8E6;"></div>
+                <span>43.6 - 47.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #6699CC;"></div>
+                <span>47.0 - 50.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #8BC34A;"></div>
+                <span>50.0 - 53.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #FFEB3B;"></div>
+                <span>53.0 - 56.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #FF9800;"></div>
+                <span>56.0 - 59.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #FF5722;"></div>
+                <span>59.0 - 63.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #B71C1C;"></div>
+                <span>63.0 - 65.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: lightgray;"></div>
+                <span>No data provided.</span>
+            </div>
+        </div>
+
+        <div class="legend" id="legend-bmi-ge30">
+            <h4>BMI_GE30 (Obese) Legend</h4>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #ADD8E6;"></div>
+                <span>7.9 - 10.9</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #0000FF;"></div>
+                <span>10.9 - 12.8</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #00008B;"></div>
+                <span>12.8 - 14.1</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #90EE90;"></div>
+                <span>14.1 - 15.7</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #008000;"></div>
+                <span>15.7 - 16.9</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #006400;"></div>
+                <span>16.9 - 18.7</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #FFA500;"></div>
+                <span>18.7 - 20.1</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #FF0000;"></div>
+                <span>20.1 - 23.0</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: #8B0000;"></div>
+                <span>23.0 - 28.7</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box" style="background-color: lightgray;"></div>
+                <span>No data provided.</span>
+            </div>
+        </div>`;
+
+// Hide unnecessary elements
+document.getElementById("countryCount").style.display = "none";
+document.getElementById("resetButton").style.display = "none";
+
 var svgObject = document.getElementById("europe-map");
 var countryName = document.getElementById("country-name");
 
@@ -266,6 +395,54 @@ function countryClicked(itemName) {
 
             break;
         }
+    }
+}
+
+function listClicked(itemName) {
+    var svgDoc = svgObject.contentDocument;
+    // Get all paths in the SVG
+    var paths = svgDoc.querySelectorAll('path');
+
+    for (var i = 0; i < paths.length; i++) {
+        if (paths[i].getAttribute("name") == itemName) {
+            // Trigger click event
+            paths[i].dispatchEvent(new MouseEvent("click"));
+
+            // Hover over the country
+            paths[i].dispatchEvent(new MouseEvent("mouseover"));
+            // Wait 0.3 second
+            setTimeout(function() {
+                // Unhover the country
+                paths[i].dispatchEvent(new MouseEvent("mouseout"));
+            }, 300);
+
+            break;
+        }
+    }
+}
+
+function listHover(itemName) {
+    var svgDoc = svgObject.contentDocument;
+    // Get all paths in the SVG
+    var paths = svgDoc.querySelectorAll('path');
+
+    for (var i = 0; i < paths.length; i++) {
+        if (paths[i].getAttribute("name") == itemName) {
+            // Hover over the country
+            paths[i].dispatchEvent(new MouseEvent("mouseover"));
+            break;
+        }
+    }
+}
+
+function listOut() {
+    var svgDoc = svgObject.contentDocument;
+    // Get all paths in the SVG
+    var paths = svgDoc.querySelectorAll('path');
+
+    for (var i = 0; i < paths.length; i++) {
+        // Unhover the country
+        paths[i].dispatchEvent(new MouseEvent("mouseout"));
     }
 }
 

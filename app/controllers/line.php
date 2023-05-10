@@ -7,7 +7,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/models/countries.ph
 // Get country names
 $countries = getCountryNames();
 
-include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/line.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/charts.php';
 ?>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -15,6 +15,10 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/lin
 
 <script>
 var bmi = document.getElementById("bmi");
+
+// Hide unnecessary elements
+document.getElementById("countryCount").style.display = "none";
+document.getElementById("year").style.display = "none";
 
 // Add event listeners to dropdown menus
 bmi.addEventListener("change", updateLine);
@@ -24,7 +28,7 @@ function updateLine() {
     document.getElementById("info-box").style.display = "none";
 
     // Remove existing line chart
-    d3.select("#line").select("svg").remove();
+    d3.select("#chart").select("svg").remove();
 
     // Create new line chart
     createLine();
@@ -36,7 +40,7 @@ function createLine() {
     var countries = [];
     var request = [];
     var response = [];
-    var svg = d3.select("#line").select("svg");
+    var svg = d3.select("#chart").select("svg");
 
     // Insert data function to call asynchronously after data is retrieved
     function insertData(data) {
@@ -61,7 +65,7 @@ function createLine() {
         }
 
         // Add the SVG element
-        var svg = d3.select("#line")
+        var svg = d3.select("#chart")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -190,7 +194,7 @@ function createLine() {
             .on("mouseout", handleMouseOut);
 
         // Add zoom functionality
-        var chart = document.querySelector("#line svg");
+        var chart = document.querySelector("#chart svg");
         var zoom = d3.select(chart).call(d3.zoom().on("zoom", function() {
             svg.attr("transform", d3.zoomTransform(this))
         }));
@@ -331,7 +335,7 @@ function handleClick(d) {
 }
 
 function listClicked(itemName) {
-    var svg = d3.select("#line").select("svg");
+    var svg = d3.select("#chart").select("svg");
     // call click event of line that has country name
     svg.selectAll("path")
         .filter(function(d) {
@@ -344,7 +348,7 @@ function listClicked(itemName) {
 }
 
 function listHover(itemName) {
-    var svg = d3.select("#line").select("svg");
+    var svg = d3.select("#chart").select("svg");
     // call mouseover event of line that has country name
     svg.selectAll("path")
         .filter(function(d) {
@@ -356,21 +360,21 @@ function listHover(itemName) {
 }
 
 function listOut() {
-    var svg = d3.select("#line").select("svg");
+    var svg = d3.select("#chart").select("svg");
     // call mouseout event of all lines
     svg.selectAll("path")
         .dispatch("mouseout");
 }
 
 function labelHover() {
-    var svg = d3.select("#line").select("svg");
+    var svg = d3.select("#chart").select("svg");
 
     // get country name
     console.log(d3.select(this).data());
 }
 
 function reset() {
-    var svg = d3.select("#line").select("svg");
+    var svg = d3.select("#chart").select("svg");
 
     updateLine();
 }
