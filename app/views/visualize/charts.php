@@ -50,7 +50,7 @@
 
             <!-- Add div to show list of countries -->
             <!-- Add header -->
-            <ul style=" position: absolute; top: 0; right: 0; overflow-y: auto; max-height: 100%;">
+            <ul style=" position: absolute; top: 0; right: 0; overflow-y: auto; max-height: 100%;" id="countryList">
                 <?php
                 // Add countries to list
                 foreach ($countries as $country) {
