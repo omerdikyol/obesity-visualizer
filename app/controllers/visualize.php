@@ -67,9 +67,16 @@ function Bar() {
 
 function Table() {
     document.querySelector('.chart-holder').innerHTML = "";
-    var table = document.createElement('img');
-    table.src = "/obesity-visualizer/public/images/table.jpg"
-    table.alt = "table";
+
+    // Add table from table.php
+    var table = document.createElement('iframe');
+    table.src = "/obesity-visualizer/app/controllers/table.php";
+
+    // Align to center
+    table.style.margin = "auto";
+    table.style.display = "block";
+    table.style.align = "center";
+
     document.querySelector('.chart-holder').appendChild(table);
 }
 </script>
