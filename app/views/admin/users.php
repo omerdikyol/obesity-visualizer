@@ -7,15 +7,17 @@
     <title>Admin</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' href='/obesity-visualizer/public/css/style.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
 
 <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/includes/sidenav.php'; ?>
 
 <body>
     <div class="main">
-
-        <a href="/obesity-visualizer/app/controllers/admin/user_create.php">
-            <button class="button1" id="usersBtn" style="float: right;">Add User</button>
+        <a href="/obesity-visualizer/app/controllers/admin/user_create.php" class="adminButton adminSmall adminCreate"
+            style="float: right; width: fit-content;">
+            <i class="fas fa-plus"></i>
+            <span>Add User</span>
         </a>
         <h1>Users</h1>
 
@@ -43,10 +45,16 @@
                 <td><?php echo $user['weight'] ?></td>
                 <td><?php echo $user['bmi'] ?></td>
                 <td>
-                    <a
-                        href="/obesity-visualizer/app/controllers/admin/user_edit.php?id=<?php echo $user['id'] ?>">Edit</a>
-                    <a
-                        href="/obesity-visualizer/app/controllers/admin/user_delete.php?id=<?php echo $user['id'] ?>">Delete</a>
+                    <a href="/obesity-visualizer/app/controllers/admin/user_edit.php?id=<?php echo $user['id'] ?>"
+                        class="adminButton adminSmall adminEdit">
+                        <i class="fas fa-edit"></i>
+                        <span>Edit</span>
+                    </a>
+                    <a href="/obesity-visualizer/app/controllers/admin/user_delete.php?id=<?php echo $user['id'] ?>"
+                        class="adminButton adminSmall adminDelete">
+                        <i class="fas fa-trash-alt"></i>
+                        <span>Delete</span>
+                    </a>
                 </td>
             </tr>
             <?php } ?>

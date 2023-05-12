@@ -51,6 +51,7 @@ footer {
     padding: 40px 0;
 }
 
+
 hr {
     border: none;
     height: 1px;
@@ -292,4 +293,101 @@ iframe {
 /* When moving the mouse over the close button */
 .alert_closebtn:hover {
     color: black;
+}
+
+/* Admin Dashboard and Buttons */
+.dashboardWrapper {
+    display: flex;
+    width: 100%;
+}
+
+.dashboard-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* make child elements stack vertically */
+    justify-content: center;
+    /* center vertically */
+    align-items: center;
+    /* center horizontally */
+}
+
+
+.adminButton-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    justify-content: center;
+    /* center horizontally */
+}
+
+.adminButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    height: 120px;
+    width: 200px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.adminButton:hover {
+    background-color: #3E8E41;
+}
+
+.user-list {
+    background-color: #2196F3;
+}
+
+.add-user {
+    background-color: #FF9800;
+}
+
+.country-data {
+    background-color: #9C27B0;
+}
+
+.add-country-data {
+    background-color: #607D8B;
+}
+
+.adminButton i {
+    margin-right: 10px;
+    font-size: 30px;
+
+}
+
+.adminSmall {
+    height: 40px;
+    width: 80px;
+    padding: 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.adminEdit {
+    background-color: #2ecc71;
+}
+
+.adminDelete {
+    background-color: #e67e22;
+}
+
+.adminDelete:hover {
+    background-color: #d35400;
+}
+
+.adminCreate {
+    background-color: #e74c3c;
+    color: #ffffff;
 }
