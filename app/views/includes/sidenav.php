@@ -73,8 +73,8 @@
         <a href="/obesity-visualizer/app/controllers/admin.php">Dashboard</a>
         <a href="/obesity-visualizer/app/controllers/admin/users.php">Users</a>
         <a href="/obesity-visualizer/app/controllers/admin/countries.php">Country Data</a>
+        <a href="/obesity-visualizer/app/controllers/admin/adminLogout.php">Log Out</a>
         <a href="/obesity-visualizer/app/controllers/home.php">Get Back to Website</a>
-        <<a href="/obesity-visualizer/app/controllers/admin/adminLogout.php">Log Out</a>
     </div>
 </body>
 

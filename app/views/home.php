@@ -79,13 +79,6 @@
         width: 100%;
         border-radius: 5px;
     }
-
-    footer {
-        background-color: #ccc;
-        color: #333;
-        padding: 20px;
-        text-align: center;
-    }
     </style>
 </head>
 
