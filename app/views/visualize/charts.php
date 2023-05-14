@@ -11,26 +11,33 @@
 
 <body>
     <section>
-        <!-- Add dropdown menu for selecting year and hold that value in a variable -->
-        <select name="year" id="year" style="width: auto;">
-            <option value="2008">2008</option>
-            <option value="2014">2014</option>
-            <option value="2017">2017</option>
-            <option value="2019">2019</option>
-        </select>
-        <!-- Add dropdown menu for selecting body mass index type -->
-        <select name="bmi" id="bmi" style="width: auto;">
-            <option value="Overweight">Overweight</option>
-            <option value="Pre-obese">Pre-obese</option>
-            <option value="Obese">Obese</option>
-        </select>
+        <div id="yearDiv">
+            <!-- Add dropdown menu for selecting year and hold that value in a variable -->
+            <label for="year" style="display: inline-block;">Year:</label>
+            <select name="year" id="year" style="width: auto;">
+                <option value="2008">2008</option>
+                <option value="2014">2014</option>
+                <option value="2017">2017</option>
+                <option value="2019">2019</option>
+            </select>
+        </div>
+
+        <div id="bmiDiv">
+            <label for="bmi" style="display: inline-block;">BMI:</label>
+            <!-- Add dropdown menu for selecting body mass index type -->
+            <select name="bmi" id="bmi" style="width: auto;">
+                <option value="Overweight">Overweight</option>
+                <option value="Pre-obese">Pre-obese</option>
+                <option value="Obese">Obese</option>
+            </select>
+        </div>
 
         <!-- Add reset button -->
         <button onclick="reset()" id="resetButton">Reset</button>
 
-        <div id="countryCount">
+        <div id="countryCountDiv">
             <!-- Add label for country count -->
-            <label for="country_count">Country Count:</label>
+            <label for="country_count" style="display: inline-block;">Country Count:</label>
             <!-- Add dropdown menu for country count -->
             <select name="country_count" id="country_count" style="width: auto;">
                 <option value="1">1</option>
@@ -45,8 +52,12 @@
         <!-- Add div to show selected countries information -->
         <p id="country-info"></p>
 
-        <div style="position: relative;">
-            <div id="chart"></div>
+        <div style="position: relative;" id="exportable">
+            <!-- Add Title with year and bmi type -->
+            <h1>Obesity rate by body mass index (BMI)</h1>
+            <h3 id="title" style="text-align: center;"></h3>
+
+            <div id="chart" style="text-align: center;"></div>
 
             <!-- Add div to show list of countries -->
             <!-- Add header -->

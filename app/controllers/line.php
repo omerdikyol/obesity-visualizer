@@ -17,13 +17,18 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/cha
 var bmi = document.getElementById("bmi");
 
 // Hide unnecessary elements
-document.getElementById("countryCount").style.display = "none";
-document.getElementById("year").style.display = "none";
+document.getElementById("countryCountDiv").style.display = "none";
+document.getElementById("yearDiv").style.display = "none";
 
 // Add event listeners to dropdown menus
 bmi.addEventListener("change", updateLine);
 
 function updateLine() {
+    var bmi = document.getElementById("bmi").value;
+
+    // Set title
+    document.getElementById("title").innerHTML = "BMI: " + bmi;
+
     // Remove info box
     document.getElementById("info-box").style.display = "none";
 
@@ -72,15 +77,6 @@ function createLine() {
             .append("g")
             .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
-
-        // Add title to the graph
-        svg.append("text")
-            .attr("x", (width / 2))
-            .attr("y", 0 - (margin.top / 2) + 10)
-            .attr("text-anchor", "middle")
-            .style("font-size", "16px")
-            .style("text-decoration", "underline")
-            .text("Obesity Prevalence in " + bmi + " BMI");
 
         // Add x-axis label
         svg.append("text")
@@ -379,5 +375,5 @@ function reset() {
     updateLine();
 }
 
-createLine();
+updateLine();
 </script>
