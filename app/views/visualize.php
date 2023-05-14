@@ -16,10 +16,10 @@
     <a><button class="button2" id="mapBtn" onclick="Map()">Map</button></a>
     <a><button class="button2" id="tableBtn" onclick="Table()">Table</button></a>
 
-    <a><button class="button2" id="exportBtn" style="float: right;">Export</button></a>
+    <a><button class="button2" id="exportBtn" onclick="generatePDF()" style="float: right;">Export</button></a>
     <a><button class="button2" id="filterBtn" style="float: right;">Filter</button></a>
 
-    <div class="chart-holder">
+    <div class="chart-holder" id="chart-holder">
     </div>
 </body>
 
