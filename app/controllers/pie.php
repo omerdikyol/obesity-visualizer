@@ -27,8 +27,8 @@ count.addEventListener("change", updateChart);
 
 // Define the dimensions of the SVG container
 // half of current window size
-var width = window.innerWidth / 2;
-var height = window.innerHeight / 2;
+var width = window.innerWidth * 2 / 3;
+var height = window.innerHeight * 2 / 3;
 var margin = 40;
 var radius = Math.min(width,
     height) / 2 - margin;
@@ -198,13 +198,14 @@ function updateChart() {
         }
     }
 
-    // first remove if there are more than 6 options (which means they are from previous update)
+    // Remove if there are more than 6 options (which means they are from previous update)
     var select = document.getElementById("country_count");
-    if (select.options.length > 6) {
-        for (var i = 6; i < select.options.length; i++) {
-            select.remove(i);
-        }
-    }
+    select.innerHTML = `<option value='1'>1</option>"
+        "<option value='3'>3</option>"
+        "<option value='5' selected='selected'>5</option>"
+        "<option value='10'>10</option>"
+        "<option value='15'>15</option>"
+        "<option value='20'>20</option>`;
 
     request = {
         year: year,
@@ -223,13 +224,13 @@ function updateChart() {
             return;
         }
 
+        // Put country name instead of country code to array
         for (var i = 0; i < data.length; i++) {
             finalData.push({
                 country: countriesDict[data[i].country],
                 value: parseFloat(data[i].value)
             });
         }
-
 
         // Sort the data by BMI value
         finalData.sort(function(a, b) {
