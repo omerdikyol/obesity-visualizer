@@ -60,7 +60,7 @@ return array(
     "CU" => "Cuba",
     "CW" => "Curacao",
     "CY" => "Cyprus",
-    "CZ" => "Czech Republic",
+    "CZ" => "Czechia",
     "DK" => "Denmark",
     "DJ" => "Djibouti",
     "DM" => "Dominica",

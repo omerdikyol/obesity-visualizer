@@ -26,8 +26,9 @@ bmi.addEventListener("change", updateChart);
 count.addEventListener("change", updateChart);
 
 // Define the dimensions of the SVG container
-var width = 450;
-var height = 450;
+// half of current window size
+var width = window.innerWidth / 2;
+var height = window.innerHeight / 2;
 var margin = 40;
 var radius = Math.min(width,
     height) / 2 - margin;
@@ -84,9 +85,15 @@ function createChart(data) {
     // Add the country name
     g.append("text")
         .attr("transform", function(d) {
-            return "translate(" + arc.centroid(d) + ")";
+            // put text to outside of the arc with same angle of arc
+            var c = arc.centroid(d);
+            var x = c[0];
+            var y = c[1];
+            var h = Math.sqrt(x * x + y * y);
+            return "translate(" + (x / h * radius * 1.1) + ',' +
+                (y / h * radius * 1.1) + ")";
+
         })
-        .attr("dy", ".35em")
         .text(function(d) {
             return d.data.country;
         })
@@ -191,6 +198,14 @@ function updateChart() {
         }
     }
 
+    // first remove if there are more than 6 options (which means they are from previous update)
+    var select = document.getElementById("country_count");
+    if (select.options.length > 6) {
+        for (var i = 6; i < select.options.length; i++) {
+            select.remove(i);
+        }
+    }
+
     request = {
         year: year,
         bmi: bmi
@@ -223,16 +238,9 @@ function updateChart() {
         console.log(finalData);
 
         // If there are more than 20 countries' add new options to select
-
         if (finalData.length > 20) {
-            var select = document.getElementById("country_count");
-            // first remove if there are more than 6 options (which means they are from previous update)
-            if (select.options.length > 6) {
-                for (var i = 6; i < select.options.length; i++) {
-                    select.remove(i);
-                }
-            }
             for (var i = 21; i <= finalData.length; i++) {
+                // add only multiples of 5 and finalData.length
                 if (i % 5 != 0 && i != finalData.length) continue;
                 var option = document.createElement("option");
                 option.text = i;

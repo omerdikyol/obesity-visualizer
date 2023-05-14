@@ -391,3 +391,13 @@ iframe {
     background-color: #e74c3c;
     color: #ffffff;
 }
+
+/* iframe transition */
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in.active {
+    opacity: 1;
+}

@@ -13,10 +13,13 @@ $root = $_SERVER['DOCUMENT_ROOT'];
 <body>
     <header>
         <h1 style="text-align: center;">Obesity Visualizer</h1>
+        <p>A powerful tool for monitoring and understanding obesity trends in Europe</p>
         <nav>
             <a href="/obesity-visualizer/app/controllers/home.php"><button class="buttonHeader">Home</button></a>
             <a href="/obesity-visualizer/app/controllers/visualize.php"><button
                     class="buttonHeader">Visualize</button></a>
+            <a href="/obesity-visualizer/app/controllers/bmi_calc.php"><button class="buttonHeader">Calculate
+                    BMI</button></a>
             <a href="/obesity-visualizer/app/controllers/personal.php"><button
                     class="buttonHeader">Personal</button></a>
 
