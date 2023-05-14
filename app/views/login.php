@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Obesity Visualizer</title>
-    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="/obesity-visualizer/public/css/style.css">
 </head>
 <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/header.php"; ?>
 
@@ -14,7 +14,9 @@
         <div class="container" id="login-container">
 
             <?php if ($is_invalid) : ?>
-            <em>Invalid Email or Password</em>
+            <div class="error-message">
+                <p>Invalid Email or Password</p>
+            </div>
             <?php endif; ?>
 
             <form method="post">

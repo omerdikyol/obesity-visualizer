@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Obesity Visualizer</title>
-    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="/obesity-visualizer/public/css/style.css">
 </head>
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/header.php"; ?>
@@ -12,6 +12,11 @@
 <body>
     <h1>Registration Form</h1>
     <div class="container">
+        <?php if ($error) : ?>
+        <div class="error-message">
+            <?php echo $error; ?>
+        </div>
+        <?php endif; ?>
         <form action="/obesity-visualizer/app/models/register.php" method="post">
             <label for="Name">Name</label>
             <input type="text" id="username" name="username" placeholder="Enter your name (required)" required>
