@@ -78,9 +78,11 @@
     <h1>BMI Calculator</h1>
     <form onsubmit="calculateBMI(event)">
         <label for="height">Height (cm):</label>
-        <input type="number" id="height" name="height" placeholder="Enter your height in centimeters" required>
+        <input type="number" id="height" name="height" step="0.1" min="0" max="250"
+            placeholder="Enter your height in centimeters" required>
         <label for="weight">Weight (kg):</label>
-        <input type="number" id="weight" name="weight" placeholder="Enter your weight in kilograms" required>
+        <input type="number" id="weight" name="weight" step="0.1" min="0" max="250"
+            placeholder="Enter your weight in kilograms" required>
         <input type="submit" value="Calculate BMI">
     </form>
     <div class="result" id="result">

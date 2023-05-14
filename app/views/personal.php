@@ -93,10 +93,12 @@
                     required>
 
                 <label for="height">Height (cm)</label>
-                <input type="number" id="height" name="height" value="<?php echo $height ?>">
+                <input type="number" id="height" name="height" step="0.1" min="0" max="250"
+                    value="<?php echo $height ?>">
 
                 <label for="weight">Weight (kg)</label>
-                <input type="number" id="weight" name="weight" value="<?php echo $weight ?>">
+                <input type="number" id="weight" name="weight" step="0.1" min="0" max="250"
+                    value="<?php echo $weight ?>">
 
                 <input type="submit" value="Submit" class="edit_button">
                 <input type="button" value="Cancel" onclick="window.location.href='personal.php'" class="edit_button">
