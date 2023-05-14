@@ -181,6 +181,9 @@ function updateChart() {
     var countries = [];
     var finalData = [];
 
+    // Set title
+    document.getElementById("title").innerHTML = "Year: " + year + ", BMI: " + bmi + ", Country Count: " + count;
+
     // Get country names from countries array
     for (var key in countriesDict) {
         if (countriesDict.hasOwnProperty(key)) {
@@ -212,11 +215,31 @@ function updateChart() {
             });
         }
 
+
         // Sort the data by BMI value
         finalData.sort(function(a, b) {
             return b.value - a.value;
         });
         console.log(finalData);
+
+        // If there are more than 20 countries' add new options to select
+
+        if (finalData.length > 20) {
+            var select = document.getElementById("country_count");
+            // first remove if there are more than 6 options (which means they are from previous update)
+            if (select.options.length > 6) {
+                for (var i = 6; i < select.options.length; i++) {
+                    select.remove(i);
+                }
+            }
+            for (var i = 21; i <= finalData.length; i++) {
+                if (i % 5 != 0 && i != finalData.length) continue;
+                var option = document.createElement("option");
+                option.text = i;
+                option.value = i;
+                select.add(option);
+            }
+        }
 
         // Create others category if there are more than "count" countries
         if (count < finalData.length) {

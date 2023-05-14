@@ -16,7 +16,7 @@ var year = document.getElementById("year");
 var bmi = document.getElementById("bmi");
 
 // Hide unnecessary elements
-document.getElementById("countryCount").style.display = "none";
+document.getElementById("countryCountDiv").style.display = "none";
 document.getElementById("resetButton").style.display = "none";
 
 // Add event listeners to dropdown menus
@@ -38,6 +38,9 @@ function updateBar() {
     var year = document.getElementById("year").value;
     var bmi = document.getElementById("bmi").value;
     var countriesDict = <?php echo json_encode($countries); ?>;
+
+    // Set title
+    document.getElementById("title").innerHTML = "Year: " + year + ", BMI: " + bmi;
 
     // AJAX call to get data for selected year and bmi
     $.ajax({
@@ -85,6 +88,7 @@ function createBar(data) {
             bottom: 30,
             left: 40
         },
+
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 

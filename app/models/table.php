@@ -6,22 +6,22 @@ $mysqli = require_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/db/d
 $sql = "SELECT * FROM public_data";
 $result = $mysqli->query($sql);
 $data = array();
+$data["Overweight"] = array();
+$data["Pre-obese"] = array();
+$data["Obese"] = array();
 while ($row = $result->fetch_assoc()) {
-    $temp = array();
-    $temp["country"] = $row['geo'];
-    $temp["year"] = $row['year'];
-    $temp["value"] = $row['value'];
+    $bmi = $row['bmi'];
     switch ($row["bmi"]) {
         case "BMI_GE25":
-            $temp["bmi"] = "Overweight";
+            $bmi = "Overweight";
             break;
         case "BMI25-29":
-            $temp["bmi"] = "Pre-obese";
+            $bmi = "Pre-obese";
             break;
         case "BMI_GE30":
-            $temp["bmi"] = "Obese";
+            $bmi = "Obese";
             break;
     }
-    $data[] = $temp;
+    $data[$bmi][$row['geo']][$row['year']] = $row['value'];
 }
 echo json_encode($data);

@@ -15,7 +15,8 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/cha
 // Add Map and legend to chart div
 document.getElementById("chart").innerHTML = `<div style="position: relative;">
             <!-- Add svg map -->
-            <object id="europe-map" type="image/svg+xml" data="/obesity-visualizer/public/images/europe.svg"></object>
+            <object id="europe-map" type="image/svg+xml" data="/obesity-visualizer/public/images/europe.svg" style="background-color: lightblue;
+"></object>
             <!-- Add div to show country name -->
             <div id="country-name"></div>
         </div>
@@ -24,7 +25,7 @@ document.getElementById("chart").innerHTML = `<div style="position: relative;">
         <div class="legend" id="legend-bmi25-29">
             <h4>BMI 25-29 (Pre-obese) Legend</h4>
             <div class=" legend-item">
-                <div class="color-box" style="background-color: #ADD8E6;"></div>
+                <div class="color-box" style="background-color: #5757FF;"></div>
                 <span>30.0 - 32.0</span>
             </div>
             <div class="legend-item">
@@ -60,7 +61,7 @@ document.getElementById("chart").innerHTML = `<div style="position: relative;">
         <div class="legend" id="legend-bmi-ge25">
             <h4>BMI_GE25 (Overweight) Legend</h4>
             <div class="legend-item">
-                <div class="color-box" style="background-color: #ADD8E6;"></div>
+                <div class="color-box" style="background-color: #5757FF;"></div>
                 <span>43.6 - 47.0</span>
             </div>
             <div class="legend-item">
@@ -96,7 +97,7 @@ document.getElementById("chart").innerHTML = `<div style="position: relative;">
         <div class="legend" id="legend-bmi-ge30">
             <h4>BMI_GE30 (Obese) Legend</h4>
             <div class="legend-item">
-                <div class="color-box" style="background-color: #ADD8E6;"></div>
+                <div class="color-box" style="background-color: #5757FF;"></div>
                 <span>7.9 - 10.9</span>
             </div>
             <div class="legend-item">
@@ -138,7 +139,7 @@ document.getElementById("chart").innerHTML = `<div style="position: relative;">
         </div>`;
 
 // Hide unnecessary elements
-document.getElementById("countryCount").style.display = "none";
+document.getElementById("countryCountDiv").style.display = "none";
 document.getElementById("resetButton").style.display = "none";
 
 var svgObject = document.getElementById("europe-map");
@@ -148,9 +149,9 @@ var year = document.getElementById("year");
 var bmi = document.getElementById("bmi");
 
 //! Add event listeners to year dropdown menus
-year.addEventListener("change", colorMap);
+year.addEventListener("change", createMap);
 year.addEventListener("change", resetInfoBox);
-bmi.addEventListener("change", colorMap);
+bmi.addEventListener("change", createMap);
 bmi.addEventListener("change", showLegend);
 bmi.addEventListener("change", resetInfoBox);
 
@@ -178,7 +179,7 @@ function showLegend() {
 
 // Color dictionaries for all bmi types
 var bmi25_29 = {
-    "30.0 - 32.0": "#ADD8E6", // light blue
+    "30.0 - 32.0": "#5757FF", // light blue
     "32.0 - 34.0": "#87CEFA", // blue
     "34.0 - 36.0": "#00FF00", // green
     "36.0 - 38.0": "#FFFF00", // yellow
@@ -188,7 +189,7 @@ var bmi25_29 = {
 };
 
 var bmi_ge25 = {
-    "43.6 - 47.0": "#ADD8E6", // light blue
+    "43.6 - 47.0": "#5757FF", // light blue
     "47.0 - 50.0": "#6699CC", // blue-gray
     "50.0 - 53.0": "#8BC34A", // green
     "53.0 - 56.0": "#FFEB3B", // yellow
@@ -198,7 +199,7 @@ var bmi_ge25 = {
 };
 
 var bmi_ge30 = {
-    "7.9 - 10.9": "#ADD8E6", // light blue
+    "7.9 - 10.9": "#5757FF", // light blue
     "10.9 - 12.8": "#0000FF", // blue
     "12.8 - 14.1": "#00008B", // dark blue
     "14.1 - 15.7": "#90EE90", // light green
@@ -210,7 +211,7 @@ var bmi_ge30 = {
 };
 
 // Function for coloring the map
-function colorMap() {
+function createMap() {
     var svgDoc = svgObject.contentDocument;
     // Get all paths in the SVG
     var paths = svgDoc.querySelectorAll('path');
@@ -220,6 +221,10 @@ function colorMap() {
     var bmi = document.getElementById("bmi").value;
     var countriesDict = <?php echo json_encode($countries); ?>;
     var color = "";
+
+    // Set title
+    document.getElementById("title").innerHTML = "Year: " + year + " BMI: " +
+        bmi;
 
     // Make AJAX call to get the BMI data for each country and build the final data array
     $.ajax({
@@ -245,8 +250,7 @@ function colorMap() {
             // Check if we have that countries data
             if (data.find(x => x.country == id) == null) { // Country data does not exist in db
                 paths[i].setAttribute("fill", "white");
-                paths[i].setAttribute("fill", "ADD8E6");
-                continue;
+                paths[i].setAttribute("fill", "lightgray");
             } else { // Data found in db
                 // Get value of that country id
                 var value = data.find(x => x.country == id).value;
@@ -273,6 +277,70 @@ function colorMap() {
                 paths[i].setAttribute("fill", "white"); // Clear previous color
                 paths[i].setAttribute("fill", color);
             }
+
+            // Add event listener to each path
+            paths[i].addEventListener("click", function() {
+                // Show info box
+                var infoBox = document.getElementById("info-box");
+                infoBox.style.display = "block";
+
+                var year = document.getElementById("year").value;
+                var bmi = document.getElementById("bmi").value;
+                var countryName = this.getAttribute("name");
+                var countryId = this.getAttribute("id");
+
+                infoBox.getElementsByTagName("p")[0].innerHTML =
+                    "<strong>Country:</strong> " + countryName;
+                infoBox.getElementsByTagName("p")[1].innerHTML =
+                    "<strong>Year:</strong> " + year;
+                infoBox.getElementsByTagName("p")[2].innerHTML =
+                    "<strong>BMI:</strong> " + bmi;
+
+                // Check if we have that countries data
+                if (data.find(x => x.country == countryId) ==
+                    null) {
+                    infoBox.getElementsByTagName("p")[3].innerHTML =
+                        "<strong>No data provided.</strong>";
+                } else { // Data found in db
+                    var value = data.find(x => x.country == countryId).value;
+                    infoBox
+                        .getElementsByTagName("p")[3].innerHTML =
+                        "<strong>Percentage:</strong> " + value;
+                }
+            });
+
+            paths[i].addEventListener("mouseover", function() {
+                // If country is already colored, make it a little bit darker
+                if (this.getAttribute("fill")[0] == "#") {
+                    // Get old color and make it a little bit darker using tinycolor.js
+                    var oldColor = tinycolor(this.getAttribute("fill"));
+                    var newColor = oldColor.darken(30).toString();
+                    this.style.fill = newColor;
+                }
+
+                // Move country name to bottom of map like a line on the bottom
+                countryName.style.display = "block";
+                countryName.innerHTML = this.getAttribute("name");
+                countryName.style.top = "100%";
+                countryName.style.left = "40%";
+                countryName.style.transform = "translate(-50%, -100%)";
+                countryName.style.fontSize = "1.5rem";
+                countryName.style.fontWeight = "bold";
+                countryName.style.color = "black";
+                countryName.style.position = "absolute";
+                countryName.style.zIndex = "1000";
+                countryName.style.backgroundColor = "white";
+                countryName.style.padding = "0.5rem";
+                countryName.style.borderRadius = "0.5rem";
+                countryName.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.3)";
+            });
+
+
+            paths[i].addEventListener("mouseout", function() {
+                // Restore old color and hide country name
+                this.style.fill = this.getAttribute("data-old-fill");
+                countryName.style.display = "none";
+            });
         }
 
     }).fail(function(jqXHR, textStatus) {
@@ -283,7 +351,7 @@ function colorMap() {
 // Event Listener for initial load
 svgObject.addEventListener("load", function() {
     // Call functions initially
-    colorMap();
+    createMap();
     showLegend();
     document.getElementById("info-box").style.display = "none";
 
@@ -318,94 +386,12 @@ svgObject.addEventListener("load", function() {
             paths[i].setAttribute("stroke", "black");
             paths[i].setAttribute("stroke-width", "0.6px");
             paths[i].setAttribute("stroke-linejoin", "round");
-
-            // Add event listener to each path
-            paths[i].addEventListener("click", function() {
-                // Show info box
-                var infoBox = document.getElementById("info-box");
-                infoBox.style.display = "block";
-
-                var year = document.getElementById("year").value;
-                var bmi = document.getElementById("bmi").value;
-                var countryName = this.getAttribute("name");
-                var countryId = this.getAttribute("id");
-
-                infoBox.getElementsByTagName("p")[0].innerHTML =
-                    "<strong>Country:</strong> " + countryName;
-                infoBox.getElementsByTagName("p")[1].innerHTML =
-                    "<strong>Year:</strong> " + year;
-                infoBox.getElementsByTagName("p")[2].innerHTML =
-                    "<strong>BMI:</strong> " + bmi;
-
-                // Check if we have that countries data
-                if (data.find(x => x.country == countryId) ==
-                    null) {
-                    infoBox.getElementsByTagName("p")[3].innerHTML =
-                        "<strong>No data provided.</strong>";
-                } else { // Data found in db
-                    var value = data.find(x => x.country == countryId).value;
-                    infoBox.getElementsByTagName("p")[3].innerHTML =
-                        "<strong>Percentage:</strong> " + value;
-                }
-            });
-
-            paths[i].addEventListener("mouseover", function() {
-                // If country is already colored, make it a little bit darker
-                if (this.getAttribute("fill")[0] == "#") {
-                    // Get old color and make it a little bit darker using tinycolor.js
-                    var oldColor = tinycolor(this.getAttribute("fill"));
-                    var newColor = oldColor.darken(30).toString();
-                    this.style.fill = newColor;
-                }
-
-
-                // Move country name to the center of the country
-                var bbox = this.getBBox();
-                var x = bbox.x + bbox.width / 2;
-                var y = bbox.y + 20;
-                countryName.style.transform = "translate(" + x + "px, " + y +
-                    "px)";
-                countryName.textContent = this.getAttribute("name");
-                countryName.style
-                    .display = "block";
-            });
-
-
-            paths[i].addEventListener("mouseout", function() {
-                // Restore old color and hide country name
-                this.style.fill = this.getAttribute("data-old-fill");
-                countryName.style.display = "none";
-            });
         }
 
     }).fail(function(jqXHR, textStatus) {
         console.log("Request failed: " + textStatus);
     });
 });
-
-// Function for clicking list elements
-function countryClicked(itemName) {
-    var svgDoc = svgObject.contentDocument;
-    // Get all paths in the SVG
-    var paths = svgDoc.querySelectorAll('path');
-
-    for (var i = 0; i < paths.length; i++) {
-        if (paths[i].getAttribute("name") == itemName) {
-            // Trigger click event
-            paths[i].dispatchEvent(new MouseEvent("click"));
-
-            // Hover over the country
-            paths[i].dispatchEvent(new MouseEvent("mouseover"));
-            // Wait 0.3 second
-            setTimeout(function() {
-                // Unhover the country
-                paths[i].dispatchEvent(new MouseEvent("mouseout"));
-            }, 300);
-
-            break;
-        }
-    }
-}
 
 function listClicked(itemName) {
     var svgDoc = svgObject.contentDocument;
