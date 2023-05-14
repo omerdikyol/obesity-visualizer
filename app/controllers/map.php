@@ -321,8 +321,8 @@ function createMap() {
                 // Move country name to bottom of map like a line on the bottom
                 countryName.style.display = "block";
                 countryName.innerHTML = this.getAttribute("name");
-                countryName.style.top = "100%";
-                countryName.style.left = "40%";
+                countryName.style.top = "20%";
+                countryName.style.left = "30%";
                 countryName.style.transform = "translate(-50%, -100%)";
                 countryName.style.fontSize = "1.5rem";
                 countryName.style.fontWeight = "bold";

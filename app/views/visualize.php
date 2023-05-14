@@ -10,17 +10,43 @@
 <?php include($_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/header.php"); ?>
 
 <body>
-    <a><button class="button2" id="pieBtn" onclick="Pie()">Pie</button></a>
-    <a><button class="button2" id="lineBtn" onclick="Line()">Line</button></a>
-    <a><button class="button2" id="barBtn" onclick="Bar()">Bar</button></a>
-    <a><button class="button2" id="mapBtn" onclick="Map()">Map</button></a>
-    <a><button class="button2" id="tableBtn" onclick="Table()">Table</button></a>
+    <a><button class="button2" id="pieBtn" style="display: none;" onclick="Visualize('pie')">Pie</button></a>
+    <a><button class="button2" id="lineBtn" style="display: none;" onclick="Visualize('line')">Line</button></a>
+    <a><button class="button2" id="barBtn" style="display: none;" onclick="Visualize('bar')">Bar</button></a>
+    <a><button class="button2" id="mapBtn" style="display: none;" onclick="Visualize('map')">Map</button></a>
+    <a><button class="button2" id="tableBtn" style="display: none;" onclick="Visualize('table')">Table</button></a>
 
-    <a><button class="button2" id="exportBtn" onclick="generatePDF()" style="float: right;">Export</button></a>
-    <a><button class="button2" id="filterBtn" style="float: right;">Filter</button></a>
+    <a><button class="button2" id="exportBtn" style="display: none; float: right;"
+            onclick="generatePDF()">Export</button></a>
 
     <div class="chart-holder" id="chart-holder">
+        <h2>Select Visualization Type</h2>
+        <h3>Select a visualization type from the buttons below. Each button represents a different type of chart or
+            graph. Click on a button to generate the corresponding visualization.</h3>
+        <div class="visualization-buttons">
+            <button class="visualization-button" onclick="Visualize('pie'); enableButtons();">
+                <i class="fas fa-chart-pie"></i>
+                <span>Pie Chart</span>
+            </button>
+            <button class="visualization-button" onclick="Visualize('line'); enableButtons();">
+                <i class="fas fa-chart-line"></i>
+                <span>Line Chart</span>
+            </button>
+            <button class="visualization-button" onclick="Visualize('bar'); enableButtons();">
+                <i class="fas fa-chart-bar"></i>
+                <span>Bar Chart</span>
+            </button>
+            <button class="visualization-button" onclick="Visualize('map'); enableButtons();">
+                <i class="fas fa-map"></i>
+                <span>Map</span>
+            </button>
+            <button class="visualization-button" onclick="Visualize('table'); enableButtons();">
+                <i class="fas fa-table"></i>
+                <span>Table</span>
+            </button>
+        </div>
     </div>
+
 </body>
 
 <?php include($_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/footer.php"); ?>

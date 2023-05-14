@@ -7,115 +7,38 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualiz
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 <script>
-function Map() {
-    document.querySelector('.chart-holder').innerHTML = "";
-
-    // Add svg map from map.php
-    var map = document.createElement('iframe');
-    map.src = "/obesity-visualizer/app/controllers/map.php";
-    map.classList.add('fade-in'); // add fade-in class
-
-    // Align to center
-    map.style.margin = "auto";
-    map.style.display = "block";
-    map.style.align = "center";
-
-    document.querySelector('.chart-holder').appendChild(map);
-
-    // Trigger reflow
-    void map.offsetWidth; // eslint-disable-line no-unused-expressions
-
-    // Add active class to trigger animation
-    map.classList.add('active');
-}
-
-function Pie() {
-    document.querySelector('.chart-holder').innerHTML = "";
-
-    // Add pie chart from pie.php
-    var pie = document.createElement('iframe');
-    pie.src = "/obesity-visualizer/app/controllers/pie.php";
-    pie.classList.add('fade-in'); // add fade-in class
-
-    // Align to center
-    pie.style.margin = "auto";
-    pie.style.display = "block";
-    pie.style.align = "center";
-
-    document.querySelector('.chart-holder').appendChild(pie);
-
-    // Trigger reflow
-    void pie.offsetWidth; // eslint-disable-line no-unused-expressions
-
-    // Add active class to trigger animation
-    pie.classList.add('active');
-}
-
-function Line() {
-    document.querySelector('.chart-holder').innerHTML = "";
-
-    // Add line chart from line.php
-    var line = document.createElement('iframe');
-    line.src = "/obesity-visualizer/app/controllers/line.php";
-    line.classList.add('fade-in'); // add fade-in class
-
-    // Align to center
-    line.style.margin = "auto";
-    line.style.display = "block";
-    line.style.align = "center";
-
-    document.querySelector('.chart-holder').appendChild(line);
-
-    // Trigger reflow
-    void line.offsetWidth; // eslint-disable-line no-unused-expressions
-
-    // Add active class to trigger animation
-    line.classList.add('active');
-}
-
-function Bar() {
-    document.querySelector('.chart-holder').innerHTML = "";
-
-    // Add bar chart from bar.php
-    var bar = document.createElement('iframe');
-    bar.src = "/obesity-visualizer/app/controllers/bar.php";
-    bar.classList.add('fade-in'); // add fade-in class
-
-    // Align to center
-    bar.style.margin = "auto";
-    bar.style.display = "block";
-    bar.style.align = "center";
-
-    document.querySelector('.chart-holder').appendChild(bar);
-
-    // Trigger reflow
-    void bar.offsetWidth; // eslint-disable-line no-unused-expressions
-
-    // Add active class to trigger animation
-    bar.classList.add('active');
-}
-
-function Table() {
+function Visualize(type) {
     document.querySelector('.chart-holder').innerHTML = "";
 
     // Add table from table.php
-    var table = document.createElement('iframe');
-    table.src = "/obesity-visualizer/app/controllers/table.php";
-    table.classList.add('fade-in'); // add fade-in class
+    var chart = document.createElement('iframe');
+    chart.src = "/obesity-visualizer/app/controllers/" + type + ".php";
+    chart.classList.add('fade-in'); // add fade-in class
+    chart.id = "chartFrame";
 
     // Align to center
-    table.style.margin = "auto";
-    table.style.display = "block";
-    table.style.align = "center";
+    chart.style.margin = "auto";
+    chart.style.display = "block";
+    chart.style.align = "center";
 
-    document.querySelector('.chart-holder').appendChild(table);
+    document.querySelector('.chart-holder').appendChild(chart);
 
     // Trigger reflow
-    void table.offsetWidth; // eslint-disable-line no-unused-expressions
+    void chart.offsetWidth; // eslint-disable-line no-unused-expressions
 
     // Add active class to trigger animation
-    table.classList.add('active');
+    chart.classList.add('active');
+}
+
+function enableButtons() {
+    document.getElementById("pieBtn").style.display = "inline-block";
+    document.getElementById("lineBtn").style.display = "inline-block";
+    document.getElementById("barBtn").style.display = "inline-block";
+    document.getElementById("mapBtn").style.display = "inline-block";
+    document.getElementById("tableBtn").style.display = "inline-block";
+    document.getElementById("exportBtn").style.display = "inline-block";
 }
 
 function generatePDF() {
