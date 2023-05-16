@@ -18,7 +18,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/visualize/cha
 document.getElementById("countryCountDiv").style.display = "none";
 document.getElementById("yearDiv").style.display = "none";
 document.getElementById("resetButton").style.display = "none";
-document.getElementById("countryList").style.display = "none";
+document.getElementById("rightOverlay").style.display = "none";
 
 // Add event listener to BMI select
 document.getElementById("bmi").addEventListener("change", updateTable);
@@ -145,6 +145,11 @@ function updateTable(header) {
 function createTable(data) {
     var headers = ["BMI", "Country", "2008", "2014", "2017", "2019"];
 
+    // Set title
+    var bmi = document.getElementById("bmi").value;
+    document.getElementById("title").innerHTML = " BMI: " +
+        bmi;
+
     // Create table
     var table = d3.select("#chart").append("table").attr("class",
         "table table-striped table-bordered table-hover");
@@ -199,6 +204,7 @@ function createTable(data) {
         .style("padding", "5px")
         .style("text-align", "center");
 
+    /*
     // Add scroll bar to table
     d3.select("#chart")
         .style("overflow", "auto")
@@ -207,6 +213,7 @@ function createTable(data) {
     // Make chart's width same as table's width + 10px (for scrollbar)
     d3.select("#chart")
         .style("width", table.node().getBoundingClientRect().width + 20 + "px");
+        */
 }
 
 updateTable();

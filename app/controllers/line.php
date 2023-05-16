@@ -88,7 +88,7 @@ function createLine() {
         // Add y-axis label
         svg.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left + 10)
+            .attr("y", 0 - margin.left)
             .attr("x", 0 - (height / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
@@ -197,13 +197,13 @@ function createLine() {
     }
 
     // Set the dimensions and margins of the graph
-    const width = 700;
-    const height = 700;
+    const width = window.innerWidth * 0.6;
+    const height = window.innerHeight * 0.6;
     const margin = {
         top: 20,
         right: 20,
         bottom: 50,
-        left: 200
+        left: 100
     };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;

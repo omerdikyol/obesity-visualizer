@@ -41,41 +41,5 @@ function enableButtons() {
     document.getElementById("exportBtn").style.display = "inline-block";
 }
 
-function generatePDF() {
-    const doc = new jsPDF();
-    const content = document.getElementById('chart-holder');
-
-    // create a canvas element to render the content to
-    const canvas = document.createElement('canvas');
-    canvas.width = content.offsetWidth;
-    canvas.height = content.offsetHeight;
-    const ctx = canvas.getContext('2d');
-
-    // use html2canvas to render the content to the canvas
-    html2canvas(content, {
-        canvas: canvas,
-        useCORS: true,
-        allowTaint: true,
-        foreignObjectRendering: true,
-        onrendered: () => {
-            // use canvg to render any SVGs in the content to the canvas
-            const svgs = content.querySelectorAll('svg');
-            svgs.forEach((svg) => {
-                canvg(canvas, svg.outerHTML, {
-                    ignoreMouse: true,
-                    ignoreAnimation: true,
-                    imageRendering: 'auto',
-                    async: false,
-                });
-            });
-
-            // add the canvas to the PDF document
-            const imgData = canvas.toDataURL('image/png');
-            doc.addImage(imgData, 'PNG', 15, 15, 180, 180 / canvas.width * canvas.height);
-
-            // save the PDF document
-            doc.save('my-document.pdf');
-        }
-    });
-}
+function generatePDF() {}
 </script>

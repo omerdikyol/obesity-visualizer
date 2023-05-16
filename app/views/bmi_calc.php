@@ -83,7 +83,7 @@
         <label for="weight">Weight (kg):</label>
         <input type="number" id="weight" name="weight" step="0.1" min="0" max="250"
             placeholder="Enter your weight in kilograms" required>
-        <input type="submit" value="Calculate BMI">
+        <input type="submit" value="Calculate BMI" class="bmi-button">
     </form>
     <div class="result" id="result">
         <h2>Your BMI is:</h2>
