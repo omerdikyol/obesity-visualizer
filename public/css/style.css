@@ -36,14 +36,26 @@ select {
     margin-bottom: 20px;
 }
 
+
 /* Header */
+/* Apply a gradient background to the header */
 header {
-    position: sticky;
     top: 0;
-    background-color: #333;
-    color: #fff;
+    background: linear-gradient(to right, #fcb045, #833ab4);
+    /* Add a drop shadow to the header */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 10px;
     text-align: center;
+    z-index: 9999;
+}
+
+/* Style the title */
+header h1 {
+    font-size: 48px;
+    font-family: 'Montserrat', sans-serif;
+    color: #FFFFFF;
+    text-align: center;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 /* buttons */
@@ -485,4 +497,184 @@ iframe {
 .visualization-button:active {
     transform: translateY(0);
     box-shadow: 1px 1px #333;
+}
+
+#info-box {
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+    font-family: 'Helvetica Neue', sans-serif;
+    padding: 20px;
+    width: 300px;
+}
+
+#info-box h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#info-box p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+#info-box strong {
+    font-weight: bold;
+}
+
+#info-box p:last-child {
+    margin-bottom: 0;
+}
+
+label[for] {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.select {
+    appearance: none;
+    background-color: #f8f8f8;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 40px 10px 20px;
+    position: relative;
+    width: 200px;
+}
+
+.select::after {
+    content: "\25BC";
+    color: #333;
+    font-size: 14px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.select option {
+    background-color: #fff;
+    color: #333;
+}
+
+.select option:checked {
+    background-color: #0077c2;
+    color: #fff;
+}
+
+.cool-button {
+    background-color: #0077c2;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.cool-button:hover {
+    background-color: #fff;
+    color: #0077c2;
+}
+
+.cool-button::before {
+    content: "";
+    background-color: #fff;
+    border-radius: 50%;
+    height: 0;
+    left: 50%;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    z-index: -1;
+    transition: all 0.3s ease;
+}
+
+.cool-button:hover::before {
+    height: 300%;
+    opacity: 0.2;
+}
+
+.cool-button::after {
+    content: "";
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    height: 150%;
+    left: 50%;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    z-index: -2;
+    transition: all 0.3s ease;
+}
+
+.cool-button:hover::after {
+    height: 250%;
+    opacity: 0.1;
+}
+
+.visButton-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.visButton {
+    background-color: #3a3a3a;
+    border: none;
+    color: #fff;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.visButton:hover {
+    background-color: #f39c12;
+    transform: scale(1.1);
+}
+
+.visButton i {
+    font-size: 24px;
+    margin-right: 8px;
+    position: relative;
+    top: 3px;
+}
+
+.visButton span {
+    position: relative;
+    top: -3px;
+}
+
+.export-btn {
+    background-color: #f39c12;
+}
+
+.export-btn:hover {
+    background-color: #3a3a3a;
 }
