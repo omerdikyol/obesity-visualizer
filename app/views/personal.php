@@ -108,6 +108,7 @@
 
 <?php endif; ?>
 
+
 <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/footer.php"; ?>
 
 </html>

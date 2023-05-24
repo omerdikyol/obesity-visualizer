@@ -15,10 +15,6 @@
         <div class="login-box">
             <h1>Admin Login Form</h1>
             <div class="container" id="login-container">
-                <?php if (isset($error)) : ?>
-                <p><?php echo $error; ?></p>
-                <?php endif; ?>
-
                 <form method="post" action="/obesity-visualizer/app/models/admin/adminLogin.php">
                     <label>Username:</label>
                     <input type="text" name="username"><br>
