@@ -7,6 +7,26 @@ if (!isset($mysqli))
     $mysqli = include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/db/database.php';
 
 
+function adminLogin($username, $password)
+{
+    // Check if the submitted credentials are valid
+    if ($username === 'admin' && $password === 'admin') {
+        // Set the session variable to indicate that the user is logged in
+        $_SESSION['admin'] = true;
+        return true;
+    }
+    return false;
+}
+
+function adminLogout()
+{
+    if ($_SESSION['admin'] === true) {
+        $_SESSION['admin'] = false;
+    }
+    header('Location: /obesity-visualizer/app/controllers/admin/adminLogin.php');
+    exit;
+}
+
 function getCountriesAdmin()
 {
     global $mysqli;

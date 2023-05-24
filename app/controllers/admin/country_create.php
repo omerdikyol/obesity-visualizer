@@ -7,7 +7,7 @@ if ($_SESSION['admin'] !== true) {
     exit;
 }
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/models/countries.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/countryService/countryService.php';
 // Get country codes
 $countryCodes = getCountryCodes();
 include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/admin/country_create.php';

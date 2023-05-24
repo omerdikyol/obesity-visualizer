@@ -21,34 +21,31 @@ function getUserFromSession()
     }
 }
 
-function login()
+function login($is_invalid, $is_logged_in)
 {
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    global $mysqli;
 
-        global $mysqli;
+    # Check if email exists in database
+    $sql = sprintf("SELECT * FROM user WHERE email = '%s'", $mysqli->real_escape_string($_POST['email']));
 
-        # Check if email exists in database
-        $sql = sprintf("SELECT * FROM user WHERE email = '%s'", $mysqli->real_escape_string($_POST['email']));
+    # Execute query
+    $result = $mysqli->query($sql);
 
-        # Execute query
-        $result = $mysqli->query($sql);
+    # Get user
+    $user = $result->fetch_assoc();
 
-        # Get user
-        $user = $result->fetch_assoc();
-
-        if ($user) {
-            if (password_verify($_POST['password'], $user['password_hash'])) {
-                session_start();
-                $_SESSION['user_id'] = $user['id'];
-                $is_logged_in = true;
-                # Redirect to home page
-                header("Location: /obesity-visualizer/app/controllers/home.php");
-                exit;
-            }
+    if ($user) {
+        if (password_verify($_POST['password'], $user['password_hash'])) {
+            session_start();
+            $_SESSION['user_id'] = $user['id'];
+            $is_logged_in = true;
+            # Redirect to home page
+            header("Location: /obesity-visualizer/app/controllers/home.php");
+            exit;
         }
-
-        $is_invalid = true;
     }
+
+    $is_invalid = true;
 }
 
 function register()

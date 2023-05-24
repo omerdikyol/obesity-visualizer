@@ -2,7 +2,7 @@
 
 session_start();
 
-include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/models/countries.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/countryService/countryService.php';
 
 // Get country names
 $countries = getCountryNames();
