@@ -1,6 +1,7 @@
 <?php
 
 $is_invalid = false;
+$is_logged_in = false;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 

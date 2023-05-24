@@ -25,7 +25,8 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/alert.php"; ?>
         <table style=" overflow-y:scroll;">
             <tr>
-                <th><a href="#">BMI</a></th>
+                <th>ID</th>
+                <th>BMI</th>
                 <th>Country Code</th>
                 <th>Year</th>
                 <th>Percentage</th>
@@ -34,18 +35,19 @@
             </tr>
             <?php foreach ($countries as $key => $country) { ?>
             <tr>
+                <td><?php echo $country['id'] ?></td>
                 <td><?php echo $country['bmi'] ?></td>
                 <td><?php echo $country['geo'] ?></td>
                 <td><?php echo $country['year'] ?></td>
                 <td><?php echo $country['value'] ?></td>
                 <td><?php echo $country['flag'] ?></td>
                 <td>
-                    <a href="/obesity-visualizer/app/controllers/admin/country_edit.php?bmi=<?php echo $country['bmi'] ?>&geo=<?php echo $country['geo'] ?>&year=<?php echo $country['year'] ?>"
+                    <a href="/obesity-visualizer/app/controllers/admin/country_edit.php?id=<?php echo $country['id'] ?>"
                         class="adminButton adminSmall adminEdit">
                         <i class="fas fa-edit"></i>
                         <span>Edit</span>
                     </a>
-                    <a href="/obesity-visualizer/app/controllers/admin/country_delete.php?bmi=<?php echo $country['bmi'] ?>&geo=<?php echo $country['geo'] ?>&year=<?php echo $country['year'] ?>"
+                    <a href="/obesity-visualizer/app/controllers/admin/country_delete.php?id=<?php echo $country['id'] ?>"
                         class="adminButton adminSmall adminDelete">
                         <i class="fas fa-trash-alt"></i>
                         <span>Delete</span>

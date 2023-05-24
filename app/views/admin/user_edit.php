@@ -18,7 +18,7 @@
         <div class=" container" id="edit_container">
 
             <div class=" container">
-                <form action="/obesity-visualizer/app/models/admin/user_edit_form.php" method="post" class="form">
+                <form action="/obesity-visualizer/app/models/admin/user_edit.php" method="post" class="form">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" value="<?php echo $name ?>" required>
 

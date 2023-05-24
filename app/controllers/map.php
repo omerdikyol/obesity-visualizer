@@ -228,7 +228,7 @@ function createMap() {
 
     // Make AJAX call to get the BMI data for each country and build the final data array
     $.ajax({
-        url: "/obesity-visualizer/app/models/pie.php",
+        url: "/obesity-visualizer/app/models/year_bmi.php",
         type: "GET",
         data: {
             year: year,
@@ -363,7 +363,7 @@ svgObject.addEventListener("load", function() {
     var paths = svgDoc.querySelectorAll('path');
 
     $.ajax({
-        url: "/obesity-visualizer/app/models/pie.php",
+        url: "/obesity-visualizer/app/models/year_bmi.php",
         type: "GET",
         data: {
             year: year,
@@ -443,6 +443,10 @@ function listOut() {
 
 // Function for reseting info box
 function resetInfoBox() {
+    document.getElementById("info-box").style.display = "none";
+}
+
+function closeInfoBox() {
     document.getElementById("info-box").style.display = "none";
 }
 </script>

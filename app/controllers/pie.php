@@ -214,7 +214,7 @@ function updateChart() {
 
     // Make AJAX call to get the BMI data for each country and build the final data array
     $.ajax({
-        url: "/obesity-visualizer/app/models/pie.php",
+        url: "/obesity-visualizer/app/models/year_bmi.php",
         type: "GET",
         data: request,
     }).done(function(data) {
@@ -236,7 +236,6 @@ function updateChart() {
         finalData.sort(function(a, b) {
             return b.value - a.value;
         });
-        console.log(finalData);
 
         // If there are more than 20 countries' add new options to select
         if (finalData.length > 20) {
@@ -314,6 +313,10 @@ function listOut() {
 function resetInfoBox() {
     var infoBox = document.getElementById("info-box");
     infoBox.style.display = "none";
+}
+
+function closeInfoBox() {
+    document.getElementById("info-box").style.display = "none";
 }
 
 updateChart();

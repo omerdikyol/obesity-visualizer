@@ -1,15 +1,16 @@
 <?php
-session_start();
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/adminService/adminService.php';
 
 if ($_SESSION['admin'] !== true) {
     header('Location: /obesity-visualizer/app/controllers/admin/adminLogin.php');
     exit;
 }
 
-$mysqli = include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/db/database.php';
-$sql = sprintf("SELECT * FROM user WHERE id = '%s'", $mysqli->real_escape_string($_GET['id']));
-$result = $mysqli->query($sql);
-$user = $result->fetch_assoc();
+$id = $mysqli->real_escape_string($_GET['id']);
+
+$user = getUser($id);
+
 if ($user) {
     $name = $user['name'];
     $email = $user['email'];
@@ -19,7 +20,7 @@ if ($user) {
     $weight = $user['weight'];
     $bmi = $user['bmi'];
 
-    $_SESSION["edit_id"] = $_GET['id'];
+    $_SESSION["edit_id"] = $id;
 
     // Get country names
     $countries = array();
@@ -31,6 +32,6 @@ if ($user) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/admin/user_edit.php';
 } else {
     $_SESSION["alert"] = "User not found";
-    header("Location: /obesity-visualizer/app/controllers/admin/user_edit.php");
+    header("Location: /obesity-visualizer/app/controllers/admin/users.php");
     exit(0);
 }

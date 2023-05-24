@@ -375,5 +375,9 @@ function reset() {
     updateLine();
 }
 
+function closeInfoBox() {
+    document.getElementById("info-box").style.display = "none";
+}
+
 updateLine();
 </script>

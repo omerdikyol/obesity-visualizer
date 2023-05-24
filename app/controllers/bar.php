@@ -23,7 +23,7 @@ document.getElementById("resetButton").style.display = "none";
 year.addEventListener("change", updateBar);
 bmi.addEventListener("change", updateBar);
 
-// Define the color scale for the pie chart
+// Define the color scale for the chart
 var color = d3.scaleOrdinal()
     .range(['#E53935', '#D81B60', '#8E24AA', '#5E35B1', '#3949AB', '#1E88E5', '#039BE5', '#00ACC1', '#00897B',
         '#43A047', '#7CB342', '#C0CA33', '#FDD835', '#FFB300', '#FB8C00', '#F4511E', '#6D4C41', '#757575',
@@ -44,7 +44,7 @@ function updateBar() {
 
     // AJAX call to get data for selected year and bmi
     $.ajax({
-        url: "/obesity-visualizer/app/models/pie.php",
+        url: "/obesity-visualizer/app/models/year_bmi.php",
         type: "GET",
         data: {
             year: year,
@@ -211,6 +211,10 @@ function listOut() {
 function resetInfoBox() {
     var infoBox = document.getElementById("info-box");
     infoBox.style.display = "none";
+}
+
+function closeInfoBox() {
+    document.getElementById("info-box").style.display = "none";
 }
 
 updateBar();
