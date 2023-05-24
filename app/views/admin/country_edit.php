@@ -13,12 +13,13 @@
 
 <body>
     <div class="main">
-        <h1 style="color: black;">Edit User</h1>
+        <h1 style="color: black;">Edit Country</h1>
 
         <div class=" container" id="edit_container">
 
             <div class=" container">
-                <form action="/obesity-visualizer/app/models/admin/country_edit_form.php" method="post" class="form">
+                <form action="/obesity-visualizer/app/models/admin/country_edit.php" method="post" class="form">
+                    <label for="id"><?php echo "ID: " . $id ?></label>
                     <label for="bmi">BMI</label>
                     <select id="bmi" name="bmi" required>
                         <option value="BMI25-29">BMI25-29</option>

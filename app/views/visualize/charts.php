@@ -77,6 +77,7 @@
 
                 <!-- Add info box to show info of clicked country -->
                 <div class="info-box" id="info-box" style="position: absolute; top: 5%; right: 20%;">
+                    <button onclick="closeInfoBox()" style="position: absolute; top: 0; right: 0;">X</button>
                     <h2 style="margin-top: 0;">Country Information</h2>
                     <p><strong>Country:</strong></p>
                     <p><strong>Year:</strong></p>

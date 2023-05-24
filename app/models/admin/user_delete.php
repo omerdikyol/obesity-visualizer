@@ -1,24 +1,8 @@
 <?php
 
-$mysqli = include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/db/database.php';
+$id = $mysqli->real_escape_string($_GET['id']);
 
-$user_id = $_GET['id'];
-
-$sql = "DELETE FROM user WHERE id = ?";
-
-$stmt = $mysqli->stmt_init();
-
-if (!$stmt->prepare($sql)) {
-    die("SQL Error: " . $stmt->error);
-}
-
-$stmt->bind_param("i", $user_id);
-
-$stmt->execute();
-
-$stmt->close();
-
-$mysqli->close();
+deleteUser($id);
 
 $_SESSION["alert_success"] = "User deleted successfully";
 
