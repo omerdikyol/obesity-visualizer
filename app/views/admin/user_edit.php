@@ -47,7 +47,7 @@
 
                     <input type="submit" value="Submit" class="button1" name="user_edit">
                 </form>
-                <a href="/obesity-visualizer/app/controllers/admin/users.php">
+                <a href="/obesity-visualizer/app/controllers/admin/users.php" style="text-decoration: none;">
                     <button class="button1" id="usersBtn">Back</button></a>
             </div>
         </div>

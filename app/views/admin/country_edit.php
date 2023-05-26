@@ -52,7 +52,7 @@
 
                     <input type="submit" value="Submit" class="button1" name="country_edit">
                 </form>
-                <a href="/obesity-visualizer/app/controllers/admin/countries.php">
+                <a href="/obesity-visualizer/app/controllers/admin/countries.php" style="text-decoration: none;">
                     <button class="button1">Back</button></a>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <?php
 # Returns data for a specific bmi
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/chartService/chartService.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/countryService.php';
 
 if (isset($_GET['bmi'])) {
     $bmi = "";

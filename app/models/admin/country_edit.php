@@ -1,12 +1,12 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/adminService/adminService.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/adminService.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $id = $_SESSION["edit_id"];
     $_SESSION["edit_id"] = null;
 
-    $data = getCountry($id);
+    $data = getCountryAdmin($id);
 
     if ($data) {
         editCountry($id);

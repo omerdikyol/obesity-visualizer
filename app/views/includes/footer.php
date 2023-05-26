@@ -1,5 +1,6 @@
 <head>
-    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Obesity Visualizer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <style>
@@ -97,6 +98,8 @@
                 <li><a href="/obesity-visualizer/app/controllers/bmi_calc.php">Calculate BMI</a></li>
                 <li><a href="/obesity-visualizer/app/controllers/personal.php">Personal</a></li>
                 <li><a href="/obesity-visualizer/app/controllers/admin.php">Admin</a></li>
+                <li><a href="/obesity-visualizer/app/views/projectReport.php">Project Report</a></li>
+
             </ul>
         </div>
         <div class="footer-column">

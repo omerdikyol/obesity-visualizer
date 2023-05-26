@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/adminService/adminService.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/adminService.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $id = $mysqli->real_escape_string($_SESSION["edit_id"]);

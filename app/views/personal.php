@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obesity Visualizer</title>
     <link rel="stylesheet" href="../../public/css/style.css">
 </head>
@@ -104,10 +105,10 @@
                 <input type="button" value="Cancel" onclick="window.location.href='personal.php'" class="edit_button">
             </form>
         </div>
+    </div>
 </body>
 
 <?php endif; ?>
-
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/footer.php"; ?>
 

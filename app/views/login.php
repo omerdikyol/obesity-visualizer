@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obesity Visualizer</title>
     <link rel="stylesheet" href="/obesity-visualizer/public/css/style.css">
 </head>
