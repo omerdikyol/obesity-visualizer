@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/userService/userService.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/userService.php';
 
 $is_invalid = false;
 $is_logged_in = false;

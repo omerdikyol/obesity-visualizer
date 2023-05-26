@@ -36,7 +36,7 @@ function getCountriesAdmin()
     return $countries;
 }
 
-function getCountry($id)
+function getCountryAdmin($id)
 {
     global $mysqli;
     $sql = "SELECT * FROM public_data WHERE id = $id";

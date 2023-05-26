@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/adminService/adminService.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/adminService.php';
 
 if (isset($_POST["user_create"])) {
     createUser();

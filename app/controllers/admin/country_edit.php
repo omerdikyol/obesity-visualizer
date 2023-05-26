@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/adminService/adminService.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/adminService.php';
 
 if ($_SESSION['admin'] !== true) {
     header('Location: /obesity-visualizer/app/controllers/admin/adminLogin.php');
@@ -8,7 +8,7 @@ if ($_SESSION['admin'] !== true) {
 
 $id = $mysqli->real_escape_string($_GET['id']);
 
-$data = getCountry($id);
+$data = getCountryAdmin($id);
 
 if ($data) {
     $bmi = $data['bmi'];

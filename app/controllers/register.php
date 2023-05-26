@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/userService/userService.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/userService.php';
 
 // Get all countries
 $data = include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/helper/countries.php';

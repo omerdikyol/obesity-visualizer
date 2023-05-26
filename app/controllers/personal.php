@@ -1,8 +1,5 @@
 <?php
-
-session_start();
-
-include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/countryService/countryService.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/countryService.php';
 
 // Get country names
 $countries = getCountryNames();
