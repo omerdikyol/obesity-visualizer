@@ -33,7 +33,7 @@
             <span>Table</span>
         </button>
         <button class="visButton export-btn" id="exportBtn" style="display: none; float: right;"
-            onclick="generatePDF()">
+            onclick="exportWebsiteAsPdf()">
             <i class="fas fa-file-pdf"></i>
             <span>Export as PDF</span>
         </button>

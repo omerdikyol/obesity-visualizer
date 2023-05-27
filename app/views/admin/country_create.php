@@ -26,7 +26,7 @@
                     </select>
 
                     <label for="country">Country Code</label>
-                    <select id="country" name="country" required>
+                    <select id="geo" name="geo" required>
                         <?php
                         foreach ($countryCodes as $key => $countryCode) {
                             echo "<option value='$countryCode'>$countryCode</option>";
@@ -44,11 +44,11 @@
                     </select>
 
                     <label for="percentage">Percentage</label>
-                    <input type="number" step="0.01" id="percentage" name="percentage">
+                    <input type="number" step="0.01" id="value" name="value">
 
                     <input type="submit" value="Submit" class="button1" name="country_create">
                 </form>
-                <a href="/obesity-visualizer/app/controllers/admin/countries.php">
+                <a href="/obesity-visualizer/app/controllers/admin/countries.php" style="text-decoration: none;">
                     <button class="button1" id="countriesBtn">Back</button>
                 </a>
             </div>
