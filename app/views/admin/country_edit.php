@@ -22,16 +22,19 @@
                     <label for="id"><?php echo "ID: " . $id ?></label>
                     <label for="bmi">BMI</label>
                     <select id="bmi" name="bmi" required>
-                        <option value="BMI25-29">BMI25-29</option>
-                        <option value="BMI_GE25">BMI_GE25</option>
-                        <option value="BMI_GE30">BMI_GE30</option>
+                        <option value="BMI25-29" <?php if ($bmi == "BMI25-29") echo 'selected="selected"' ?>>BMI25-29
+                        </option>
+                        <option value="BMI_GE25" <?php if ($bmi == "BMI_GE25") echo 'selected="selected"' ?>>BMI_GE25
+                        </option>
+                        <option value="BMI_GE30" <?php if ($bmi == "BMI_GE30") echo 'selected="selected"' ?>>BMI_GE30
+                        </option>
                     </select>
 
                     <label for="geo">Country Code</label>
                     <select id="geo" name="geo" required>
                         <option value="<?php echo $geo ?>"><?php echo $geo ?></option>
                         <?php
-                        foreach ($geos as $key => $geo) {
+                        foreach ($countries as $key => $geo) {
                             echo "<option value='$geo'>$geo</option>";
                         }
                         ?>
@@ -41,8 +44,9 @@
                     <select id="year" name="year" required>
                         <option value="<?php echo $year ?>"><?php echo $year ?></option>
                         <?php
-                        foreach ($years as $key => $year) {
-                            echo "<option value='$year'>$year</option>";
+                        $year = date("Y");
+                        for ($i = 1970; $i < $year + 1; $i++) {
+                            echo "<option value='$i'>$i</option>";
                         }
                         ?>
                     </select>

@@ -9,7 +9,9 @@ if ($_SESSION['admin'] !== true) {
 
 $id = $mysqli->real_escape_string($_GET['id']);
 
-$user = getUser($id);
+$adminService = new AdminService();
+
+$user = $adminService->getUser($id);
 
 if ($user) {
     $name = $user['name'];

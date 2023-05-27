@@ -8,7 +8,9 @@ if ($_SESSION['admin'] !== true) {
 
 $id = $mysqli->real_escape_string($_GET['id']);
 
-$data = getCountryAdmin($id);
+$adminService = new AdminService();
+
+$data = $adminService->getCountryAdmin($id);
 
 if ($data) {
     $bmi = $data['bmi'];
@@ -28,7 +30,7 @@ if ($data) {
 
     include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/views/admin/country_edit.php';
 } else {
-    $_SESSION["alert"] = "Country Data not found";
+    $_SESSION["alert_fail"] = "Country Data not found";
     header("Location: /obesity-visualizer/app/controllers/admin/countries.php");
     exit(0);
 }

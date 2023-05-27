@@ -79,6 +79,7 @@ function getFromBmi($bmi)
     $result = $mysqli->query($sql);
     $data = array();
     while ($row = $result->fetch_assoc()) {
+        $row["value"] = floatval($row["value"]);
         $data[] = $row;
     }
     return json_encode($data);
@@ -109,7 +110,7 @@ function getFromYearAndBmi($year, $bmi)
     while ($row = $result->fetch_assoc()) {
         $temp = array();
         $temp["country"] = $row['geo'];
-        $temp["value"] = $row['value'];
+        $temp["value"] = floatval($row['value']);
         $data[] = $temp;
     }
     return json_encode($data);
@@ -138,7 +139,7 @@ function getAllData()
                 $bmi = "Obese";
                 break;
         }
-        $data[$bmi][$row['geo']][$row['year']] = $row['value'];
+        $data[$bmi][$row['geo']][$row['year']] = floatval($row['value']);
     }
     return json_encode($data);
 }
