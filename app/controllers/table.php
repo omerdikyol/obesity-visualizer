@@ -1,8 +1,10 @@
 <?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/countryService.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/models/country.php';
 
 // Get country names
 $countries = getCountryNames();
