@@ -5,7 +5,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/controllers/Ad
 include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/controllers/CountryController.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/controllers/ChartController.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/controllers/UserController.php';
-//include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/controllers/LoginController.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/controllers/LoginController.php';
 
 
 header("Access-Control-Allow-Origin: *");
@@ -18,7 +18,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 
 // our endpoints start with /admin, /country or /user
-if ($uri[2] !== 'admin' && $uri[2] !== 'country' && $uri[2] !== 'user' && $uri[2] !== 'chart' && $uri[2] !== 'login') {
+if ($uri[2] !== 'admin' && $uri[2] !== 'country' && $uri[2] !== 'user' && $uri[2] !== 'chart' && $uri[2] !== 'auth') {
     header("HTTP/1.1 404 Not Found");
     exit();
 }
@@ -26,6 +26,8 @@ if ($uri[2] !== 'admin' && $uri[2] !== 'country' && $uri[2] !== 'user' && $uri[2
 // the id is optional and must be a number:
 $id = null;
 $idIndex = 3; // the index where the id is in the uri (usually 3)
+
+$type = null;
 
 // Make changes to the header depending on the endpoint
 switch ($uri[2]) {
@@ -53,11 +55,10 @@ switch ($uri[2]) {
             $year = null;
         }
         break;
-    case 'login':
+    case 'auth':
         if (isset($uri[3])) {
             $type = $uri[3];
-        } else {
-            $type = null;
+            $idIndex = 4; // no id needed
         }
         break;
     default:
@@ -79,8 +80,8 @@ if ($uri[2] === 'admin') {
     $controller = new UserController($requestMethod, $id);
 } else if ($uri[2] === 'chart') {
     $controller = new ChartController($requestMethod, $year, $bmi);
-} else if ($uri[2] === 'login') {
-    //$controller = new LoginController($requestMethod, $type);
+} else if ($uri[2] === 'auth') {
+    $controller = new LoginController($requestMethod, $type);
 }
 
 $controller->processRequest();

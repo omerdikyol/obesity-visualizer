@@ -13,14 +13,8 @@
     <div class="login-box">
         <h1>Login Form</h1>
         <div class="container" id="login-container">
-
-            <?php if ($is_invalid) : ?>
-            <div class="error-message">
-                <p>Invalid Email or Password</p>
-            </div>
-            <?php endif; ?>
-
-            <form method="post">
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/alert.php"; ?>
+            <form action="/obesity-visualizer/app/models/login.php" method="post" class="form">
                 <label id="login-label" for="email">Email</label>
                 <input type="text" id="email" name="email" placeholder="Enter your email" required
                     value="<?= htmlspecialchars($_POST["email"] ??  "") ?>">
