@@ -4,6 +4,9 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/controllers/AdminController.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/controllers/CountryController.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/controllers/ChartController.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/controllers/UserController.php';
+//include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/app/controllers/LoginController.php';
+
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -15,7 +18,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 
 // our endpoints start with /admin, /country or /user
-if ($uri[2] !== 'admin' && $uri[2] !== 'country' && $uri[2] !== 'user' && $uri[2] !== 'chart') {
+if ($uri[2] !== 'admin' && $uri[2] !== 'country' && $uri[2] !== 'user' && $uri[2] !== 'chart' && $uri[2] !== 'login') {
     header("HTTP/1.1 404 Not Found");
     exit();
 }
@@ -50,6 +53,13 @@ switch ($uri[2]) {
             $year = null;
         }
         break;
+    case 'login':
+        if (isset($uri[3])) {
+            $type = $uri[3];
+        } else {
+            $type = null;
+        }
+        break;
     default:
         break;
 }
@@ -60,16 +70,17 @@ if (isset($uri[$idIndex])) {
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-// pass the request method and user ID
+// pass the request method and parameters
 if ($uri[2] === 'admin') {
     $controller = new AdminController($requestMethod, $type, $id);
 } else if ($uri[2] === 'country') {
-
     $controller = new CountryController($requestMethod, $id, $type);
 } else if ($uri[2] === 'user') {
-    //$controller = new UserController($requestMethod, $id);
+    $controller = new UserController($requestMethod, $id);
 } else if ($uri[2] === 'chart') {
     $controller = new ChartController($requestMethod, $year, $bmi);
+} else if ($uri[2] === 'login') {
+    //$controller = new LoginController($requestMethod, $type);
 }
 
 $controller->processRequest();
