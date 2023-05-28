@@ -86,7 +86,7 @@ class UserService
         }
 
         # Date Validation
-        if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_POST['dateOfBirth'])) {
+        if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_POST['date_of_birth'])) {
             $_SESSION['regError'] = "Invalid date";
             header("Location: /obesity-visualizer/app/controllers/register.php");
             exit;
@@ -114,7 +114,7 @@ class UserService
             die("SQL Error: " . $stmt->error);
         }
 
-        $stmt->bind_param("sssss", $_POST['username'], $_POST['email'], $password_hash, $_POST['country'], $_POST['dateOfBirth']);
+        $stmt->bind_param("sssss", $_POST['username'], $_POST['email'], $password_hash, $_POST['country'], $_POST['date_of_birth']);
 
         $stmt->execute();
 

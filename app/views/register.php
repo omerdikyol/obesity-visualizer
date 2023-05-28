@@ -13,14 +13,10 @@
 <body>
     <h1>Registration Form</h1>
     <div class="container">
-        <?php if ($error) : ?>
-        <div class="error-message">
-            <?php echo $error; ?>
-        </div>
-        <?php endif; ?>
-        <form action="/obesity-visualizer/app/models/register.php" method="post">
-            <label for="Name">Name</label>
-            <input type="text" id="username" name="username" placeholder="Enter your name (required)" required>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/alert.php"; ?>
+        <form action="/obesity-visualizer/app/models/register.php" method="post" class="form">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name (required)" required>
 
             <label for="email">Email</label>
             <input type="text" id="email" name="email" placeholder="Enter your email (required)" required>
@@ -28,8 +24,8 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter your password (required)" required>
 
-            <label for="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" name="confirmPassword"
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password"
                 placeholder="Confirm your password (required)" required>
 
             <label for="country">Country</label>
@@ -41,8 +37,8 @@
                 ?>
             </select>
 
-            <label for="dateOfBirth">Date of Birth</label>
-            <input type="date" id="dateOfBirth" name="dateOfBirth">
+            <label for="date_of_birth">Date of Birth</label>
+            <input type="date" id="date_of_birth" name="date_of_birth">
 
             <label for="height">Height (cm)</label>
             <input type="text" id="height" name="height" placeholder="Enter your height (optional)">
