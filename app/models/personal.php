@@ -4,14 +4,28 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/services/userService.ph
 
 $id = $mysqli->real_escape_string($_SESSION['user_id']);
 
-$data = getPersonalData($id);
+$url = 'http://localhost/obesity-visualizer/user/' . $id;
 
-$data = json_decode($data, true);
+$c = curl_init();
+curl_setopt($c, CURLOPT_URL, $url);
+curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
+$res = curl_exec($c);
+curl_close($c);
 
-$name = $data['name'];
-$email = $data['email'];
-$country = $data['country'];
-$date_of_birth = $data['date_of_birth'];
-$height = $data['height'];
-$weight = $data['weight'];
-$bmi = $data['bmi'];;
+$arr = json_decode($res, true);
+
+if ($arr === null) {
+    // JSON decoding failed
+    $error = json_last_error_msg();
+    echo "JSON decoding error: $error";
+} else {
+    // Access the values from the array
+    $name = $arr['name'] ?? null;
+    $email = $arr['email'] ?? null;
+    $country = $arr['country'] ?? null;
+    $date_of_birth = $arr['date_of_birth'] ?? null;
+    $height = $arr['height'] ?? null;
+    $weight = $arr['weight'] ?? null;
+    $bmi = $arr['bmi'] ?? null;
+}

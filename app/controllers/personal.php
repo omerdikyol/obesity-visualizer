@@ -26,6 +26,8 @@ function editBtn() {
     // Remove Data table and show form
     document.getElementById('data_container').style.display = 'none';
     document.getElementById('edit_container').style.display = 'block';
+
+    <?php $_SESSION["edit_id"] = $id; ?>
 }
 
 // Export button function

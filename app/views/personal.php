@@ -19,6 +19,7 @@
     </div>
     <?php else : ?>
     <div class="container" id="data_container">
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/app/views/includes/alert.php"; ?>
         <div class="exportable" id="exportable">
             <h1>My Personal Data</h1>
             <div class="container">
@@ -72,7 +73,7 @@
     <div class="container" id="edit_container" style="display: none;">
         <h1 style="color: black;">Edit Personal Data</h1>
         <div class="container">
-            <form action="../controllers/editController.php" method="post" class="form">
+            <form action="/obesity-visualizer/app/models/personal_edit.php" method="post" class="form">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" value="<?php echo $name ?>" required>
 
