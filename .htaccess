@@ -1,6 +1,22 @@
-<ifmodule mod_rewrite.c>
+<IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteBase /obesity-visualizer/
+
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^ /obesity-visualizer/index.php [QSA,L]
-</ifmodule>
+
+    RewriteRule ^admin/([^/]+)/?$ AdminService/index.php?type=$1 [QSA,L]
+    RewriteRule ^admin/([^/]+)/([^/]+)/?$ AdminService/index.php?type=$1&id=$2 [QSA,L]
+
+    
+    RewriteRule ^chart/?$ ChartService/index.php [QSA,L]
+    RewriteRule ^chart/([^/]+)/?$ ChartService/index.php?bmi=$1 [QSA,L]
+    RewriteRule ^chart/([^/]+)/([^/]+)/?$ ChartService/index.php?bmi=$1&year=$2 [QSA,L]
+
+    RewriteRule ^country/([^/]+)/?$ CountryService/index.php?type=$1 [QSA,L]
+    RewriteRule ^country/([^/]+)/([^/]+)/?$ CountryService/index.php?type=$1&id=$2 [QSA,L]
+
+    RewriteRule ^auth/([^/]+)/?$ LoginService/index.php?type=$1 [QSA,L]
+
+    RewriteRule ^user/([^/]+)/?$ UserService/index.php?id=$1 [QSA,L]
+</IfModule>
