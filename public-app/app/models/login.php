@@ -29,13 +29,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $data = json_decode($res, true);
 
-    if ($data['success'] === true) {
+
+    if ($data['user'] !== null) { // User found
         $is_logged_in = true;
         $_SESSION['user'] = true;
         $_SESSION['user_id'] = $data['user']['id'];
-    } else {
+        $_SESSION['alert_success'] = 'Logged in successfully.';
+    } else { // User not found
         $is_invalid = true;
-        $_SESSION['alert_fail'] = 'Invalid email or password.' . ' ' . $res . ' ' . $err . ' ' . $errno . ' ' . $httpCode . ' ' . $data['success'] . ' ' . $data['user'] . ' ' . $url;
+        $_SESSION['alert_fail'] = 'Invalid email or password.';
+        header("Location: /obesity-visualizer/public-app/app/controllers/login.php");
+        exit;
     }
 
     // Check for errors
