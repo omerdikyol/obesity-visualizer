@@ -10,76 +10,76 @@
     <title>Obesity Visualizer</title>
     <link rel="stylesheet" href="/obesity-visualizer/public-app/public/css/style.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-        header {
-            background-color: #0073e6;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
+    header {
+        background-color: #0073e6;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+    }
 
-        h1 {
-            margin: 0;
-            font-size: 3em;
-        }
+    h1 {
+        margin: 0;
+        font-size: 3em;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
 
-        .card {
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
+    .card {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
 
-        .card h2 {
-            margin-top: 0;
-            font-size: 2em;
-        }
+    .card h2 {
+        margin-top: 0;
+        font-size: 2em;
+    }
 
-        .card p {
-            font-size: 1.2em;
-            line-height: 1.5;
-        }
+    .card p {
+        font-size: 1.2em;
+        line-height: 1.5;
+    }
 
-        .btn {
-            background-color: #0073e6;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
+    .btn {
+        background-color: #0073e6;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1.2em;
+        cursor: pointer;
+    }
 
-        .btn:hover {
-            background-color: #0059b3;
-        }
+    .btn:hover {
+        background-color: #0059b3;
+    }
 
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-        }
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
 
-        .col {
-            flex: 1;
-            margin: 10px;
-        }
+    .col {
+        flex: 1;
+        margin: 10px;
+    }
 
-        .col img {
-            width: 100%;
-            border-radius: 5px;
-        }
+    .col img {
+        width: 100%;
+        border-radius: 5px;
+    }
     </style>
 </head>
 
@@ -90,6 +90,7 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/public-app/app/views/includes/header.php"; ?>
     </header>
     <div class="container">
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/public-app/app/views/includes/alert.php"; ?>
         <div class="card">
             <p>Obesity is a growing problem in many countries around the world, including Europe. It is a complex issue
                 that is influenced by a variety of factors, including genetics, diet, physical activity levels, and
@@ -105,7 +106,8 @@
             <h2>Calculate your BMI</h2>
             <p>Use our BMI calculator to find out your own body mass index (BMI) and learn about potential health risks
                 associated with obesity.</p>
-            <a href="/obesity-visualizer/public-app/app/controllers/bmi_calc.php"><button class="btn">Calculate BMI</button></a>
+            <a href="/obesity-visualizer/public-app/app/controllers/bmi_calc.php"><button class="btn">Calculate
+                    BMI</button></a>
         </div>
         <div class="card">
             <p>But our website goes beyond just calculating your BMI. We also provide detailed visualizations of obesity
@@ -118,7 +120,8 @@
             <h2>Visualize obesity data</h2>
             <p>Explore obesity rates in Europe using a range of visualization tools, including pie charts, bar charts,
                 maps, line charts, and tables.</p>
-            <a href="/obesity-visualizer/public-app/app/controllers/visualize.php"><button class="btn">Visualize Data</button></a>
+            <a href="/obesity-visualizer/public-app/app/controllers/visualize.php"><button class="btn">Visualize
+                    Data</button></a>
         </div>
         <div class="card">
             <p>Our website is designed to be user-friendly and accessible to a wide range of users, from healthcare
