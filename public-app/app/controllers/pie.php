@@ -14,6 +14,8 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/vi
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="/obesity-visualizer/public-app/public/js/chartFunctions.js"></script>
+
 <script>
 var year = document.getElementById("year");
 var bmi = document.getElementById("bmi");
@@ -202,12 +204,26 @@ function updateChart() {
 
     // Remove if there are more than 6 options (which means they are from previous update)
     var select = document.getElementById("country_count");
-    select.innerHTML = `<option value='1'>1</option>"
+    var length = select.options.length;
+    if (length > 6) {
+        select.innerHTML = `<option value='1'>1</option>"
         "<option value='3'>3</option>"
-        "<option value='5' selected='selected'>5</option>"
+        "<option value='5'>5</option>"
         "<option value='10'>10</option>"
         "<option value='15'>15</option>"
         "<option value='20'>20</option>`;
+    }
+
+    // Select correct option which is equal to country count
+    var options = select.options;
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].value == count) {
+            options[i].selected = true;
+            break;
+        }
+    }
+
+
 
     request = {
         year: year,
@@ -283,42 +299,6 @@ function updateChart() {
 
     // Reset the info box
     resetInfoBox();
-}
-
-function listClicked(itemName) {
-    var svg = d3.select("#chart").select("svg");
-    // call click event of line that has country name
-    svg.selectAll(".arc")
-        .filter(function(d) {
-            return d["data"].country == itemName;
-        })
-        .dispatch("click");
-}
-
-function listHover(itemName) {
-    var svg = d3.select("#chart").select("svg");
-    // call mouseover event of line that has country name
-    svg.selectAll(".arc")
-        .filter(function(d) {
-            return d["data"].country == itemName;
-        })
-        .dispatch("mouseover");
-}
-
-function listOut() {
-    var svg = d3.select("#chart").select("svg");
-    // call mouseout event of all lines
-    svg.selectAll(".arc")
-        .dispatch("mouseout");
-}
-
-function resetInfoBox() {
-    var infoBox = document.getElementById("info-box");
-    infoBox.style.display = "none";
-}
-
-function closeInfoBox() {
-    document.getElementById("info-box").style.display = "none";
 }
 
 updateChart();

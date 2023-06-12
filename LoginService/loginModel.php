@@ -33,35 +33,35 @@ class LoginService
         if (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
             // Set error message and redirect to register page
             $_SESSION['alert_fail'] = "Invalid email";
-            header('Location: /obesity-visualizer/public-app/app/controllers/register.php');
+            header('Location: /obesity-visualizer/register');
         }
 
         # Check if password length is greater than 8
         if (strlen($input['password']) < 8) {
             $_SESSION['alert_fail'] = "Password must be at least 8 characters long";
-            header('Location: /obesity-visualizer/public-app/app/controllers/register.php');
+            header('Location: /obesity-visualizer/register');
         }
 
         # Password must contain at least one number and one letter
         if (!preg_match('/[a-z]/i', $input['password'])) {
             $_SESSION['alert_fail'] = "Password must contain at least one letter";
-            header('Location: /obesity-visualizer/public-app/app/controllers/register.php');
+            header('Location: /obesity-visualizer/register');
         }
         if (!preg_match('/[0-9]/', $input['password'])) {
             $_SESSION['alert_fail'] = "Password must contain at least one number";
-            header('Location: /obesity-visualizer/public-app/app/controllers/register.php');
+            header('Location: /obesity-visualizer/register');
         }
 
         # Check if both passwords match
         if ($input['password'] != $input['confirm_password']) {
             $_SESSION['alert_fail'] = "Passwords do not match";
-            header('Location: /obesity-visualizer/public-app/app/controllers/register.php');
+            header('Location: /obesity-visualizer/register');
         }
 
         # Date Validation
         if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $input['date_of_birth'])) {
             $_SESSION['alert_fail'] = "Invalid date";
-            header('Location: /obesity-visualizer/public-app/app/controllers/register.php');
+            header('Location: /obesity-visualizer/register');
         }
 
         # Hash password
@@ -73,7 +73,7 @@ class LoginService
         $user = $result->fetch_assoc();
         if ($user) {
             $_SESSION['alert_fail'] = "Email already exists";
-            header('Location: /obesity-visualizer/public-app/app/controllers/register.php');
+            header('Location: /obesity-visualizer/register');
         }
 
         # Insert user into database

@@ -17,25 +17,21 @@
             <div class="dashboard-content">
                 <h1>Admin Dashboard</h1>
                 <div class="adminButton-row">
-                    <a href="/obesity-visualizer/public-app/app/controllers/admin/users.php"
-                        class="adminButton user-list">
+                    <a href="/obesity-visualizer/admin/user-list" class="adminButton user-list">
                         <i class="fas fa-users"></i>
                         <span>User List</span>
                     </a>
-                    <a href="/obesity-visualizer/public-app/app/controllers/admin/user_create.php"
-                        class="adminButton add-user">
+                    <a href="/obesity-visualizer/admin/user-create" class="adminButton add-user">
                         <i class="fas fa-user-plus"></i>
                         <span>Add User</span>
                     </a>
                 </div>
                 <div class="adminButton-row">
-                    <a href="/obesity-visualizer/public-app/app/controllers/admin/countries.php"
-                        class="adminButton country-data">
+                    <a href="/obesity-visualizer/admin/country-list" class="adminButton country-data">
                         <i class="fas fa-globe"></i>
                         <span>Country Data</span>
                     </a>
-                    <a href="/obesity-visualizer/public-app/app/controllers/admin/country_create.php"
-                        class="adminButton add-country-data">
+                    <a href="/obesity-visualizer/admin/country-create" class="adminButton add-country-data">
                         <i class="fas fa-plus"></i>
                         <span>Add Country Data</span>
                     </a>

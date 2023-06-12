@@ -59,5 +59,5 @@ if ($httpCode === 200) {
     $_SESSION["alert_fail"] = "User data not updated.";
 }
 
-header("Location: /obesity-visualizer/public-app/app/controllers/personal.php");
+header("Location: /obesity-visualizer/personal");
 exit;

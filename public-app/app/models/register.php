@@ -50,16 +50,16 @@ curl_close($c);
 if ($errno !== 0) {
     // cURL error occurred
     $_SESSION["alert_fail"] = "cURL error: " . $error;
-    header("Location: /obesity-visualizer/public-app/app/controllers/register.php");
+    header("Location: /obesity-visualizer/register");
     exit;
 }
 
 if ($httpCode === 201) {
     // User created successfully
     $_SESSION["alert_success"] = "User created successfully";
-    header("Location: /obesity-visualizer/public-app/app/controllers/login.php");
+    header("Location: /obesity-visualizer/login");
 } else {
     // User not created
     $_SESSION["alert_fail"] = "User not created.";
-    header("Location: /obesity-visualizer/public-app/app/controllers/register.php");
+    header("Location: /obesity-visualizer/register");
 }

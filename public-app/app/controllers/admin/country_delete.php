@@ -8,7 +8,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/AdminService/admin
 
 
 if ($_SESSION['admin'] !== true) {
-    header('Location: /obesity-visualizer/public-app/app/controllers/admin/adminLogin.php');
+    header('Location: /obesity-visualizer/admin/login');
     exit;
 }
 

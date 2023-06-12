@@ -15,6 +15,8 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/vi
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="/obesity-visualizer/public-app/public/js/chartFunctions.js"></script>
+
 <script>
 var bmi = document.getElementById("bmi");
 
@@ -101,10 +103,11 @@ function createLine() {
             .domain(["2008", "2019"])
             .range([0, width]);
 
+
         var x = svg.append("g")
             .attr("transform", "translate(0," + height + ")") // put height instead of 500
             .attr("class", "x axis")
-            .call(d3.axisBottom(xAxis));
+            .call(d3.axisBottom(xAxis).tickFormat(d3.format("d")));
 
         // Add values to y-axis
         var yAxis = d3.scaleLinear()
@@ -257,8 +260,6 @@ function createLine() {
 
 }
 
-
-
 function handleMouseOver(d) {
     // Get country name
     var countryName = d3.select(this).data()[0][0];
@@ -330,55 +331,6 @@ function handleClick(d) {
 
     // Show info box
     infoBox.style.display = "block";
-}
-
-function listClicked(itemName) {
-    var svg = d3.select("#chart").select("svg");
-    // call click event of line that has country name
-    svg.selectAll("path")
-        .filter(function(d) {
-            // if it is line's text
-            if (typeof(d) == "object" && d != null)
-                return d[0] == itemName;
-        })
-        .dispatch("click");
-
-}
-
-function listHover(itemName) {
-    var svg = d3.select("#chart").select("svg");
-    // call mouseover event of line that has country name
-    svg.selectAll("path")
-        .filter(function(d) {
-            // if it is line's text
-            if (typeof(d) == "object" && d != null)
-                return d[0] == itemName;
-        })
-        .dispatch("mouseover");
-}
-
-function listOut() {
-    var svg = d3.select("#chart").select("svg");
-    // call mouseout event of all lines
-    svg.selectAll("path")
-        .dispatch("mouseout");
-}
-
-function labelHover() {
-    var svg = d3.select("#chart").select("svg");
-
-    // get country name
-    console.log(d3.select(this).data());
-}
-
-function reset() {
-    var svg = d3.select("#chart").select("svg");
-
-    updateLine();
-}
-
-function closeInfoBox() {
-    document.getElementById("info-box").style.display = "none";
 }
 
 updateLine();

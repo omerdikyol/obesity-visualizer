@@ -88,7 +88,6 @@ header h1 {
 
 /* Buttons */
 .button1 {
-    display: block;
     margin: 20px auto;
     padding: 10px 20px;
     background-color: #4caf50;
@@ -233,18 +232,6 @@ iframe {
     padding: 10px;
     margin-bottom: 5px;
     cursor: pointer;
-}
-
-/* Info box and hover name for country */
-.info-box {
-    display: none;
-    position: fixed;
-    padding: 2px;
-    border: 1px solid #ccc;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    background-color: #fff;
-    z-index: 9999;
 }
 
 #country-name {
@@ -454,6 +441,12 @@ iframe {
     height: 100%;
 }
 
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .visualization-buttons {
     display: flex;
     flex-direction: row;
@@ -500,6 +493,7 @@ iframe {
 }
 
 #info-box {
+    position: absolute;
     background-color: #f8f8f8;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -508,6 +502,8 @@ iframe {
     font-family: 'Helvetica Neue', sans-serif;
     padding: 20px;
     width: 300px;
+    cursor: grabbing;
+    display: none;
 }
 
 #info-box h2 {

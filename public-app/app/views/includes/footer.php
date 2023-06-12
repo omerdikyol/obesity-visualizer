@@ -93,12 +93,12 @@
         <div class="footer-column">
             <h4>Quick Links</h4>
             <ul>
-                <li><a href="/obesity-visualizer/public-app/app/controllers/home.php">Home</a></li>
-                <li><a href="/obesity-visualizer/public-app/app/controllers/visualize.php">Visualize</a></li>
-                <li><a href="/obesity-visualizer/public-app/app/controllers/bmi_calc.php">Calculate BMI</a></li>
-                <li><a href="/obesity-visualizer/public-app/app/controllers/personal.php">Personal</a></li>
-                <li><a href="/obesity-visualizer/public-app/app/controllers/admin.php">Admin</a></li>
-                <li><a href="/obesity-visualizer/public-app/app/views/projectReport.php">Project Report</a></li>
+                <li><a href="/obesity-visualizer/home">Home</a></li>
+                <li><a href="/obesity-visualizer/visualize">Visualize</a></li>
+                <li><a href="/obesity-visualizer/calculate-bmi">Calculate BMI</a></li>
+                <li><a href="/obesity-visualizer/personal">Personal</a></li>
+                <li><a href="/obesity-visualizer/admin/dashboard">Admin</a></li>
+                <li><a href="/obesity-visualizer/report">Project Report</a></li>
 
             </ul>
         </div>

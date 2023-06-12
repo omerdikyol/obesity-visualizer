@@ -48,7 +48,7 @@
 
                     <input type="submit" value="Submit" class="button1" name="user_create">
                 </form>
-                <a href="/obesity-visualizer/public-app/app/controllers/admin/users.php" style="text-decoration: none;">
+                <a href="/obesity-visualizer/admin/user-list" style="text-decoration: none;">
                     <button class="button1" id="usersBtn">Back</button></a>
             </div>
         </div>

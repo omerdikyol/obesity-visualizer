@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else { // User not found
         $is_invalid = true;
         $_SESSION['alert_fail'] = 'Invalid email or password.';
-        header("Location: /obesity-visualizer/public-app/app/controllers/login.php");
+        header("Location: /obesity-visualizer/login");
         exit;
     }
 
@@ -46,34 +46,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($errno !== 0) {
         // cURL error occurred
         $_SESSION["alert_fail"] = "cURL error: " . $error;
-        header("Location: /obesity-visualizer/public-app/app/controllers/login.php");
+        header("Location: /obesity-visualizer/login");
         exit;
     }
 
     if ($httpCode === 200) {
         // User logged in successfully
-        header("Location: /obesity-visualizer/public-app/app/controllers/home.php");
+        header("Location: /obesity-visualizer/home");
         exit;
     }
 
     if ($httpCode === 400) {
         // Bad request
         $_SESSION["alert_fail"] = "Bad request";
-        header("Location: /obesity-visualizer/public-app/app/controllers/login.php");
+        header("Location: /obesity-visualizer/login");
         exit;
     }
 
     if ($httpCode === 401) {
         // Unauthorized
         $_SESSION["alert_fail"] = "Unauthorized";
-        header("Location: /obesity-visualizer/public-app/app/controllers/login.php");
+        header("Location: /obesity-visualizer/login");
         exit;
     }
 
     if ($httpCode === 404) {
         // Not found
         $_SESSION["alert_fail"] = "Not found";
-        header("Location: /obesity-visualizer/public-app/app/controllers/login.php");
+        header("Location: /obesity-visualizer/login");
         exit;
     }
 }

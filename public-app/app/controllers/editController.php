@@ -63,6 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mysqli->close();
 
         // Redirect to personal page
-        header("Location: /obesity-visualizer/public-app/app/controllers/personal.php");
+        header("Location: /obesity-visualizer/personal");
     }
 }

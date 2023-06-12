@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obesity Visualizer</title>
     <link rel="stylesheet" href="/obesity-visualizer/public-app/public/css/style.css">
+    <style>
+    .password-requirements {
+        list-style-type: disc;
+        padding-left: 20px;
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .password-requirements li {
+        margin-bottom: 5px;
+        color: gray;
+        font-size: smaller;
+    }
+    </style>
 </head>
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/public-app/app/views/includes/header.php"; ?>
@@ -23,9 +37,14 @@
 
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter your password (required)" required>
+            <ul class="password-requirements">
+                <li>Password must be at least 8 characters long.</li>
+                <li>Password must contain at least one digit.</li>
+            </ul>
 
             <label for="confirm_password">Confirm Password</label>
-            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password (required)" required>
+            <input type="password" id="confirm_password" name="confirm_password"
+                placeholder="Confirm your password (required)" required>
 
             <label for="country">Country</label>
             <select id="country" name="country">

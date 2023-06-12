@@ -4,4 +4,4 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/models/admin/adminLogout.php';
-header("Location: /obesity-visualizer/public-app/app/controllers/admin/adminLogin.php");
+header("Location: /obesity-visualizer/admin/login");

@@ -17,7 +17,7 @@ if (isset($_GET['bmi'])) {
 
     if ($errno !== 0) {
         // cURL error occurred  
-        header("Location: /obesity-visualizer/public-app/app/controllers/admin/countries.php");
+        header("Location: /obesity-visualizer/admin/country-list");
         exit;
     }
 
@@ -25,6 +25,6 @@ if (isset($_GET['bmi'])) {
     echo $data;
 } else {
     // BMI not specified
-    header("Location: /obesity-visualizer/public-app/app/controllers/admin/countries.php");
+    header("Location: /obesity-visualizer/admin/country-list");
     exit;
 }

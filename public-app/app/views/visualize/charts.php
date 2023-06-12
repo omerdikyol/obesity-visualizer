@@ -73,7 +73,9 @@
                 <h1>Obesity rate by body mass index (BMI)</h1>
                 <h3 id="title" style="text-align: center;"></h3>
 
-                <div id="chart" style="text-align: center;"></div>
+                <div id="chart-container" class="center-container" style="overflow-x: scroll; white-space: nowrap;">
+                    <div id="chart"></div>
+                </div>
 
                 <!-- Add info box to show info of clicked country -->
                 <div class="info-box" id="info-box" style="position: absolute; top: 5%; right: 20%;">
