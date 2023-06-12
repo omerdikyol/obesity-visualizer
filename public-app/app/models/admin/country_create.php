@@ -43,7 +43,7 @@ if (isset($_POST['country_create'])) {
     if ($errno !== 0) {
         // cURL error occurred
         $_SESSION["alert_fail"] = "cURL error: " . $error;
-        header("Location: /obesity-visualizer/public-app/app/controllers/admin/countries.php");
+        header("Location: /obesity-visualizer/admin/country-list");
         exit;
     }
 
@@ -55,6 +55,6 @@ if (isset($_POST['country_create'])) {
         $_SESSION["alert_fail"] = "Country data not created.";
     }
 
-    header("Location: /obesity-visualizer/public-app/app/controllers/admin/countries.php");
+    header("Location: /obesity-visualizer/admin/country-list");
     exit;
 }

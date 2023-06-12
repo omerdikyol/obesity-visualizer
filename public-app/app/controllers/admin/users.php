@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if ($_SESSION['admin'] !== true) {
-    header('Location: /obesity-visualizer/public-app/app/controllers/admin/adminLogin.php');
+    header('Location: /obesity-visualizer/admin/login');
     exit;
 }
 

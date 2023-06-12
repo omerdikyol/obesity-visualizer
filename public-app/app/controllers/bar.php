@@ -14,6 +14,8 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/vi
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="/obesity-visualizer/public-app/public/js/chartFunctions.js"></script>
+
 <script>
 var year = document.getElementById("year");
 var bmi = document.getElementById("bmi");
@@ -92,8 +94,11 @@ function createBar(data) {
             left: 40
         },
 
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+        // Calculate the width of the chart based on the number of bars and the desired bar width
+        barWidth = window.innerWidth / 15,
+        visibleBars = 5,
+        width = barWidth * data.length - margin.left - margin.right,
+        height = window.innerHeight * 2 / 3 - margin.top - margin.bottom;
 
     var x = d3.scaleBand()
         .range([0, width])
@@ -101,7 +106,6 @@ function createBar(data) {
 
     var y = d3.scaleLinear()
         .range([height, 0]);
-
 
     var svg = d3.select("#chart").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -142,6 +146,11 @@ function createBar(data) {
 
     svg.append("g")
         .call(d3.axisLeft(y));
+
+
+    // Update the chart container width based on the visible bars
+    d3.select(".center-container")
+        .style("width", (barWidth * visibleBars + margin.left + margin.right) + "px")
 }
 
 function handleMouseover(d) {
@@ -211,6 +220,7 @@ function listOut() {
         .dispatch("mouseout");
 }
 
+// js file for avoiding code repetition in the chart controllers
 function resetInfoBox() {
     var infoBox = document.getElementById("info-box");
     infoBox.style.display = "none";

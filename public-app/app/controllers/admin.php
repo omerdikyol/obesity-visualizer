@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 // Check if the user is logged in
 if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
     // Redirect the user to the login page
-    header('Location: /obesity-visualizer/public-app/app/controllers/admin/adminLogin.php');
+    header('Location: /obesity-visualizer/admin/login');
     exit;
 } else {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/admin.php';

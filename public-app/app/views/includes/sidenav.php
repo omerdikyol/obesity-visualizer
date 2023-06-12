@@ -71,11 +71,11 @@
 
 <body>
     <div class="sidenav">
-        <a href="/obesity-visualizer/public-app/app/controllers/admin.php">Dashboard</a>
-        <a href="/obesity-visualizer/public-app/app/controllers/admin/users.php">Users</a>
-        <a href="/obesity-visualizer/public-app/app/controllers/admin/countries.php">Country Data</a>
-        <a href="/obesity-visualizer/public-app/app/controllers/admin/adminLogout.php">Log Out</a>
-        <a href="/obesity-visualizer/public-app/app/controllers/home.php">Get Back to Website</a>
+        <a href="/obesity-visualizer/admin/dashboard">Dashboard</a>
+        <a href="/obesity-visualizer/admin/user-list">Users</a>
+        <a href="/obesity-visualizer/admin/country-list">Country Data</a>
+        <a href="/obesity-visualizer/admin/logout">Log Out</a>
+        <a href="/obesity-visualizer/home">Get Back to Website</a>
     </div>
 </body>
 

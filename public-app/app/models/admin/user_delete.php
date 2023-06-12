@@ -20,7 +20,7 @@ curl_close($c);
 if ($errno !== 0) {
     // cURL error occurred
     $_SESSION["alert_fail"] = "cURL error: " . $error;
-    header("Location: /obesity-visualizer/public-app/app/controllers/admin/countries.php");
+    header("Location: /obesity-visualizer/admin/country-list");
     exit;
 }
 
@@ -30,4 +30,4 @@ if ($info === 200) {
     $_SESSION["alert_fail"] = "User data not deleted";
 }
 
-header("Location: /obesity-visualizer/public-app/app/controllers/admin/users.php");
+header("Location: /obesity-visualizer/admin/user-list");

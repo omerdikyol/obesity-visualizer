@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/AdminService/adminModel.php';
 
 if ($_SESSION['admin'] !== true) {
-    header('Location: /obesity-visualizer/public-app/app/controllers/admin/adminLogin.php');
+    header('Location: /obesity-visualizer/admin/login');
     exit;
 }
 
@@ -35,6 +35,6 @@ if ($data) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/admin/country_edit.php';
 } else {
     $_SESSION["alert_fail"] = "Country Data not found";
-    header("Location: /obesity-visualizer/public-app/app/controllers/admin/countries.php");
+    header("Location: /obesity-visualizer/admin/country-list");
     exit(0);
 }

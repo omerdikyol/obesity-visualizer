@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($errno !== 0) {
         // cURL error occurred
         $_SESSION["alert_fail"] = "cURL error: " . $error;
-        header("Location: /obesity-visualizer/public-app/app/controllers/admin/users.php");
+        header("Location: /obesity-visualizer/admin/user-list");
         exit;
     }
 
@@ -63,5 +63,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $_SESSION["alert_fail"] = "User edit failed";
 }
 
-header("Location: /obesity-visualizer/public-app/app/controllers/admin/users.php");
+header("Location: /obesity-visualizer/admin/user-list");
 exit(0);

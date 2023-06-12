@@ -32,10 +32,22 @@
             <i class="fas fa-table"></i>
             <span>Table</span>
         </button>
-        <button class="visButton export-btn" id="exportBtn" style="display: none; float: right;" onclick="exportWebsiteAsPdf()">
-            <i class="fas fa-file-pdf"></i>
-            <span>Export as PDF</span>
-        </button>
+        <div class="dropdown" style="display: none;" id="dropdown">
+            <button class="visButton export-btn" id="exportDropdownBtn" onclick="toggleExportDropdown()">
+                <i class="fas fa-file-export"></i>
+                <span>Export</span>
+            </button>
+            <div id="exportDropdownContent" class="dropdown-content">
+                <button class="visButton export-btn" id="pdfBtn" onclick="generatePDF()">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Export as PDF</span>
+                </button>
+                <button class="visButton export-btn" id="csvBtn" onclick="downloadCSV()">
+                    <i class="fas fa-file-csv"></i>
+                    <span>Export as CSV</span>
+                </button>
+            </div>
+        </div>
     </div>
 
 

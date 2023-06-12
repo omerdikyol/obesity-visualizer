@@ -17,10 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($result === true) {
         // Redirect the user to the admin dashboard page
-        header('Location: /obesity-visualizer/public-app/app/controllers/admin.php');
+        header('Location: /obesity-visualizer/admin/dashboard');
         exit;
     } else {
         // Display an error message
-        header('Location: /obesity-visualizer/public-app/app/controllers/admin/adminLogin.php');
+        header('Location: /obesity-visualizer/admin/login');
     }
 }

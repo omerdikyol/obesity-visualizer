@@ -1,6 +1,6 @@
 <?php
 
-header("Location: /obesity-visualizer/public-app/app/controllers/home.php");
+header("Location: /obesity-visualizer/home");
 
 /*
 // index.php

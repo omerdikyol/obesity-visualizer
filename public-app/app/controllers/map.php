@@ -13,6 +13,9 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/vi
 <script type='text/javascript' src='/obesity-visualizer/public-app/public/js/tinycolor.js'></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="/obesity-visualizer/public-app/public/js/chartFunctions.js"></script>
+
+
 <script type='text/javascript'>
 // Add Map and legend to chart div
 document.getElementById("chart").innerHTML = `<div style="position: relative;">
@@ -394,61 +397,4 @@ svgObject.addEventListener("load", function() {
         console.log("Request failed: " + textStatus);
     });
 });
-
-function listClicked(itemName) {
-    var svgDoc = svgObject.contentDocument;
-    // Get all paths in the SVG
-    var paths = svgDoc.querySelectorAll('path');
-
-    for (var i = 0; i < paths.length; i++) {
-        if (paths[i].getAttribute("name") == itemName) {
-            // Trigger click event
-            paths[i].dispatchEvent(new MouseEvent("click"));
-
-            // Hover over the country
-            paths[i].dispatchEvent(new MouseEvent("mouseover"));
-            // Wait 0.3 second
-            setTimeout(function() {
-                // Unhover the country
-                paths[i].dispatchEvent(new MouseEvent("mouseout"));
-            }, 300);
-
-            break;
-        }
-    }
-}
-
-function listHover(itemName) {
-    var svgDoc = svgObject.contentDocument;
-    // Get all paths in the SVG
-    var paths = svgDoc.querySelectorAll('path');
-
-    for (var i = 0; i < paths.length; i++) {
-        if (paths[i].getAttribute("name") == itemName) {
-            // Hover over the country
-            paths[i].dispatchEvent(new MouseEvent("mouseover"));
-            break;
-        }
-    }
-}
-
-function listOut() {
-    var svgDoc = svgObject.contentDocument;
-    // Get all paths in the SVG
-    var paths = svgDoc.querySelectorAll('path');
-
-    for (var i = 0; i < paths.length; i++) {
-        // Unhover the country
-        paths[i].dispatchEvent(new MouseEvent("mouseout"));
-    }
-}
-
-// Function for reseting info box
-function resetInfoBox() {
-    document.getElementById("info-box").style.display = "none";
-}
-
-function closeInfoBox() {
-    document.getElementById("info-box").style.display = "none";
-}
 </script>

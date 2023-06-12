@@ -5,9 +5,35 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
 
+    # Redirect requests for controller files
+    RewriteRule ^home$ public-app/app/controllers/home.php [L]
+    RewriteRule ^visualize$ public-app/app/controllers/visualize.php [L]
+    RewriteRule ^calculate-bmi$ public-app/app/controllers/bmi_calc.php [L]
+    RewriteRule ^personal$ public-app/app/controllers/personal.php [L]
+    RewriteRule ^logout$ public-app/app/controllers/logout.php [L]
+    RewriteRule ^login$ public-app/app/controllers/login.php [L]
+    RewriteRule ^register$ public-app/app/controllers/register.php [L]
+    RewriteRule ^report$ public-app/app/views/projectReport.php [L]
+
+    RewriteRule ^admin/login$ public-app/app/controllers/admin/adminLogin.php [L]
+    RewriteRule ^admin/dashboard$ public-app/app/controllers/admin.php [L]
+    RewriteRule ^admin/logout$ public-app/app/controllers/admin/adminLogout.php [L]
+
+    RewriteRule ^admin/user-list$ public-app/app/controllers/admin/users.php [L]
+    RewriteRule ^admin/user-edit/([^/]+)/?$ public-app/app/controllers/admin/user_edit.php?id=$1 [L]
+    RewriteRule ^admin/user-delete/([^/]+)/?$ public-app/app/controllers/admin/user_delete.php?id=$1 [L]
+    RewriteRule ^admin/user-create$ public-app/app/controllers/admin/user_create.php [L]
+
+    RewriteRule ^admin/country-list$ public-app/app/controllers/admin/countries.php [L]
+    RewriteRule ^admin/country-edit/([^/]+)/?$ public-app/app/controllers/admin/country_edit.php?id=$1 [L]
+    RewriteRule ^admin/country-delete/([^/]+)/?$ public-app/app/controllers/admin/country_delete.php?id=$1 [L]
+    RewriteRule ^admin/country-create$ public-app/app/controllers/admin/country_create.php [L]
+
+
+
+    # Redirect Service Requests to Service Folders
     RewriteRule ^admin/([^/]+)/?$ AdminService/index.php?type=$1 [QSA,L]
     RewriteRule ^admin/([^/]+)/([^/]+)/?$ AdminService/index.php?type=$1&id=$2 [QSA,L]
-
     
     RewriteRule ^chart/?$ ChartService/index.php [QSA,L]
     RewriteRule ^chart/([^/]+)/?$ ChartService/index.php?bmi=$1 [QSA,L]

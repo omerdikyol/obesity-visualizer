@@ -42,129 +42,47 @@ function enableButtons() {
     document.getElementById("barBtn").style.display = "inline-block";
     document.getElementById("mapBtn").style.display = "inline-block";
     document.getElementById("tableBtn").style.display = "inline-block";
-    document.getElementById("exportBtn").style.display = "inline-block";
+    document.getElementById("dropdown").style.display = "inline-block";
+    document.getElementById("pdfBtn").style.display = "inline-block";
+    document.getElementById("csvBtn").style.display = "inline-block";
 }
 
-function generatePDF() {
-    // Create a new jsPDF instance
-    const pdf = new jsPDF();
-    console.log("PDF generating");
+function downloadCSV() {
+    // Create a hidden anchor element
+    const link = document.createElement('a');
+    link.style.display = 'none';
 
-    // Get all the charts and iframes on the page
-    const elementsToExport = document.querySelectorAll('svg, iframe');
+    // Set the download URL
+    link.href = '/obesity-visualizer/public-app/app/db/eurostat_data.csv';
 
-    // Create a promise for each element to be exported
-    const exportPromises = [];
+    // Set the file name
+    link.download = 'data.csv';
 
-    // Loop through all the elements and add them to the array of promises
-    elementsToExport.forEach((element) => {
-        const exportPromise = new Promise((resolve) => {
-            // Get the current element's bounding rectangle
-            const elementRect = element.getBoundingClientRect();
+    // Append the anchor element to the document body
+    document.body.appendChild(link);
 
-            // Create a canvas element that has the same width and height as the current element
-            const elementCanvas = document.createElement('canvas');
-            elementCanvas.width = elementRect.width;
-            elementCanvas.height = elementRect.height;
+    // Trigger the click event
+    link.click();
 
-            // Get the canvas context
-            const elementCtx = elementCanvas.getContext('2d');
+    // Clean up
+    document.body.removeChild(link);
+}
 
-            // Draw the current element on the canvas
-            if (element instanceof SVGSVGElement) {
-                // If the current element is an SVG element, draw it on the canvas using canvg
-                canvg(elementCanvas, element.outerHTML);
-            } else {
-                // If the current element is an iframe, draw it on the canvas using dom-to-image
-                domtoimage.toPng(element).then((dataUrl) => {
-                    const img = new Image();
-                    img.src = dataUrl;
-                    elementCtx.drawImage(img, 0, 0);
-                });
+function toggleExportDropdown() {
+    var exportDropdown = document.getElementById("exportDropdownContent");
+    exportDropdown.classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches(".export-btn")) {
+        var exportDropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < exportDropdowns.length; i++) {
+            var exportDropdown = exportDropdowns[i];
+            if (exportDropdown.classList.contains("show")) {
+                exportDropdown.classList.remove("show");
             }
-
-            // Add the current element's canvas to the PDF
-            pdf.addImage(elementCanvas, elementRect.left, elementRect.top, elementRect.width,
-                elementRect.height);
-
-            // Resolve the promise
-            resolve();
-        });
-
-        // Add the promise to the array of promises
-        exportPromises.push(exportPromise);
-    });
-
-    // When all the promises are resolved, save the PDF
-    Promise.all(exportPromises).then(() => {
-        pdf.save('obesity-visualizer.pdf');
-        console.log("PDF generated");
-    });
-}
-
-function generatePDF2() {
-    // Export div with id "chartFrame" to PDF
-    var element = document.getElementById('chartFrame');
-
-    html2canvas(element).then((canvas) => {
-        var imgData = canvas.toDataURL('image/png');
-        var doc = new jsPDF();
-        doc.addImage(imgData, 'PNG', 10, 10);
-        doc.save('obesity-visualizer.pdf');
-    });
-
-    console.log("PDF generated");
-    setTimeout(function() {
-        window.location.reload();
-    }, 1000);
-}
-
-function generatePDF3() {
-    const element = document.getElementById('chartFrame');
-
-    // Create a configuration object for html2pdf
-    const config = {
-        filename: 'chart.pdf',
-        margin: 10,
-        image: {
-            type: 'jpeg',
-            quality: 0.98
-        },
-        html2canvas: {
-            scale: 2
-        },
-        jsPDF: {
-            unit: 'mm',
-            format: 'a4',
-            orientation: 'portrait'
         }
-    };
-
-    // Call the html2pdf function with the element and configuration
-    html2pdf().from(element).set(config).save();
-
-    console.log("PDF generated");
-}
-
-function generatePDF4() {
-    var pdf = new jsPDF('p', 'pt', 'a4');
-    pdf.setFontSize(18);
-    pdf.fromHTML(document.getElementById('html-2-pdfwrapper'),
-        margins.left, // x coord
-        margins.top, {
-            // y coord
-            width: margins.width // max width of content on PDF
-        },
-        function(dispose) {
-            headerFooterFormatting(pdf)
-        },
-        margins);
-
-    var iframe = document.createElement('iframe');
-    iframe.setAttribute('style',
-        'position:absolute;right:0; top:0; bottom:0; height:100%; width:650px; padding:20px;');
-    document.body.appendChild(iframe);
-
-    iframe.src = pdf.output('datauristring');
-}
+    }
+};
 </script>

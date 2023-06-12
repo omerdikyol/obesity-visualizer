@@ -14,7 +14,7 @@
 
 <body>
     <div class="main">
-        <a href="/obesity-visualizer/public-app/app/controllers/admin/user_create.php" class="adminButton adminSmall adminCreate" style="float: right; width: fit-content;">
+        <a href="/obesity-visualizer/admin/user-create" class="adminButton adminSmall adminCreate" style="float: right; width: fit-content;">
             <i class="fas fa-plus"></i>
             <span>Add User</span>
         </a>
@@ -44,11 +44,11 @@
                     <td><?php echo $user['weight'] ?></td>
                     <td><?php echo $user['bmi'] ?></td>
                     <td>
-                        <a href="/obesity-visualizer/public-app/app/controllers/admin/user_edit.php?id=<?php echo $user['id'] ?>" class="adminButton adminSmall adminEdit">
+                        <a href="/obesity-visualizer/admin/user-edit/<?php echo $user['id'] ?>" class="adminButton adminSmall adminEdit">
                             <i class="fas fa-edit"></i>
                             <span>Edit</span>
                         </a>
-                        <a href="/obesity-visualizer/public-app/app/controllers/admin/user_delete.php?id=<?php echo $user['id'] ?>" class="adminButton adminSmall adminDelete">
+                        <a href="/obesity-visualizer/admin/user-delete/<?php echo $user['id'] ?>" class="adminButton adminSmall adminDelete">
                             <i class="fas fa-trash-alt"></i>
                             <span>Delete</span>
                         </a>

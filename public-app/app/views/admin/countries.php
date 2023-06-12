@@ -15,7 +15,7 @@
 <body>
     <div class="main">
 
-        <a href="/obesity-visualizer/public-app/app/controllers/admin/country_create.php" class="adminButton adminSmall adminCreate" style="float: right; width: fit-content;">
+        <a href="/obesity-visualizer/admin/country-create" class="adminButton adminSmall adminCreate" style="float: right; width: fit-content;">
             <i class="fas fa-plus"></i>
             <span>Add Data</span>
         </a>
@@ -41,11 +41,11 @@
                     <td><?php echo $country['value'] ?></td>
                     <td><?php echo $country['flag'] ?></td>
                     <td>
-                        <a href="/obesity-visualizer/public-app/app/controllers/admin/country_edit.php?id=<?php echo $country['id'] ?>" class="adminButton adminSmall adminEdit">
+                        <a href="/obesity-visualizer/admin/country-edit/<?php echo $country['id'] ?>" class="adminButton adminSmall adminEdit">
                             <i class="fas fa-edit"></i>
                             <span>Edit</span>
                         </a>
-                        <a href="/obesity-visualizer/public-app/app/controllers/admin/country_delete.php?id=<?php echo $country['id'] ?>" class="adminButton adminSmall adminDelete">
+                        <a href="/obesity-visualizer/admin/country-delete/<?php echo $country['id'] ?>" class="adminButton adminSmall adminDelete">
                             <i class="fas fa-trash-alt"></i>
                             <span>Delete</span>
                         </a>
