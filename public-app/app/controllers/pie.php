@@ -13,8 +13,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/vi
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script src="/obesity-visualizer/public-app/public/js/chartFunctions.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
 var year = document.getElementById("year");
@@ -26,7 +25,9 @@ document.getElementById("resetButton").style.display = "none";
 
 // Add event listeners to dropdown menus
 year.addEventListener("change", updateChart);
+year.addEventListener("change", resetCount);
 bmi.addEventListener("change", updateChart);
+bmi.addEventListener("change", resetCount);
 count.addEventListener("change", updateChart);
 
 // Define the dimensions of the SVG container
@@ -202,7 +203,7 @@ function updateChart() {
         }
     }
 
-    // Remove if there are more than 6 options (which means they are from previous update)
+    // Reset country count to avoid duplicates
     var select = document.getElementById("country_count");
     var length = select.options.length;
     if (length > 6) {
@@ -213,17 +214,6 @@ function updateChart() {
         "<option value='15'>15</option>"
         "<option value='20'>20</option>`;
     }
-
-    // Select correct option which is equal to country count
-    var options = select.options;
-    for (var i = 0; i < options.length; i++) {
-        if (options[i].value == count) {
-            options[i].selected = true;
-            break;
-        }
-    }
-
-
 
     request = {
         year: year,
@@ -256,6 +246,7 @@ function updateChart() {
         });
 
         // If there are more than 20 countries' add new options to select
+        var select = document.getElementById("country_count");
         if (finalData.length > 20) {
             for (var i = 21; i <= finalData.length; i++) {
                 // add only multiples of 5 and finalData.length
@@ -290,6 +281,15 @@ function updateChart() {
         // Remove the old chart
         d3.select("#chart").select("svg").remove();
 
+        // Select correct option which is equal to country count
+        var options = select.options;
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].value == count) {
+                options[i].selected = true;
+                break;
+            }
+        }
+
         // Create the new chart
         createChart(finalData);
 
@@ -299,6 +299,104 @@ function updateChart() {
 
     // Reset the info box
     resetInfoBox();
+}
+
+function listClicked(itemName) {
+    var svg = d3.select("#chart").select("svg");
+    // call click event of line that has country name
+    svg.selectAll(".arc")
+        .filter(function(d) {
+            return d["data"].country == itemName;
+        })
+        .dispatch("click");
+}
+
+function listHover(itemName) {
+    var svg = d3.select("#chart").select("svg");
+    // call mouseover event of line that has country name
+    svg.selectAll(".arc")
+        .filter(function(d) {
+            return d["data"].country == itemName;
+        })
+        .dispatch("mouseover");
+}
+
+function listOut() {
+    var svg = d3.select("#chart").select("svg");
+    // call mouseout event of all lines
+    svg.selectAll(".arc")
+        .dispatch("mouseout");
+}
+
+function resetInfoBox() {
+    var infoBox = document.getElementById("info-box");
+    infoBox.style.display = "none";
+}
+
+function closeInfoBox() {
+    document.getElementById("info-box").style.display = "none";
+}
+
+function resetCount() {
+    var select = document.getElementById("country_count");
+    var count = select.value;
+    var length = select.options.length;
+    if (length > 6) {
+        select.innerHTML = `<option value='1'>1</option>"
+        "<option value='3'>3</option>"
+        "<option value='5'>5</option>"
+        "<option value='10'>10</option>"
+        "<option value='15'>15</option>"
+        "<option value='20'>20</option>`;
+    }
+
+    // Select correct option which is equal to country count
+    var options = select.options;
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].value == count) {
+            options[i].selected = true;
+            break;
+        }
+    }
+}
+
+// Hold and drag the info-box
+// Get the info-box element
+const infoBox = document.getElementById("info-box");
+
+// Variable to store the initial position of the info-box
+let initialX;
+let initialY;
+
+
+// Add event listener to the info-box for the mousedown event
+infoBox.addEventListener("mousedown", dragStart);
+
+function dragStart(event) {
+    // Store the initial position of the info-box
+    initialX = event.clientX - infoBox.offsetLeft;
+    initialY = event.clientY - infoBox.offsetTop;
+
+    // Attach event listeners for dragging and dropping
+    document.addEventListener("mousemove", drag);
+    document.addEventListener("mouseup", dragEnd);
+}
+
+function drag(event) {
+    event.preventDefault();
+
+    // Calculate the new position of the info-box
+    const newX = event.clientX - initialX;
+    const newY = event.clientY - initialY;
+
+    // Set the new position
+    infoBox.style.left = newX + "px";
+    infoBox.style.top = newY + "px";
+}
+
+function dragEnd() {
+    document.removeEventListener("mousemove", drag);
+    document.removeEventListener("mouseup", dragEnd);
 }
 
 updateChart();

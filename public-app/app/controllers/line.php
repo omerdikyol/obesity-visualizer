@@ -14,8 +14,12 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/vi
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 
 <script src="/obesity-visualizer/public-app/public/js/chartFunctions.js"></script>
+<script src="/obesity-visualizer/public-app/public/js/generatePDF.js"></script>
+
 
 <script>
 var bmi = document.getElementById("bmi");
@@ -26,6 +30,9 @@ document.getElementById("yearDiv").style.display = "none";
 
 // Add event listeners to dropdown menus
 bmi.addEventListener("change", updateLine);
+
+var xAxis = d3.scaleLinear();
+var yAxis = d3.scaleLinear();
 
 function updateLine() {
     var bmi = document.getElementById("bmi").value;
@@ -49,7 +56,6 @@ function createLine() {
     var countries = [];
     var request = [];
     var response = [];
-    var svg = d3.select("#chart").select("svg");
 
     // Insert data function to call asynchronously after data is retrieved
     function insertData(data) {
@@ -76,6 +82,7 @@ function createLine() {
         // Add the SVG element
         var svg = d3.select("#chart")
             .append("svg")
+            .attr("id", "line-chart") // Add ID to the SVG element
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
@@ -99,28 +106,47 @@ function createLine() {
             .text("% of Population");
 
         // Add year to x-axis
-        var xAxis = d3.scaleLinear()
-            .domain(["2008", "2019"])
+        xAxis.domain(["2008", "2019"])
             .range([0, width]);
 
-
-        var x = svg.append("g")
+        x = svg.append("g")
             .attr("transform", "translate(0," + height + ")") // put height instead of 500
             .attr("class", "x axis")
             .call(d3.axisBottom(xAxis).tickFormat(d3.format("d")));
 
         // Add values to y-axis
-        var yAxis = d3.scaleLinear()
-            .domain([d3.min(allValues) - 5, d3.max(allValues) + 5])
+        yAxis.domain([d3.min(allValues) - 5, d3.max(allValues) + 5])
             .range([height, 0]);
 
-        var y = svg.append("g")
+        y = svg.append("g")
             .attr("class", "y axis")
             .call(d3.axisLeft(yAxis));
 
         var color = d3.scaleOrdinal()
             .domain(countries)
             .range(colors);
+
+        // Add gray lines to the background
+        var backgroundLines = svg.append("g")
+            .attr("class", "background-lines");
+
+        var yValues = yAxis.ticks();
+
+        backgroundLines.selectAll("line")
+            .data(yValues)
+            .enter()
+            .append("line")
+            .attr("x1", 0)
+            .attr("x2", width)
+            .attr("y1", function(d) {
+                return yAxis(d);
+            })
+            .attr("y2", function(d) {
+                return yAxis(d);
+            })
+            .style("stroke", "#ddd")
+            .style("stroke-width", 1)
+            .style("stroke-dasharray", "2,2");
 
         // Add line for each country
         var line = d3.line()
@@ -129,7 +155,8 @@ function createLine() {
             })
             .y(function(d) {
                 return yAxis(d.value)
-            })
+            });
+
         svg.selectAll("myLines")
             .data(groupedData)
             .enter()
@@ -140,7 +167,7 @@ function createLine() {
             .attr("stroke", function(d) {
                 return color(d[0])
             })
-            .style("stroke-width", 4)
+            .style("stroke-width", 1.5) // Adjust the value as needed
             .style("fill", "none")
             .on("mouseover", handleMouseOver)
             .on("mouseout", handleMouseOut)
@@ -166,8 +193,8 @@ function createLine() {
             .attr("cy", function(d) {
                 return yAxis(d.value)
             })
-            .attr("r", 5)
-            .attr("stroke", "white")
+            .attr("r", 6) // Adjust the value as needed
+            .attr("stroke", "white");
 
         // Add country name to the left of the line
         svg.selectAll("myLabels")
@@ -194,12 +221,25 @@ function createLine() {
             .on("mouseover", handleMouseOver)
             .on("mouseout", handleMouseOut);
 
-        // Add zoom functionality
-        var chart = document.querySelector("#chart svg");
-        var zoom = d3.select(chart).call(d3.zoom().on("zoom", function() {
-            svg.attr("transform", d3.zoomTransform(this))
-        }));
+        // Add a clip path to the SVG element
+        svg.append("defs")
+            .append("clipPath")
+            .attr("id", "clip")
+            .append("rect")
+            .attr("width", width)
+            .attr("height", height);
+
+        // Add the line group and apply the clip path
+        lineGroup = svg.append("g")
+            .attr("class", "line-group")
+            .attr("clip-path", "url(#clip)");
+
+        // Add the dot group and apply the clip path
+        dotGroup = svg.append("g")
+            .attr("class", "dot-group")
+            .attr("clip-path", "url(#clip)");
     }
+
 
     // Set the dimensions and margins of the graph
     const width = window.innerWidth * 0.6;
@@ -213,18 +253,11 @@ function createLine() {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
     const colors = [
-        "#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c",
-        "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5",
-        "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f",
-        "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5",
-        "#393b79", "#637939", "#8c6d31", "#b5cf6b", "#843c39",
-        "#ad494a", "#d6616b", "#e7969c", "#7b4173", "#a55194",
-        "#ce6dbd", "#de9ed6", "#3182bd", "#6baed6", "#9ecae1",
-        "#e6550d", "#fd8d3c", "#fdae6b", "#fdd0a2", "#31a354",
-        "#74c476"
+        "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+        "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
+        "#393b79", "#7b4173", "#a55194", "#ce6dbd", "#de9ed6",
+        "#3182bd", "#6baed6", "#9ecae1", "#fd8d3c", "#fdae6b"
     ];
-
-    //! Working on Data
 
     // Get country names from countries array
     for (var key in countriesDict) {
@@ -257,7 +290,6 @@ function createLine() {
     }).always(function() {
         console.log("Finished");
     });
-
 }
 
 function handleMouseOver(d) {
