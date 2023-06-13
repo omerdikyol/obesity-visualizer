@@ -35,6 +35,8 @@
                     </select>
                 </div>
 
+                <button onclick="generatePDF()" id="updateButton" class="cool-button">PDF</button>
+
                 <!-- Add reset button -->
                 <button onclick="reset()" id="resetButton" class="cool-button">Reset</button>
 
@@ -73,7 +75,7 @@
                 <h1>Obesity rate by body mass index (BMI)</h1>
                 <h3 id="title" style="text-align: center;"></h3>
 
-                <div id="chart-container" class="center-container" style="overflow-x: scroll; white-space: nowrap;">
+                <div id="chart-container" class="center-container" style="white-space: nowrap;">
                     <div id="chart"></div>
                 </div>
 

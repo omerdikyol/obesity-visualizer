@@ -39,7 +39,7 @@
             <input type="password" id="password" name="password" placeholder="Enter your password (required)" required>
             <ul class="password-requirements">
                 <li>Password must be at least 8 characters long.</li>
-                <li>Password must contain at least one digit.</li>
+                <li>Password must contain at least one digit and one number.</li>
             </ul>
 
             <label for="confirm_password">Confirm Password</label>

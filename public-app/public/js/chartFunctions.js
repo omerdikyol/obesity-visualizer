@@ -3,51 +3,41 @@
 // These functions are used in the most/all of chart controllers
 
 function listClicked(itemName) {
-    var svgDoc = svgObject.contentDocument;
-    // Get all paths in the SVG
-    var paths = svgDoc.querySelectorAll('path');
-
-    for (var i = 0; i < paths.length; i++) {
-        if (paths[i].getAttribute("name") == itemName) {
-            // Trigger click event
-            paths[i].dispatchEvent(new MouseEvent("click"));
-
-            // Hover over the country
-            paths[i].dispatchEvent(new MouseEvent("mouseover"));
-            // Wait 0.3 second
-            setTimeout(function () {
-                // Unhover the country
-                paths[i].dispatchEvent(new MouseEvent("mouseout"));
-            }, 300);
-
-            break;
-        }
-    }
+    var svg = d3.select("#chart").select("svg");
+    // call click event of line that has country name
+    svg.selectAll("path")
+        .filter(function (d) {
+            // if it is line's text
+            if (typeof (d) == "object" && d != null)
+                return d[0] == itemName;
+        })
+        .dispatch("click");
 }
 
 function listHover(itemName) {
-    var svgDoc = svgObject.contentDocument;
-    // Get all paths in the SVG
-    var paths = svgDoc.querySelectorAll('path');
-
-    for (var i = 0; i < paths.length; i++) {
-        if (paths[i].getAttribute("name") == itemName) {
-            // Hover over the country
-            paths[i].dispatchEvent(new MouseEvent("mouseover"));
-            break;
-        }
-    }
+    var svg = d3.select("#chart").select("svg");
+    // call mouseover event of line that has country name
+    svg.selectAll("path")
+        .filter(function (d) {
+            // if it is line's text
+            if (typeof (d) == "object" && d != null)
+                return d[0] == itemName;
+        })
+        .dispatch("mouseover");
 }
 
 function listOut() {
-    var svgDoc = svgObject.contentDocument;
-    // Get all paths in the SVG
-    var paths = svgDoc.querySelectorAll('path');
+    var svg = d3.select("#chart").select("svg");
+    // call mouseout event of all lines
+    svg.selectAll("path")
+        .dispatch("mouseout");
+}
 
-    for (var i = 0; i < paths.length; i++) {
-        // Unhover the country
-        paths[i].dispatchEvent(new MouseEvent("mouseout"));
-    }
+function labelHover() {
+    var svg = d3.select("#chart").select("svg");
+
+    // get country name
+    console.log(d3.select(this).data());
 }
 
 function reset() {
@@ -102,4 +92,3 @@ function dragEnd() {
     document.removeEventListener("mousemove", drag);
     document.removeEventListener("mouseup", dragEnd);
 }
-
