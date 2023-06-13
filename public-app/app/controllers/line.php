@@ -276,7 +276,7 @@ function createLine() {
 
     // Make AJAX call to get the data for selected bmi
     $.ajax({
-        url: "/obesity-visualizer/public-app/app/models/line.php",
+        url: "http://localhost/obesity-visualizer/chart/",
         type: "GET",
         data: {
             bmi: bmi

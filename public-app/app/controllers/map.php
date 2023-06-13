@@ -230,11 +230,11 @@ function createMap() {
 
     // Make AJAX call to get the BMI data for each country and build the final data array
     $.ajax({
-        url: "/obesity-visualizer/public-app/app/models/year_bmi.php",
+        url: "http://localhost/obesity-visualizer/chart/",
         type: "GET",
         data: {
-            year: year,
-            bmi: bmi
+            bmi: bmi,
+            year: year
         },
     }).done(function(data) {
         data = JSON.parse(data);
@@ -365,11 +365,11 @@ svgObject.addEventListener("load", function() {
     var paths = svgDoc.querySelectorAll('path');
 
     $.ajax({
-        url: "/obesity-visualizer/public-app/app/models/year_bmi.php",
+        url: "http://localhost/obesity-visualizer/chart/",
         type: "GET",
         data: {
-            year: year,
-            bmi: bmi
+            bmi: bmi,
+            year: year
         },
     }).done(function(data) {
         data = JSON.parse(data);

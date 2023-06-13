@@ -49,11 +49,11 @@ function updateBar() {
 
     // AJAX call to get data for selected year and bmi
     $.ajax({
-        url: "/obesity-visualizer/public-app/app/models/year_bmi.php",
+        url: "http://localhost/obesity-visualizer/chart/",
         type: "GET",
         data: {
-            year: year,
-            bmi: bmi
+            bmi: bmi,
+            year: year
         },
     }).done(function(data) {
         data = JSON.parse(data);
