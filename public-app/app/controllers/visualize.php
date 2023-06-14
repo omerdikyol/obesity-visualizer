@@ -27,6 +27,10 @@ function Visualize(type) {
     chart.style.display = "block";
     chart.style.align = "center";
 
+    if (type == "map") {
+        chart.scrolling = "no";
+    }
+
     document.querySelector('.chart-holder').appendChild(chart);
 
     // Trigger reflow

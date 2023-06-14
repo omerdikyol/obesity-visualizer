@@ -2,24 +2,10 @@
 <html>
 
 <head>
+    <title>Obesity Visualizer</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obesity Visualizer</title>
     <link rel="stylesheet" href="/obesity-visualizer/public-app/public/css/style.css">
-    <style>
-    .password-requirements {
-        list-style-type: disc;
-        padding-left: 20px;
-        margin-top: 0;
-        margin-bottom: 20px;
-    }
-
-    .password-requirements li {
-        margin-bottom: 5px;
-        color: gray;
-        font-size: smaller;
-    }
-    </style>
 </head>
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/public-app/app/views/includes/header.php"; ?>

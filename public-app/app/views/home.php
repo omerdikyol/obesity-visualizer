@@ -9,78 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obesity Visualizer</title>
     <link rel="stylesheet" href="/obesity-visualizer/public-app/public/css/style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #0073e6;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 3em;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .card {
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .card h2 {
-            margin-top: 0;
-            font-size: 2em;
-        }
-
-        .card p {
-            font-size: 1.2em;
-            line-height: 1.5;
-        }
-
-        .btn {
-            background-color: #0073e6;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #0059b3;
-        }
-
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .col {
-            flex: 1;
-            margin: 10px;
-        }
-
-        .col img {
-            width: 100%;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 
 
@@ -89,10 +17,11 @@
     <header>
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/public-app/app/views/includes/header.php"; ?>
     </header>
-    <div class="container">
+    <div class="homeContainer">
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/public-app/app/views/includes/alert.php"; ?>
         <div class="card">
-            <p>Obesity is a growing problem in many countries around the world, including Europe. It is a complex issue
+            <p>Obesity is a ghomeRowing problem in many countries around the world, including Europe. It is a complex
+                issue
                 that is influenced by a variety of factors, including genetics, diet, physical activity levels, and
                 social and environmental factors. At Obesity Visualizer, we aim to provide a way for people to better
                 understand this problem and its impact on individuals and society as a whole.<br>
@@ -106,7 +35,7 @@
             <h2>Calculate your BMI</h2>
             <p>Use our BMI calculator to find out your own body mass index (BMI) and learn about potential health risks
                 associated with obesity.</p>
-            <a href="/obesity-visualizer/calculate-bmi"><button class="btn">Calculate
+            <a href="/obesity-visualizer/calculate-bmi"><button class="homeBtn">Calculate
                     BMI</button></a>
         </div>
         <div class="card">
@@ -120,7 +49,7 @@
             <h2>Visualize obesity data</h2>
             <p>Explore obesity rates in Europe using a range of visualization tools, including pie charts, bar charts,
                 maps, line charts, and tables.</p>
-            <a href="/obesity-visualizer/visualize"><button class="btn">Visualize
+            <a href="/obesity-visualizer/visualize"><button class="homeBtn">Visualize
                     Data</button></a>
         </div>
         <div class="card">
@@ -133,11 +62,11 @@
                 With our powerful tools and easy-to-use platform, you'll be able to better understand this complex
                 problem and take steps to improve your own health and wellbeing.</p>
         </div>
-        <div class="row">
-            <div class="col">
+        <div class="homeRow">
+            <div class="homeCol">
                 <img src="https://via.placeholder.com/400x300" alt="Obesity chart">
             </div>
-            <div class="col">
+            <div class="homeCol">
                 <img src="https://via.placeholder.com/400x300" alt="BMI calculator">
             </div>
         </div>
