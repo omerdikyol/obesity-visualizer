@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: Open Sans, sans-serif;
     background-color: #f5f5f5;
     margin: 0;
     padding: 0;
@@ -181,7 +183,7 @@ header h1 {
 
 /* Vizualization iframe */
 iframe {
-    width: 90%;
+    width: 95%;
     height: 100%;
     border: 2px solid black;
     min-height: 800px;
@@ -438,7 +440,11 @@ iframe {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    overflow: hidden;
+}
+
+.chart-holder iframe {
+    overflow: hidden;
 }
 
 .center-container {
@@ -673,4 +679,123 @@ label[for] {
 
 .export-btn:hover {
     background-color: #3a3a3a;
+}
+
+/* Home Page */
+.homeContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 2em;
+}
+
+.card p {
+    font-size: 1.2em;
+    line-height: 1.5;
+}
+
+.homeBtn {
+    background-color: #0073e6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.homeBtn:hover {
+    background-color: #0059b3;
+}
+
+.homeRow {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.homeCol {
+    flex: 1;
+    margin: 10px;
+}
+
+.homeCol img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* Register Page */
+.password-requirements {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.password-requirements li {
+    margin-bottom: 5px;
+    color: gray;
+    font-size: smaller;
+}
+
+/* BMI Calculator Page */
+.bmiForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.bmiInput[type="text"],
+.bmiInput[type="number"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.bmiInput[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.bmiInput[type="submit"]:hover {
+    background-color: #3e8e41;
+}
+
+.bmiResult {
+    display: none;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.bmiResult h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.bmiResult p {
+    font-size: 24px;
+    margin-top: 0;
 }

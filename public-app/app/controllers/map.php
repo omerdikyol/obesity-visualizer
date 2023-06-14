@@ -11,7 +11,11 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/vi
 ?>
 
 <script type='text/javascript' src='/obesity-visualizer/public-app/public/js/tinycolor.js'></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="/obesity-visualizer/public-app/public/js/generatePDF.js"></script>
 
 <script type='text/javascript'>
 // Add Map and legend to chart div
@@ -142,7 +146,6 @@ document.getElementById("chart").innerHTML = `<div style="position: relative;">
 
 // Hide unnecessary elements
 document.getElementById("countryCountDiv").style.display = "none";
-document.getElementById("resetButton").style.display = "none";
 
 var svgObject = document.getElementById("europe-map");
 var countryName = document.getElementById("country-name");
@@ -151,9 +154,9 @@ var year = document.getElementById("year");
 var bmi = document.getElementById("bmi");
 
 //! Add event listeners to year dropdown menus
-year.addEventListener("change", createMap);
+year.addEventListener("change", colorMap);
 year.addEventListener("change", resetInfoBox);
-bmi.addEventListener("change", createMap);
+bmi.addEventListener("change", colorMap);
 bmi.addEventListener("change", showLegend);
 bmi.addEventListener("change", resetInfoBox);
 
@@ -213,7 +216,7 @@ var bmi_ge30 = {
 };
 
 // Function for coloring the map
-function createMap() {
+function colorMap() {
     var svgDoc = svgObject.contentDocument;
     // Get all paths in the SVG
     var paths = svgDoc.querySelectorAll('path');
@@ -312,13 +315,11 @@ function createMap() {
             });
 
             paths[i].addEventListener("mouseover", function() {
-                // If country is already colored, make it a little bit darker
-                if (this.getAttribute("fill")[0] == "#") {
-                    // Get old color and make it a little bit darker using tinycolor.js
-                    var oldColor = tinycolor(this.getAttribute("fill"));
-                    var newColor = oldColor.darken(30).toString();
-                    this.style.fill = newColor;
-                }
+
+                // Get old color and make it a little bit darker using tinycolor.js
+                var oldColor = tinycolor(this.getAttribute("fill"));
+                var newColor = oldColor.darken(30).toString();
+                this.style.fill = newColor;
 
                 // Move country name to bottom of map like a line on the bottom
                 countryName.style.display = "block";
@@ -350,50 +351,76 @@ function createMap() {
     });
 }
 
-// Event Listener for initial load
-svgObject.addEventListener("load", function() {
-    // Call functions initially
-    createMap();
-    showLegend();
-    document.getElementById("info-box").style.display = "none";
+function createMap() {
+    // Event Listener for initial load
+    svgObject.addEventListener("load", function() {
+        // Call functions initially
+        colorMap();
+        showLegend();
+        document.getElementById("info-box").style.display = "none";
 
-    var year = document.getElementById("year").value;
-    var bmi = document.getElementById("bmi").value;
+        var year = document.getElementById("year").value;
+        var bmi = document.getElementById("bmi").value;
 
-    var svgDoc = svgObject.contentDocument;
-    // Get all paths in the SVG
-    var paths = svgDoc.querySelectorAll('path');
+        var svgDoc = svgObject.contentDocument;
+        // Get all paths in the SVG
+        var paths = svgDoc.querySelectorAll('path');
 
-    $.ajax({
-        url: "http://localhost/obesity-visualizer/chart/",
-        type: "GET",
-        data: {
-            bmi: bmi,
-            year: year
-        },
-    }).done(function(data) {
-        data = JSON.parse(data);
-        if (data[0] == null) {
-            return;
+        $.ajax({
+            url: "http://localhost/obesity-visualizer/chart/",
+            type: "GET",
+            data: {
+                bmi: bmi,
+                year: year
+            },
+        }).done(function(data) {
+            data = JSON.parse(data);
+            if (data[0] == null) {
+                return;
+            }
+
+            // Float the values
+            for (var i = 0; i < data.length; i++) {
+                data[i].value = parseFloat(data[i].value);
+            }
+
+            // Set Borders and Add event listeners to each path
+            for (var i = 0; i < paths.length; i++) {
+                // Add border
+                paths[i].setAttribute("stroke", "black");
+                paths[i].setAttribute("stroke-width", "0.6px");
+                paths[i].setAttribute("stroke-linejoin", "round");
+            }
+
+        }).fail(function(jqXHR, textStatus) {
+            console.log("Request failed: " + textStatus);
+        });
+
+        // Add zoom functionality
+        var svg = d3.select(svgDoc.querySelector("svg"));
+
+        // Create a zoom behavior
+        var zoom = d3.zoom()
+            .scaleExtent([1, 10]) // Set the minimum and maximum zoom levels
+            .on("zoom", zoomed);
+
+        svg.call(zoom); // Bind the zoom behavior to the SVG element
+
+        function zoomed(event) {
+            // Update the transform of the SVG element based on the zoom event
+            svg.attr("transform", event.transform);
         }
 
-        // Float the values
-        for (var i = 0; i < data.length; i++) {
-            data[i].value = parseFloat(data[i].value);
-        }
-
-        // Set Borders and Add event listeners to each path
-        for (var i = 0; i < paths.length; i++) {
-            // Add border
-            paths[i].setAttribute("stroke", "black");
-            paths[i].setAttribute("stroke-width", "0.6px");
-            paths[i].setAttribute("stroke-linejoin", "round");
-        }
-
-    }).fail(function(jqXHR, textStatus) {
-        console.log("Request failed: " + textStatus);
+        // Add reset zoom button
+        var resetZoomButton = document.getElementById("resetButton");
+        resetZoomButton.onclick = function() {
+            // Reset the zoom
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity);
+        };
     });
-});
+}
 
 function listClicked(itemName) {
     var svgDoc = svgObject.contentDocument;
@@ -410,7 +437,7 @@ function listClicked(itemName) {
             // Wait 0.3 second
             setTimeout(function() {
                 // Unhover the country
-                paths[i].dispatchEvent(new MouseEvent("mouseout"));
+                paths[i].dispatchEvent(new MouseEvent("mo   useout"));
             }, 300);
 
             break;
@@ -443,12 +470,6 @@ function listOut() {
     }
 }
 
-function reset() {
-    var svg = d3.select("#chart").select("svg");
-
-    updateLine();
-}
-
 function resetInfoBox() {
     var infoBox = document.getElementById("info-box");
     infoBox.style.display = "none";
@@ -466,7 +487,6 @@ const infoBox = document.getElementById("info-box");
 let initialX;
 let initialY;
 
-
 // Add event listener to the info-box for the mousedown event
 infoBox.addEventListener("mousedown", dragStart);
 
@@ -481,8 +501,6 @@ function dragStart(event) {
 }
 
 function drag(event) {
-    event.preventDefault();
-
     // Calculate the new position of the info-box
     const newX = event.clientX - initialX;
     const newY = event.clientY - initialY;
@@ -496,4 +514,6 @@ function dragEnd() {
     document.removeEventListener("mousemove", drag);
     document.removeEventListener("mouseup", dragEnd);
 }
+
+createMap();
 </script>
