@@ -47,29 +47,6 @@ function enableButtons() {
     document.getElementById("mapBtn").style.display = "inline-block";
     document.getElementById("tableBtn").style.display = "inline-block";
     document.getElementById("dropdown").style.display = "inline-block";
-    document.getElementById("pdfBtn").style.display = "inline-block";
-    document.getElementById("csvBtn").style.display = "inline-block";
-}
-
-function downloadCSV() {
-    // Create a hidden anchor element
-    const link = document.createElement('a');
-    link.style.display = 'none';
-
-    // Set the download URL
-    link.href = '/obesity-visualizer/public-app/app/db/eurostat_data.csv';
-
-    // Set the file name
-    link.download = 'data.csv';
-
-    // Append the anchor element to the document body
-    document.body.appendChild(link);
-
-    // Trigger the click event
-    link.click();
-
-    // Clean up
-    document.body.removeChild(link);
 }
 
 function toggleExportDropdown() {

@@ -13,11 +13,102 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/vi
 <script type='text/javascript' src='/obesity-visualizer/public-app/public/js/tinycolor.js'></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="/obesity-visualizer/public-app/public/js/generatePDF.js"></script>
+<script src="/obesity-visualizer/public-app/public/js/exportChart.js"></script>
+
 
 <script type='text/javascript'>
+window.jsPDF = window.jspdf.jsPDF;
+
+function convertSVGToObjectURL(svgObject) {
+    return new Promise((resolve) => {
+        const xmlSerializer = new XMLSerializer();
+        const svgString = xmlSerializer.serializeToString(svgObject.contentDocument.documentElement);
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            resolve(canvas.toDataURL('image/png'));
+        };
+        img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString)));
+    });
+}
+
+async function generatePDF() {
+    const exportable = document.getElementById('exportable');
+    const svgObject = document.getElementById('europe-map');
+    const infoBox = document.getElementById('info-box');
+    const legends = document.querySelectorAll('.legend');
+
+    // Convert the SVG object to a Data URL
+    const svgDataURL = await convertSVGToObjectURL(svgObject);
+    svgObject.style.display = 'none';
+
+    // Create a new image element with the Data URL as its source
+    const svgImage = new Image();
+    svgImage.src = svgDataURL;
+    svgImage.style.width = '100%';
+    exportable.appendChild(svgImage);
+
+    // Modify the CSS properties of the info-box div to move it below the map
+    const originalInfoBoxStyle = infoBox.getAttribute('style');
+    infoBox.style.position = 'static';
+    infoBox.style.marginTop = '1rem';
+
+    // Move the legends above the map and set their display to block
+    legends.forEach((legend) => {
+        const originalLegendStyle = legend.getAttribute('style');
+        legend.setAttribute('data-original-style',
+            originalLegendStyle); // Store the original style in a data attribute
+        if (legend.style.display !== 'none') {
+            legend.style.position = 'static';
+            legend.style.marginTop = '1rem';
+        }
+    });
+
+    // Convert the div to a canvas using html2canvas
+    html2canvas(exportable, {
+        scale: 2
+    }).then((canvas) => {
+        // Create a new jsPDF instance
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        // Calculate the width and height of the canvas in mm
+        const imgWidth = (canvas.width * 25.4) / 96;
+        const imgHeight = (canvas.height * 25.4) / 96;
+
+        // Calculate the necessary dimensions to fit the content into the A4 page size
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const scaleX = pageWidth / imgWidth;
+        const scaleY = pageHeight / imgHeight;
+        const scale = Math.min(scaleX, scaleY);
+
+        // Add the canvas image to the PDF with the calculated dimensions
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth * scale, imgHeight * scale);
+
+        // Save the PDF
+        pdf.save('chart_data.pdf');
+
+        // Remove the temporary image element and show the original SVG object
+        exportable.removeChild(svgImage);
+        svgObject.style.display = '';
+
+        // Restore the original CSS properties of the info-box div and legends
+        infoBox.setAttribute('style', originalInfoBoxStyle);
+        legends.forEach((legend) => {
+            const originalLegendStyle = legend.getAttribute('data-original-style');
+            legend.setAttribute('style', originalLegendStyle);
+        });
+    });
+}
+
+
 // Add Map and legend to chart div
 document.getElementById("chart").innerHTML = `<div style="position: relative;">
             <!-- Add svg map -->

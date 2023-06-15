@@ -20,7 +20,7 @@
     <div class="homeContainer">
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/public-app/app/views/includes/alert.php"; ?>
         <div class="card">
-            <p>Obesity is a ghomeRowing problem in many countries around the world, including Europe. It is a complex
+            <p>Obesity is a growing problem in many countries around the world, including Europe. It is a complex
                 issue
                 that is influenced by a variety of factors, including genetics, diet, physical activity levels, and
                 social and environmental factors. At Obesity Visualizer, we aim to provide a way for people to better

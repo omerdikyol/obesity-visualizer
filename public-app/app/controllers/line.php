@@ -15,31 +15,14 @@ include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/vi
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-<script src="http://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
 
 <script src="/obesity-visualizer/public-app/public/js/chartFunctions.js"></script>
+<script src="/obesity-visualizer/public-app/public/js/exportChart.js"></script>
 
 
 <script>
-function generatePDF2() {
-    console.log("generatePDF2");
-    // Generate PDF using kendoui
-    kendo.drawing.drawDOM("#exportable", {
-        paperSize: "A4",
-        margin: {
-            top: "1cm",
-            bottom: "1cm"
-        },
-        scale: 0.8,
-        height: 500
-    }).then(function(group) {
-        kendo.drawing.pdf.saveAs(group, "chart.pdf");
-    });
-}
-
-
 var bmi = document.getElementById("bmi");
 
 // Hide unnecessary elements
