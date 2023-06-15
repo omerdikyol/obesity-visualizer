@@ -12,8 +12,14 @@
 <body>
     <section>
 
+
         <div class="wrapper">
             <div id="leftOverlay">
+                <div id="exportDiv">
+                    <label style="display: inline-block;">Export As:</label>
+                    <button onclick=" generatePDF()" class="chart-exp-button" style="margin-right: 10px;">PDF</button>
+                    <button onclick="generateCSV()" class="chart-exp-button">CSV</button>
+                </div>
                 <div id="yearDiv">
                     <!-- Add dropdown menu for selecting year and hold that value in a variable -->
                     <label for="year" style="display: inline-block;">Year:</label>
@@ -34,8 +40,6 @@
                         <option value="Obese">Obese</option>
                     </select>
                 </div>
-
-                <button onclick="generatePDF()" id="updateButton" class="cool-button">PDF</button>
 
                 <!-- Add reset button -->
                 <button onclick="reset()" id="resetButton" class="cool-button">Reset Zoom</button>
