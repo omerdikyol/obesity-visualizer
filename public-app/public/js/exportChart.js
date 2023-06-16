@@ -135,8 +135,11 @@ function generateCSV() {
     var bmiObj = document.getElementById('bmi');
     var yearObj = document.getElementById('year');
 
-    var bmi = (bmiObj.style.display === 'none') ? null : bmiObj.value;
-    var year = (yearObj.style.display === 'none') ? null : yearObj.value;
+    var bmiDiv = document.getElementById('bmiDiv');
+    var yearDiv = document.getElementById('yearDiv');
+
+    var bmi = (bmiDiv.style.display === 'none') ? null : bmiObj.value;
+    var year = (yearDiv.style.display === 'none') ? null : yearObj.value;
 
     switch (bmi) {
         case "Overweight":
