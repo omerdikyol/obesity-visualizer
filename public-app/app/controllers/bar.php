@@ -95,12 +95,30 @@ function createBar(data) {
     var margin = {
             top: 20,
             right: 30,
-            bottom: 30,
+            bottom: 60,
             left: 40
         },
 
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+        //barWidth = 100,
+        //visibleBars = 5,
+        //estimatedWidth = barWidth * data.length,
+
+        //width = (estimatedWidth > window.innerWidth / 2) ? estimatedWidth : window.innerWidth / 2,
+
+        //width = estimatedWidth - margin.left - margin.right,
+        //height = window.innerHeight * 2 / 3 - margin.top - margin.bottom;
+
+
+        width = window.innerWidth * 0.6,
+        height = window.innerHeight * 0.6;
+
+    // Set the style of the chart container
+    d3.select("#chart-container")
+        .style("width", (width) + "px")
+        .style("overflow-x", "scroll")
+        .style("box-sizing", "border-box")
+        .style("margin", "auto")
+        .style("display", "block");
 
     var x = d3.scaleBand()
         .range([0, width])
@@ -116,13 +134,32 @@ function createBar(data) {
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
+    const maxY = d3.max(data, function(d) {
+        return d.value;
+    });
+
+    const roundedMaxY = Math.round(10 * (maxY + 5)) / 10; // Round to nearest higher 10
+
     x.domain(data.map(function(d) {
         return d.country;
     }));
-    y.domain([0, d3.max(data, function(d) {
-        return d.value;
-    })]);
+    y.domain([0, roundedMaxY]);
 
+
+    // Add gray lines to the background
+    var backgroundLines = svg.append("g")
+        .attr("class", "background-lines");
+
+    backgroundLines.selectAll("line")
+        .data(y.ticks())
+        .enter().append("line")
+        .attr("x1", 0)
+        .attr("x2", width)
+        .attr("y1", y)
+        .attr("y2", y)
+        .style("stroke", "#ddd");
+
+    // Append the bars
     svg.selectAll(".bar")
         .data(data)
         .enter().append("rect")
@@ -142,12 +179,20 @@ function createBar(data) {
         .on("mouseout", handleMouseout)
         .on("click", handleClick);
 
+    // Append the x-axis
     svg.append("g")
+        .call(d3.axisBottom(x))
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .style("font-size", "12px")
+        .attr("transform", "translate(-10,0)rotate(-45)")
+        .attr("dx", "-.8em");
 
+    // Append the y-axis
     svg.append("g")
-        .call(d3.axisLeft(y));
+        .call(d3.axisLeft(y))
+        .style("font-size", "12px");
 }
 
 function handleMouseover(d) {

@@ -105,9 +105,9 @@
                     value="<?php echo $weight ?>">
 
                 <div style="display: flex;justify-content: center;align-items: center;">
-                    <input type="submit" value="Submit" class="edit_button">
+                    <input type="submit" value="Submit" class="button1">
                     <input type="button" value="Cancel" onclick="window.location.href='/obesity-visualizer/personal'"
-                        class="edit_button">
+                        class="button1">
                 </div>
 
             </form>

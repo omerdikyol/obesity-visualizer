@@ -120,6 +120,8 @@ function createChart(data) {
         var sliceName = d3.select(this).data()[0]['data']['country'];
         var sliceValue = d3.select(this).data()[0]['data']['value'];
 
+        if (sliceName === "Others") return; // Don't show info box for "Others" slice
+
         // Show info box
         var infoBox = document.getElementById("info-box");
         var year = document.getElementById("year").value;
@@ -141,6 +143,8 @@ function createChart(data) {
         d3.select(this).transition().duration(200).style("opacity", 1);
 
         var sliceName = d3.select(this).data()[0]['data']['country'];
+
+        if (sliceName === "Others") return; // Don't change opacity for "Others" slice
 
         // Dim the opacity of all other slices
         var slices = svg.selectAll(".slice")
