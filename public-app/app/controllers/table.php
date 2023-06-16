@@ -145,6 +145,9 @@ function updateTable(header) {
         d3.select("table").remove();
 
         createTable(finalData);
+
+        // Save data to session storage (for exporting the chart as CSV)
+        sessionStorage.setItem("data", JSON.stringify(finalData));
     });
 }
 
@@ -209,17 +212,6 @@ function createTable(data) {
         .style("border", "1px black solid")
         .style("padding", "5px")
         .style("text-align", "center");
-
-    /*
-    // Add scroll bar to table
-    d3.select("#chart")
-        .style("overflow", "auto")
-        .style("max-height", window.innerHeight * 9 / 10 + "px");
-
-    // Make chart's width same as table's width + 10px (for scrollbar)
-    d3.select("#chart")
-        .style("width", table.node().getBoundingClientRect().width + 20 + "px");
-        */
 }
 
 updateTable();
