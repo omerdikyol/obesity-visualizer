@@ -108,9 +108,7 @@ function createChart(data) {
         .attr("class", "arc text");
 
 
-    function handleLoad(d) {
-        console.log("Loaded");
-    }
+    function handleLoad(d) {}
 
     function handleClick(d) {
         // Toggle the clicked state of the slice
@@ -234,7 +232,6 @@ function updateChart() {
         data: request,
     }).done(function(data) {
         data = JSON.parse(data);
-        console.log(data);
         if (data[0] == null) {
             return;
         }
@@ -267,7 +264,6 @@ function updateChart() {
 
         // Create others category if there are more than "count" countries
         if (count < finalData.length) {
-            console.log("count: " + count);
             // put rest to Others
             var others = {
                 country: "Others",
@@ -299,6 +295,13 @@ function updateChart() {
 
         // Create the new chart
         createChart(finalData);
+
+        // Save data to session storage (for exporting the chart as CSV)
+        // Convert country codes to country names first
+        for (var i = 0; i < data.length; i++) {
+            data[i].country = countriesDict[data[i].country];
+        }
+        sessionStorage.setItem("data", JSON.stringify(data));
 
     }).fail(function(jqXHR, textStatus) {
         console.log("Request failed: " + textStatus);

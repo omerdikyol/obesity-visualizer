@@ -62,16 +62,16 @@ function createLine() {
     function insertData(data) {
         // Change from country codes to country names using countriesDict
         for (var i = 0; i < data.length; i++) {
-            data[i].geo = countriesDict[data[i].geo];
+            data[i].country = countriesDict[data[i].country];
         }
 
         // Remove null and undefined values
         data = data.filter(function(d) {
-            return d["geo"] != null || d["geo"] != undefined;
+            return d["country"] != null || d["country"] != undefined;
         });
 
         // Group the data by country
-        var groupedData = d3.group(data, d => d.geo);
+        var groupedData = d3.group(data, d => d.country);
 
         // Get all values
         var allValues = [];
@@ -283,14 +283,25 @@ function createLine() {
             bmi: bmi
         }
     }).done(function(data) {
-        response = JSON.parse(data);
+        data = JSON.parse(data);
         // call insertData function with response
-        insertData(response);
+
+        // Change geo column to country
+        data = data.map(function(d) {
+            d.country = d.geo;
+            delete d.geo;
+            return d;
+        });
+
+        insertData(data);
+
+        // Save data to session storage (for exporting the chart as CSV)
+        sessionStorage.setItem("data", JSON.stringify(data));
     }).fail(function() {
         console.log("Error retrieving BMI data for " + request[i].country);
-    }).always(function() {
-        console.log("Finished");
-    });
+    }).always(function() {});
+
+
 }
 
 function handleMouseOver(d) {
@@ -306,7 +317,7 @@ function handleMouseOver(d) {
             .filter(function(d) {
                 // if it is line
                 if (typeof(d) == "object" && d != null)
-                    return d.geo != countryName;
+                    return d.country != countryName;
             })
             .style("opacity", 0.1);
     }

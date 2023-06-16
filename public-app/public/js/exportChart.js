@@ -141,67 +141,82 @@ function generateCSV() {
     var bmi = (bmiDiv.style.display === 'none') ? null : bmiObj.value;
     var year = (yearDiv.style.display === 'none') ? null : yearObj.value;
 
+    var bmiSecond = null;
+
     switch (bmi) {
         case "Overweight":
-            bmi = "BMI_GE25";
+            bmiSecond = "BMI_GE25";
             break;
         case "Pre-obese":
-            bmi = "BMI25-29";
+            bmiSecond = "BMI25-29";
             break;
         case "Obese":
-            bmi = "BMI_GE30";
+            bmiSecond = "BMI_GE30";
             break;
         default:
             break;
     }
 
-    // Read  CSV file
-    const reader = new FileReader();
+    // Get data from session storage
+    var data = sessionStorage.getItem("data");
+    var dataObj = JSON.parse(data);
 
-    reader.onload = function (event) {
-        const csvData = event.target.result;
-        const lines = csvData.split('\n');
-        const filteredLines = [];
+    // Clear data from session storage
+    sessionStorage.removeItem("data");
 
-        filteredLines.push(lines[0]); // Add the header line to the filtered lines
+    // Generate CSV
+    const lines = [];
+    const headers = [];
 
-        // Filter the CSV data based on the criteria
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
-            const columns = line.split(',');
+    // Add BMI and year to top of file
+    lines.push("Obesity Visualizer");
+    lines.push("BMI: " + bmi);
+    if (year !== null) {
+        lines.push("Year: " + year);
+    }
+    lines.push(""); // Add empty line
 
-            // Check if year is null
-            if (year === null) {
-                if (columns[0] === bmi) { // Check if the BMI column matches the selected BMI
-                    filteredLines.push(line);
-                }
-            }
-            else {
-                if (columns[0] === bmi && columns[2] === year) { // Check if the BMI and year columns match the selected BMI and year
-                    filteredLines.push(line);
-                }
+    // Add headers
+    headers.push("country"); // Add country header first
+    for (const key in dataObj[0]) {
+        if (dataObj[0].hasOwnProperty(key) && key !== "country") { // Add all other headers
+            const element = dataObj[0][key];
+            if (key === "bmi" || key === "id") continue;
+            headers.push(key);
+        }
+    }
+    lines.push(headers.join(","));
+
+    // Add data
+    for (let i = 0; i < dataObj.length; i++) {
+        const line = [];
+        const columns = dataObj[i];
+
+        if (columns["country"] === undefined) continue; // Skip if country is undefined
+
+        line.push(columns["country"]); // Add country first
+        for (const key in columns) {
+            if (key === "bmi" || key === "id") continue;
+            if (columns.hasOwnProperty(key) && key !== "country") {
+                const element = columns[key];
+                line.push(element);
             }
         }
+        lines.push(line.join(","));
+    }
 
-        // Generate the filtered CSV content
-        const filteredCSV = filteredLines.join('\n');
+    // Generate the filtered CSV content
+    const filteredCSV = lines.join('\n');
 
-        // Create a download link for the filtered CSV file
-        const link = document.createElement('a');
-        link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(filteredCSV));
-        link.setAttribute('download', "chart_data.csv");
+    // Create a download link for the filtered CSV file
+    const link = document.createElement('a');
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(filteredCSV));
+    link.setAttribute('download', "chart_data.csv");
 
-        // Trigger the download
-        link.click();
+    // Trigger the download
+    link.click();
 
-        // Clean up
-        year = null;
-        bmi = null;
-    };
-
-    // Read the CSV file using its location
-    fetch("/obesity-visualizer/public-app/app/db/eurostat_data.csv")
-        .then(response => response.blob())
-        .then(blob => reader.readAsText(blob))
-        .catch(error => console.log('Error:', error));
+    // Clean up
+    year = null;
+    bmi = null;
 }

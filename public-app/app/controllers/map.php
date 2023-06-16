@@ -437,6 +437,14 @@ function colorMap() {
             });
         }
 
+        // Save data to session storage (for exporting the chart as CSV)
+        // Convert country codes to country names
+        for (var i = 0; i < data.length; i++) {
+            data[i].country = countriesDict[data[i].country];
+        }
+
+        sessionStorage.setItem("data", JSON.stringify(data));
+
     }).fail(function(jqXHR, textStatus) {
         console.log("Request failed: " + textStatus);
     });

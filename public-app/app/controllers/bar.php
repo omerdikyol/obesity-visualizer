@@ -62,7 +62,6 @@ function updateBar() {
         },
     }).done(function(data) {
         data = JSON.parse(data);
-        console.log(data);
         if (data[0] == null) {
             return;
         }
@@ -82,6 +81,9 @@ function updateBar() {
 
         // Create the new chart
         createBar(data);
+
+        // Save data to session storage (for exporting the chart as CSV)
+        sessionStorage.setItem("data", JSON.stringify(data));
 
     }).fail(function(jqXHR, textStatus) {
         console.log("Request failed: " + textStatus);
@@ -239,7 +241,6 @@ function listClicked(itemName) {
     // call click event of line that has country name
     svg.selectAll(".bar")
         .filter(function(d) {
-            console.log(d);
             return d.country == itemName;
         })
         .dispatch("click");

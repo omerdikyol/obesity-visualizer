@@ -35,9 +35,6 @@ function listOut() {
 
 function labelHover() {
     var svg = d3.select("#chart").select("svg");
-
-    // get country name
-    console.log(d3.select(this).data());
 }
 
 function reset() {
