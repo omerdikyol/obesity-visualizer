@@ -131,22 +131,74 @@ async function generateMap() {
 
 // CSV
 function generateCSV() {
-    // Create a hidden anchor element
-    const link = document.createElement('a');
-    link.style.display = 'none';
+    // Read bmi and year value 
+    var bmiObj = document.getElementById('bmi');
+    var yearObj = document.getElementById('year');
 
-    // Set the download URL
-    link.href = '/obesity-visualizer/public-app/app/db/eurostat_data.csv';
+    var bmi = (bmiObj.style.display === 'none') ? null : bmiObj.value;
+    var year = (yearObj.style.display === 'none') ? null : yearObj.value;
 
-    // Set the file name
-    link.download = 'data.csv';
+    switch (bmi) {
+        case "Overweight":
+            bmi = "BMI_GE25";
+            break;
+        case "Pre-obese":
+            bmi = "BMI25-29";
+            break;
+        case "Obese":
+            bmi = "BMI_GE30";
+            break;
+        default:
+            break;
+    }
 
-    // Append the anchor element to the document body
-    document.body.appendChild(link);
+    // Read  CSV file
+    const reader = new FileReader();
 
-    // Trigger the click event
-    link.click();
+    reader.onload = function (event) {
+        const csvData = event.target.result;
+        const lines = csvData.split('\n');
+        const filteredLines = [];
 
-    // Clean up
-    document.body.removeChild(link);
+        filteredLines.push(lines[0]); // Add the header line to the filtered lines
+
+        // Filter the CSV data based on the criteria
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            const columns = line.split(',');
+
+            // Check if year is null
+            if (year === null) {
+                if (columns[0] === bmi) { // Check if the BMI column matches the selected BMI
+                    filteredLines.push(line);
+                }
+            }
+            else {
+                if (columns[0] === bmi && columns[2] === year) { // Check if the BMI and year columns match the selected BMI and year
+                    filteredLines.push(line);
+                }
+            }
+        }
+
+        // Generate the filtered CSV content
+        const filteredCSV = filteredLines.join('\n');
+
+        // Create a download link for the filtered CSV file
+        const link = document.createElement('a');
+        link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(filteredCSV));
+        link.setAttribute('download', "chart_data.csv");
+
+        // Trigger the download
+        link.click();
+
+        // Clean up
+        year = null;
+        bmi = null;
+    };
+
+    // Read the CSV file using its location
+    fetch("/obesity-visualizer/public-app/app/db/eurostat_data.csv")
+        .then(response => response.blob())
+        .then(blob => reader.readAsText(blob))
+        .catch(error => console.log('Error:', error));
 }

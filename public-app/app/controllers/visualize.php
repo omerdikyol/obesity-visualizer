@@ -46,7 +46,6 @@ function enableButtons() {
     document.getElementById("barBtn").style.display = "inline-block";
     document.getElementById("mapBtn").style.display = "inline-block";
     document.getElementById("tableBtn").style.display = "inline-block";
-    document.getElementById("dropdown").style.display = "inline-block";
 }
 
 function toggleExportDropdown() {
