@@ -383,7 +383,6 @@ function colorMap() {
                 var year = document.getElementById("year").value;
                 var bmi = document.getElementById("bmi").value;
                 var countryName = this.getAttribute("name");
-                var countryId = this.getAttribute("id");
 
                 infoBox.getElementsByTagName("p")[0].innerHTML =
                     "<strong>Country:</strong> " + countryName;
@@ -393,12 +392,12 @@ function colorMap() {
                     "<strong>BMI:</strong> " + bmi;
 
                 // Check if we have that countries data
-                if (data.find(x => x.country == countryId) ==
+                if (data.find(x => x.country == countryName) ==
                     null) {
                     infoBox.getElementsByTagName("p")[3].innerHTML =
                         "<strong>No data provided.</strong>";
                 } else { // Data found in db
-                    var value = data.find(x => x.country == countryId).value;
+                    var value = data.find(x => x.country == countryName).value;
                     infoBox
                         .getElementsByTagName("p")[3].innerHTML =
                         "<strong>Percentage:</strong> " + value;

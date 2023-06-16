@@ -36,8 +36,8 @@ count.addEventListener("change", updateChart);
 // Define the dimensions of the SVG container
 // half of current window size
 var width = window.innerWidth * 2 / 3;
-var height = window.innerHeight * 2 / 3;
-var margin = 40;
+var height = window.innerHeight * 2 / 3; // Add 100px for the country name labels
+var margin = 60;
 var radius = Math.min(width,
     height) / 2 - margin;
 
@@ -64,9 +64,9 @@ function createChart(data) {
     // Create the SVG container
     var svg = d3.select("#chart").append("svg")
         .attr("width", width)
-        .attr("height", height)
+        .attr("height", height + 200)
         .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        .attr("transform", "translate(" + width / 2 + "," + (height / 2 + 50) + ")");
 
     // Generate the pie chart slices
     var g = svg.selectAll(".arc")
@@ -93,20 +93,32 @@ function createChart(data) {
     // Add the country name
     g.append("text")
         .attr("transform", function(d) {
-            // put text to outside of the arc with same angle of arc
             var c = arc.centroid(d);
             var x = c[0];
             var y = c[1];
             var h = Math.sqrt(x * x + y * y);
-            return "translate(" + (x / h * radius * 1.1) + ',' +
-                (y / h * radius * 1.1) + ")";
+            var angle = (d.startAngle + d.endAngle) / 2;
+            var rotate = angle * (180 / Math.PI) + 90;
+
+            // Adjust rotation for angles
+            if (angle >= 0 && angle <= Math.PI) {
+                rotate += 180;
+            }
+
+            // Calculate the scaling factor based on the position of the label
+            var scale = 1.1;
+            if (angle > Math.PI && angle < Math.PI * 2) {
+                scale = 1.4;
+            }
+
+            return "translate(" + (x / h * radius * scale) + ',' +
+                (y / h * radius * scale) + ") rotate(" + rotate + ")";
 
         })
         .text(function(d) {
             return d.data.country;
         })
         .attr("class", "arc text");
-
 
     function handleLoad(d) {}
 
