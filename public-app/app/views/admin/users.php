@@ -4,17 +4,19 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Admin</title>
+    <title>OV Admin | User List</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' href='/obesity-visualizer/public-app/public/css/style.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="icon" href="/obesity-visualizer/public-app/public/images/logoov.ico">
 </head>
 
 <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/includes/sidenav.php'; ?>
 
 <body>
     <div class="main">
-        <a href="/obesity-visualizer/admin/user-create" class="adminButton adminSmall adminCreate" style="float: right; width: fit-content;">
+        <a href="/obesity-visualizer/admin/user-create" class="adminButton adminSmall adminCreate"
+            style="float: right; width: fit-content;">
             <i class="fas fa-plus"></i>
             <span>Add User</span>
         </a>
@@ -34,26 +36,28 @@
                 <th>Actions</th>
             </tr>
             <?php foreach ($users as $key => $user) { ?>
-                <tr>
-                    <td><?php echo $user['id'] ?></td>
-                    <td><?php echo $user['name'] ?></td>
-                    <td><?php echo $user['email'] ?></td>
-                    <td><?php echo $user['country'] ?></td>
-                    <td><?php echo $user['date_of_birth'] ?></td>
-                    <td><?php echo $user['height'] ?></td>
-                    <td><?php echo $user['weight'] ?></td>
-                    <td><?php echo $user['bmi'] ?></td>
-                    <td>
-                        <a href="/obesity-visualizer/admin/user-edit/<?php echo $user['id'] ?>" class="adminButton adminSmall adminEdit">
-                            <i class="fas fa-edit"></i>
-                            <span>Edit</span>
-                        </a>
-                        <a href="/obesity-visualizer/admin/user-delete/<?php echo $user['id'] ?>" class="adminButton adminSmall adminDelete">
-                            <i class="fas fa-trash-alt"></i>
-                            <span>Delete</span>
-                        </a>
-                    </td>
-                </tr>
+            <tr>
+                <td><?php echo $user['id'] ?></td>
+                <td><?php echo $user['name'] ?></td>
+                <td><?php echo $user['email'] ?></td>
+                <td><?php echo $user['country'] ?></td>
+                <td><?php echo $user['date_of_birth'] ?></td>
+                <td><?php echo $user['height'] ?></td>
+                <td><?php echo $user['weight'] ?></td>
+                <td><?php echo $user['bmi'] ?></td>
+                <td>
+                    <a href="/obesity-visualizer/admin/user-edit/<?php echo $user['id'] ?>"
+                        class="adminButton adminSmall adminEdit">
+                        <i class="fas fa-edit"></i>
+                        <span>Edit</span>
+                    </a>
+                    <a href="/obesity-visualizer/admin/user-delete/<?php echo $user['id'] ?>"
+                        class="adminButton adminSmall adminDelete">
+                        <i class="fas fa-trash-alt"></i>
+                        <span>Delete</span>
+                    </a>
+                </td>
+            </tr>
             <?php } ?>
         </table>
     </div>

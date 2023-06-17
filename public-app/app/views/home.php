@@ -7,8 +7,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obesity Visualizer</title>
+    <title>OV | Home</title>
     <link rel="stylesheet" href="/obesity-visualizer/public-app/public/css/style.css">
+    <link rel="icon" href="/obesity-visualizer/public-app/public/images/logoov.ico">
 </head>
 
 

@@ -3,9 +3,10 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Obesity Visualizer</title>
+    <title>OV Admin | Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" href="/obesity-visualizer/public-app/public/css/style.css">
+    <link rel="icon" href="/obesity-visualizer/public-app/public/images/logoov.ico">
 </head>
 </head>
 

@@ -4,11 +4,23 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obesity Visualizer</title>
+    <style>
+    .logoContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+    </style>
 </head>
 
 <body>
     <header>
-        <h1 style="text-align: center;">Obesity Visualizer</h1>
+        <div class="logoContainer">
+            <img src="/obesity-visualizer/public-app/public/images/logoov.png" alt="Obesity Visualizer Logo" width="100"
+                height="100" style="margin-right: 10px;">
+            <h1 style="text-align: center;">Obesity Visualizer</h1>
+        </div>
         <p style="color: white;">A powerful tool for monitoring and understanding obesity trends in Europe</p>
         <nav>
             <a href="/obesity-visualizer/home"><button class="buttonHeader">Home</button></a>

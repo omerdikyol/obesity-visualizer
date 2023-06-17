@@ -8,12 +8,13 @@ session_start();
 <head>
     <base href="./">
     <meta charset="UTF-8">
-    <title>Obesity Visualizer</title>
+    <title>OV | Project Report</title>
     <link rel="stylesheet" href="/obesity-visualizer/public-app/public/css/style.css">
+    <link rel="icon" href="/obesity-visualizer/public-app/public/images/logoov.ico">
     <style>
-        h1 {
-            text-align: left;
-        }
+    h1 {
+        text-align: left;
+    }
     </style>
 </head>
 
@@ -50,7 +51,9 @@ session_start();
         </p>
 
         <h3>1.3 References</h3>
-        <p>Obesity Visualizer uses public data provided by <a href="https://ec.europa.eu/eurostat/databrowser/view/sdg_02_10/default/table?lang=en" target="_blank">Eurostat</a></p>
+        <p>Obesity Visualizer uses public data provided by <a
+                href="https://ec.europa.eu/eurostat/databrowser/view/sdg_02_10/default/table?lang=en"
+                target="_blank">Eurostat</a></p>
 
         <h1>2. Overall Description</h1>
         <h3>2.1 Product Functions</h3>

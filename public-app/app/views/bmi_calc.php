@@ -2,10 +2,11 @@
 <html>
 
 <head>
-    <title>BMI Calculator | Obesity Visualizer</title>
+    <title>OV | BMI Calculator</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/obesity-visualizer/public-app/public/css/style.css">
+    <link rel="icon" href="/obesity-visualizer/public-app/public/images/logoov.ico">
 </head>
 
 <body>
