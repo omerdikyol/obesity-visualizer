@@ -4,9 +4,10 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Obesity Visualizer</title>
+    <title>OV Admin | Add Country</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' href='/obesity-visualizer/public-app/public/css/style.css'>
+    <link rel="icon" href="/obesity-visualizer/public-app/public/images/logoov.ico">
 </head>
 
 <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/includes/sidenav.php'; ?>
@@ -17,7 +18,8 @@
         <div class="container" id="edit_container">
 
             <div class=" container">
-                <form action="/obesity-visualizer/public-app/app/models/admin/country_create.php" method="post" class="form">
+                <form action="/obesity-visualizer/public-app/app/models/admin/country_create.php" method="post"
+                    class="form">
                     <label for="bmi">BMI</label>
                     <select id="bmi" name="bmi" required>
                         <option value="BMI25-29">BMI25-29</option>

@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <title>Login</title>
+    <title>OV Admin | Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/obesity-visualizer/public-app/public/css/style.css">
-
+    <link rel="icon" href="/obesity-visualizer/public-app/public/images/logoov.ico">
 </head>
 
 <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/includes/sidenav.php'; ?>

@@ -2,10 +2,11 @@
 <html>
 
 <head>
-    <title>Obesity Visualizer</title>
+    <title>OV | Register</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/obesity-visualizer/public-app/public/css/style.css">
+    <link rel="icon" href="/obesity-visualizer/public-app/public/images/logoov.ico">
 </head>
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . "/obesity-visualizer/public-app/app/views/includes/header.php"; ?>

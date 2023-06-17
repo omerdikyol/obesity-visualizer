@@ -4,9 +4,10 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Obesity Visualizer</title>
+    <title>OV Admin | Edit User</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' href='/obesity-visualizer/public-app/public/css/style.css'>
+    <link rel="icon" href="/obesity-visualizer/public-app/public/images/logoov.ico">
 </head>
 
 <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/includes/sidenav.php'; ?>
@@ -36,7 +37,8 @@
                     </select>
 
                     <label for="date_of_birth">Date of Birth</label>
-                    <input type="date" id="date_of_birth" name="date_of_birth" value="<?php echo $date_of_birth ?>" required>
+                    <input type="date" id="date_of_birth" name="date_of_birth" value="<?php echo $date_of_birth ?>"
+                        required>
 
                     <label for="height">Height (cm)</label>
                     <input type="number" id="height" name="height" value="<?php echo $height ?>">
