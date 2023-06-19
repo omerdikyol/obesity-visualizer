@@ -30,38 +30,43 @@ class LoginService
         global $mysqli;
 
         # Email Validation
+        if (empty($input["email"])) {
+            return -1;
+        }
+
         if (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
-            // Set error message and redirect to register page
-            $_SESSION['alert_fail'] = "Invalid email";
-            header('Location: /obesity-visualizer/register');
+            return -2;
         }
 
         # Check if password length is greater than 8
         if (strlen($input['password']) < 8) {
-            $_SESSION['alert_fail'] = "Password must be at least 8 characters long";
-            header('Location: /obesity-visualizer/register');
+            return -3;
         }
 
         # Password must contain at least one number and one letter
-        if (!preg_match('/[a-z]/i', $input['password'])) {
-            $_SESSION['alert_fail'] = "Password must contain at least one letter";
-            header('Location: /obesity-visualizer/register');
-        }
-        if (!preg_match('/[0-9]/', $input['password'])) {
-            $_SESSION['alert_fail'] = "Password must contain at least one number";
-            header('Location: /obesity-visualizer/register');
+        if (!preg_match("#[0-9]+#", $input['password']) || !preg_match("#[a-zA-Z]+#", $input['password'])) {
+            return -4;
         }
 
         # Check if both passwords match
         if ($input['password'] != $input['confirm_password']) {
-            $_SESSION['alert_fail'] = "Passwords do not match";
-            header('Location: /obesity-visualizer/register');
+            return -5;
         }
 
-        # Date Validation
-        if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $input['date_of_birth'])) {
-            $_SESSION['alert_fail'] = "Invalid date";
-            header('Location: /obesity-visualizer/register');
+        # Date Validation (must be in the years 1900-2020)
+        if (empty($input["date_of_birth"])) {
+            $_SESSION['alert_fail'] = "Date of birth is required";
+            return -6;
+        } else {
+            $date_of_birth = $this->input_data($input["date_of_birth"]);
+            if (!preg_match("/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/", $date_of_birth)) {
+                return -7;
+            } else {
+                $year = substr($date_of_birth, 0, 4);
+                if ($year < 1900 || $year > 2020) {
+                    return -8;
+                }
+            }
         }
 
         # Hash password
@@ -72,8 +77,7 @@ class LoginService
         $result = $mysqli->query($sql);
         $user = $result->fetch_assoc();
         if ($user) {
-            $_SESSION['alert_fail'] = "Email already exists";
-            header('Location: /obesity-visualizer/register');
+            return -9;
         }
 
         # Insert user into database
@@ -82,7 +86,7 @@ class LoginService
         $stmt = $mysqli->stmt_init();
 
         if (!$stmt->prepare($sql)) {
-            die("SQL Error: " . $stmt->error);
+            return -10;
         }
 
         $stmt->bind_param("sssssii", $input['name'], $input['email'], $password_hash, $input['country'], $input['date_of_birth'], $input['height'], $input['weight']);
@@ -90,5 +94,15 @@ class LoginService
         $stmt->execute();
 
         $stmt->close();
+
+        return 1;
+    }
+
+    function input_data($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 }

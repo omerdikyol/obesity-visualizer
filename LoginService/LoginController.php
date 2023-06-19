@@ -66,7 +66,48 @@ class LoginController
             return $this->unprocessableEntityResponse();
         }
 
-        $this->loginService->register($input);
+        $result = $this->loginService->register($input);
+
+        if ($result < 0) {
+            $response['status_code_header'] = 'HTTP/1.1 500 Internal Server Error';
+
+            switch ($result) {
+                case -1:
+                    $response['body'] = json_encode(["success" => false, "error" => "Email is required"]);
+                    break;
+                case -2:
+                    $response['body'] = json_encode(["success" => false, "error" => "Invalid email"]);
+                    break;
+                case -3:
+                    $response['body'] = json_encode(["success" => false, "error" => "Password must be at least 8 characters long"]);
+                    break;
+                case -4:
+                    $response['body'] = json_encode(["success" => false, "error" => "Password must contain at least one number and one letter"]);
+                    break;
+                case -5:
+                    $response['body'] = json_encode(["success" => false, "error" => "Passwords do not match"]);
+                    break;
+                case -6:
+                    $response['body'] = json_encode(["success" => false, "error" => "Date of birth is required"]);
+                    break;
+                case -7:
+                    $response['body'] = json_encode(["success" => false, "error" => "Invalid date format"]);
+                    break;
+                case -8:
+                    $response['body'] = json_encode(["success" => false, "error" => "Date must be between 1900 and 2020"]);
+                    break;
+                case -9:
+                    $response['body'] = json_encode(["success" => false, "error" => "Email already exists"]);
+                    break;
+                case -10:
+                    $response['body'] = json_encode(["success" => false, "error" => "SQL Error"]);
+                    break;
+                default:
+                    $response['body'] = json_encode(["success" => false, "error" => "Unknown error"]);
+                    break;
+            }
+            return $response;
+        }
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
         $response['body'] = json_encode(["success" => true]);

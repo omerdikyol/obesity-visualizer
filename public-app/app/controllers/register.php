@@ -13,7 +13,4 @@ foreach ($data as $key => $country) {
     array_push($countries, $country);
 }
 
-$error = isset($_SESSION['regError']) ? $_SESSION['regError'] : false;
-unset($_SESSION['regError']);
-
 include $_SERVER['DOCUMENT_ROOT'] . '/obesity-visualizer/public-app/app/views/register.php';
