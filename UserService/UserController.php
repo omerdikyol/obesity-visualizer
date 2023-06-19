@@ -91,34 +91,6 @@ class UserController
         return $response;
     }
 
-    /*
-    function login($input)
-    {
-        $result = $this->userService->login($input);
-        if ($result) {
-            $response['status_code_header'] = 'HTTP/1.1 200 OK';
-            $response['body'] = json_encode(['message' => 'Login Successful']);
-        } else {
-            $response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
-            $response['body'] = json_encode(['message' => 'Login Failed']);
-        }
-        return $response;
-    }
-
-    function register($input)
-    {
-        $result = $this->userService->register($input);
-        if ($result) {
-            $response['status_code_header'] = 'HTTP/1.1 200 OK';
-            $response['body'] = json_encode(['message' => 'Register Successful']);
-        } else {
-            $response['status_code_header'] = 'HTTP/1.1 401 Unauthorized';
-            $response['body'] = json_encode(['message' => 'Register Failed']);
-        }
-        return $response;
-    }
-    */
-
     private function getRequestBody()
     {
         return json_decode(file_get_contents('php://input'), true);

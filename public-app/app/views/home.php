@@ -65,10 +65,10 @@
         </div>
         <div class="homeRow">
             <div class="homeCol">
-                <img src="https://via.placeholder.com/400x300" alt="Obesity chart">
+                <img src="/obesity-visualizer/public-app/public/images/charts.png" alt="Obesity Charts">
             </div>
             <div class="homeCol">
-                <img src="https://via.placeholder.com/400x300" alt="BMI calculator">
+                <img src="/obesity-visualizer/public-app/public/images/bmi_calculator.png" alt="BMI calculator">
             </div>
         </div>
     </div>

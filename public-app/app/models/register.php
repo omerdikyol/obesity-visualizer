@@ -44,7 +44,10 @@ $error = curl_error($c);
 $errno = curl_errno($c);
 $httpCode = curl_getinfo($c, CURLINFO_HTTP_CODE);
 
+$response = json_decode($res, true);
+
 curl_close($c);
+
 
 // Check for errors
 if ($errno !== 0) {
@@ -60,6 +63,6 @@ if ($httpCode === 201) {
     header("Location: /obesity-visualizer/login");
 } else {
     // User not created
-    $_SESSION["alert_fail"] = "User not created.";
+    $_SESSION["alert_fail"] = "User not created: " . $response["error"];
     header("Location: /obesity-visualizer/register");
 }
