@@ -8,9 +8,9 @@ This project is a web application that allows the user to visualize the evolutio
 
 ### Screenshots:
 
-![image](https://github.com/user-attachments/assets/1124f063-8eec-44f5-8fc6-a2e62671ac81)
+![image](https://github.com/user-attachments/assets/122d2316-82bf-4f4d-a96a-077fd92c048e)
 
-![image](https://github.com/user-attachments/assets/fbe2e1e1-185d-45d5-a5fb-10ab638c8b28)
+![image](https://github.com/user-attachments/assets/03b8bd8d-b87d-464f-96a9-cdbc5308240a)
 
 ![image](https://github.com/user-attachments/assets/7682fa73-af56-4275-a103-8624bfa8fb59)
 
@@ -24,4 +24,5 @@ This project is a web application that allows the user to visualize the evolutio
 
 ![image](https://github.com/user-attachments/assets/bcb82a15-7db0-4d7f-a711-4960441814be)
 
-![image](https://github.com/user-attachments/assets/01e8a360-4a5f-4ec6-b6f1-21a952b3dd09)
+![image](https://github.com/user-attachments/assets/cfbf9b3c-db84-4530-abff-267895723128)
+
