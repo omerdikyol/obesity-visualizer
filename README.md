@@ -1,4 +1,10 @@
-# Obesity visualizer
+<h1 align="center">Obesity visualizer</h1>
+
+<p align="center">
+  <img alt="language: PHP" src="https://img.shields.io/badge/language-PHP-777BB4">
+  <img alt="type: course project" src="https://img.shields.io/badge/type-course%20project-lightgrey">
+  <img alt="license: MIT" src="https://img.shields.io/badge/license-MIT-green">
+</p>
 
 A web application for exploring obesity statistics across countries and years. Country views and charts sit alongside user and admin interfaces.
 
